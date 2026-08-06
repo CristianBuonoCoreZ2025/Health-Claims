@@ -14,6 +14,59 @@ export type Database = {
   }
   public: {
     Tables: {
+      aranceles: {
+        Row: {
+          amount: number
+          code: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          level: number
+          name: string
+          parent_id: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          amount?: number
+          code: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          level?: number
+          name: string
+          parent_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          amount?: number
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          level?: number
+          name?: string
+          parent_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "aranceles_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "aranceles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           address: string | null
@@ -219,6 +272,54 @@ export type Database = {
           updated_by?: string | null
         }
         Relationships: []
+      }
+      provider_coverages: {
+        Row: {
+          coverage_type_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          provider_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          coverage_type_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          provider_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          coverage_type_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          provider_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "provider_coverages_coverage_type_id_fkey"
+            columns: ["coverage_type_id"]
+            isOneToOne: false
+            referencedRelation: "coverage_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "provider_coverages_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       providers: {
         Row: {

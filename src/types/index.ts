@@ -23,6 +23,8 @@ export type Provider = Database["public"]["Tables"]["providers"]["Row"];
 export type Diagnostic = Database["public"]["Tables"]["diagnostics"]["Row"];
 export type Medication = Database["public"]["Tables"]["medications"]["Row"];
 export type CoverageType = Database["public"]["Tables"]["coverage_types"]["Row"];
+export type Arancel = Database["public"]["Tables"]["aranceles"]["Row"];
+export type ProviderCoverage = Database["public"]["Tables"]["provider_coverages"]["Row"];
 
 // Sesion autenticada con perfil cargado (usado por hooks/stores de auth).
 export interface AuthSession {
