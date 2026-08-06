@@ -2,7 +2,7 @@
 // Re-exporta los tipos generados de Supabase y agrega tipos de dominio
 // (Role, Profile, etc.) usados en la app.
 
-export type { Database, Json, AppRole } from "./database.generated";
+export type { Database, Json } from "./database.generated";
 
 import type { Database } from "./database.generated";
 

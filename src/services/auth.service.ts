@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { createSupabaseRouteHandlerClient, createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseRouteHandlerClient, createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { ProfilesRepository } from "@/repositories/profiles.repository";
 import type { AuthSession } from "@/types";
 
@@ -33,13 +33,20 @@ export async function signIn(email: string, password: string): Promise<SignInRes
 
 // Cierra la sesion y redirige a /login.
 export async function signOut(): Promise<void> {
+  if (!isSupabaseConfigured()) {
+    redirect("/login");
+  }
   const supabase = await createSupabaseServerClient();
   await supabase.auth.signOut();
   redirect("/login");
 }
 
-// Obtiene la sesion actual (Server Component). Devuelve null si no hay sesion.
+// Obtiene la sesion actual (Server Component). Devuelve null si no hay sesion
+// o si Supabase no esta configurado (proyecto no vinculado).
 export async function getSession(): Promise<AuthSession | null> {
+  if (!isSupabaseConfigured()) {
+    return null;
+  }
   const supabase = await createSupabaseServerClient();
 
   const {

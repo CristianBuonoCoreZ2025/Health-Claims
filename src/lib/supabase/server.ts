@@ -6,6 +6,13 @@ import type { Database } from "@/types";
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+// Indica si las variables publicas de Supabase estan configuradas.
+// Permite que getSession/signOut degraden gracefulmente (redirect a /login)
+// cuando el proyecto Supabase aun no esta vinculado, en vez de crashear.
+export function isSupabaseConfigured(): boolean {
+  return Boolean(SUPABASE_URL && SUPABASE_ANON_KEY);
+}
+
 function assertEnv(value: string | undefined, name: string): string {
   if (!value) {
     throw new Error(
