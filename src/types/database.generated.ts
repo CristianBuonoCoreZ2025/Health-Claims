@@ -130,6 +130,13 @@ export type Database = {
             foreignKeyName: "claim_details_claim_id_fkey"
             columns: ["claim_id"]
             isOneToOne: false
+            referencedRelation: "claim_rejections"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claim_details_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
             referencedRelation: "claims"
             referencedColumns: ["id"]
           },
@@ -189,6 +196,13 @@ export type Database = {
           id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "claim_timeline_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "claim_rejections"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "claim_timeline_claim_id_fkey"
             columns: ["claim_id"]
@@ -958,9 +972,62 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      claim_rejections: {
+        Row: {
+          amount_requested: number | null
+          assigned_liquidator_id: string | null
+          claim_number: string | null
+          holder_name: string | null
+          id: string | null
+          incident_date: string | null
+          insured_first_name: string | null
+          insured_id: string | null
+          insured_last_name: string | null
+          is_active: boolean | null
+          policy_id: string | null
+          rejected_at: string | null
+          rejection_reason: string | null
+          report_date: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claims_insured_id_fkey"
+            columns: ["insured_id"]
+            isOneToOne: false
+            referencedRelation: "insureds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      liquidator_workload: {
+        Row: {
+          active_amount: number | null
+          active_claims: number | null
+          approved: number | null
+          assigned: number | null
+          full_name: string | null
+          in_review: number | null
+          paid: number | null
+          rejected: number | null
+          requesting_docs: number | null
+          total_claims: number | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      anular_siniestro: {
+        Args: { p_claim_id: string; p_description?: string }
+        Returns: undefined
+      }
       assign_liquidator: {
         Args: { p_coverage_type_id?: string }
         Returns: string
@@ -986,6 +1053,10 @@ export type Database = {
       current_user_id: { Args: never; Returns: string }
       current_user_role: { Args: never; Returns: string }
       has_role: { Args: { p_role: string }; Returns: boolean }
+      reingresar_siniestro: {
+        Args: { p_claim_id: string; p_description?: string }
+        Returns: undefined
+      }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
       update_claim_status: {
