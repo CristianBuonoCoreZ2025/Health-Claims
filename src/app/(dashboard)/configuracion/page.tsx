@@ -6,6 +6,7 @@ import {
   Pill,
   Layers,
   ShieldCheck,
+  BookOpen,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -53,6 +54,12 @@ const CARDS: readonly ConfigCard[] = [
     description: "Tipos de cobertura disponibles",
     href: "/configuracion/coberturas",
     icon: ShieldCheck,
+  },
+  {
+    label: "Catalogos",
+    description: "Catalogos maestros y mapeos por compania",
+    href: "/configuracion/catalogos",
+    icon: BookOpen,
   },
 ] as const;
 

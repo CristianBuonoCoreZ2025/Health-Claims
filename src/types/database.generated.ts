@@ -67,6 +67,42 @@ export type Database = {
           },
         ]
       }
+      banks: {
+        Row: {
+          abbreviation: string | null
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          abbreviation?: string | null
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          abbreviation?: string | null
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       claim_details: {
         Row: {
           amount: number
@@ -286,51 +322,183 @@ export type Database = {
       }
       companies: {
         Row: {
+          abbreviation: string | null
           address: string | null
+          api_denunciation_notification: boolean
+          auto_assign: boolean
+          bac_number: boolean
+          bank_account: string | null
+          bank_account_type: string | null
+          bank_id: string | null
+          claim_number_length: number | null
+          commercial_payment: boolean
+          copy_type: string | null
+          country_id: string | null
           created_at: string
           created_by: string | null
+          currency_id: string | null
+          cutoff_time: string | null
+          daily_shipping: boolean
+          delivery_days_in: number | null
+          delivery_days_out: number | null
+          diagnosis_type: string | null
           email: string | null
+          fasec: boolean
+          free_disposition_fund: boolean
+          high_amount_company: number | null
+          high_amount_int: number | null
           holding_id: string | null
           id: string
           is_active: boolean
           logo_url: string | null
           name: string
+          operational_docs: boolean
+          out_of_term: boolean
+          overproduction: boolean
+          paper_voucher: boolean
+          payment_days: number | null
+          payment_method_id: string | null
+          pending_management: boolean
           phone: string | null
+          receives_invoice: boolean
+          reliquidation: boolean
           rut: string
+          single_experience: boolean
+          single_window: boolean
+          treasury_fund: boolean
+          treatment_type: string | null
           updated_at: string
           updated_by: string | null
+          waiting_type: string | null
+          web_denunciation_notification: boolean
+          web_insured_block: boolean
         }
         Insert: {
+          abbreviation?: string | null
           address?: string | null
+          api_denunciation_notification?: boolean
+          auto_assign?: boolean
+          bac_number?: boolean
+          bank_account?: string | null
+          bank_account_type?: string | null
+          bank_id?: string | null
+          claim_number_length?: number | null
+          commercial_payment?: boolean
+          copy_type?: string | null
+          country_id?: string | null
           created_at?: string
           created_by?: string | null
+          currency_id?: string | null
+          cutoff_time?: string | null
+          daily_shipping?: boolean
+          delivery_days_in?: number | null
+          delivery_days_out?: number | null
+          diagnosis_type?: string | null
           email?: string | null
+          fasec?: boolean
+          free_disposition_fund?: boolean
+          high_amount_company?: number | null
+          high_amount_int?: number | null
           holding_id?: string | null
           id?: string
           is_active?: boolean
           logo_url?: string | null
           name: string
+          operational_docs?: boolean
+          out_of_term?: boolean
+          overproduction?: boolean
+          paper_voucher?: boolean
+          payment_days?: number | null
+          payment_method_id?: string | null
+          pending_management?: boolean
           phone?: string | null
+          receives_invoice?: boolean
+          reliquidation?: boolean
           rut: string
+          single_experience?: boolean
+          single_window?: boolean
+          treasury_fund?: boolean
+          treatment_type?: string | null
           updated_at?: string
           updated_by?: string | null
+          waiting_type?: string | null
+          web_denunciation_notification?: boolean
+          web_insured_block?: boolean
         }
         Update: {
+          abbreviation?: string | null
           address?: string | null
+          api_denunciation_notification?: boolean
+          auto_assign?: boolean
+          bac_number?: boolean
+          bank_account?: string | null
+          bank_account_type?: string | null
+          bank_id?: string | null
+          claim_number_length?: number | null
+          commercial_payment?: boolean
+          copy_type?: string | null
+          country_id?: string | null
           created_at?: string
           created_by?: string | null
+          currency_id?: string | null
+          cutoff_time?: string | null
+          daily_shipping?: boolean
+          delivery_days_in?: number | null
+          delivery_days_out?: number | null
+          diagnosis_type?: string | null
           email?: string | null
+          fasec?: boolean
+          free_disposition_fund?: boolean
+          high_amount_company?: number | null
+          high_amount_int?: number | null
           holding_id?: string | null
           id?: string
           is_active?: boolean
           logo_url?: string | null
           name?: string
+          operational_docs?: boolean
+          out_of_term?: boolean
+          overproduction?: boolean
+          paper_voucher?: boolean
+          payment_days?: number | null
+          payment_method_id?: string | null
+          pending_management?: boolean
           phone?: string | null
+          receives_invoice?: boolean
+          reliquidation?: boolean
           rut?: string
+          single_experience?: boolean
+          single_window?: boolean
+          treasury_fund?: boolean
+          treatment_type?: string | null
           updated_at?: string
           updated_by?: string | null
+          waiting_type?: string | null
+          web_denunciation_notification?: boolean
+          web_insured_block?: boolean
         }
         Relationships: [
+          {
+            foreignKeyName: "companies_bank_id_fkey"
+            columns: ["bank_id"]
+            isOneToOne: false
+            referencedRelation: "banks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "companies_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "companies_currency_id_fkey"
+            columns: ["currency_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "companies_holding_id_fkey"
             columns: ["holding_id"]
@@ -338,7 +506,315 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "companies_payment_method_id_fkey"
+            columns: ["payment_method_id"]
+            isOneToOne: false
+            referencedRelation: "payment_methods"
+            referencedColumns: ["id"]
+          },
         ]
+      }
+      company_bank_codes: {
+        Row: {
+          bank_id: string
+          code: string
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          bank_id: string
+          code: string
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          bank_id?: string
+          code?: string
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_bank_codes_bank_id_fkey"
+            columns: ["bank_id"]
+            isOneToOne: false
+            referencedRelation: "banks"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_bank_codes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_isapre_codes: {
+        Row: {
+          code: string
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          isapre_id: string
+          isapre_plan_id: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          isapre_id: string
+          isapre_plan_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          isapre_id?: string
+          isapre_plan_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_isapre_codes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_isapre_codes_isapre_id_fkey"
+            columns: ["isapre_id"]
+            isOneToOne: false
+            referencedRelation: "isapres"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_isapre_codes_isapre_plan_id_fkey"
+            columns: ["isapre_plan_id"]
+            isOneToOne: false
+            referencedRelation: "isapre_plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_medication_codes: {
+        Row: {
+          code: string
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          medication_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          medication_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          medication_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_medication_codes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_medication_codes_medication_id_fkey"
+            columns: ["medication_id"]
+            isOneToOne: false
+            referencedRelation: "medications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_pharmacy_codes: {
+        Row: {
+          code: string
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          pharmacy_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          pharmacy_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          pharmacy_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_pharmacy_codes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_pharmacy_codes_pharmacy_id_fkey"
+            columns: ["pharmacy_id"]
+            isOneToOne: false
+            referencedRelation: "pharmacies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_provider_codes: {
+        Row: {
+          code_1: string | null
+          code_2: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          provider_id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code_1?: string | null
+          code_2?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          provider_id: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code_1?: string | null
+          code_2?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          provider_id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_provider_codes_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "company_provider_codes_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      countries: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
       }
       coverage_types: {
         Row: {
@@ -365,6 +841,39 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      currencies: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
           id?: string
           is_active?: boolean
           name?: string
@@ -406,6 +915,78 @@ export type Database = {
           id?: string
           is_active?: boolean
           keywords?: unknown
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      dispatch_campaigns: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          description: string | null
+          dispatch_date: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          dispatch_date?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          dispatch_date?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      document_types: {
+        Row: {
+          applies_to: string[]
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          applies_to?: string[]
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          applies_to?: string[]
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
           name?: string
           updated_at?: string
           updated_by?: string | null
@@ -577,6 +1158,158 @@ export type Database = {
           },
         ]
       }
+      isapre_plans: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          isapre_id: string
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          isapre_id: string
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          isapre_id?: string
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "isapre_plans_isapre_id_fkey"
+            columns: ["isapre_id"]
+            isOneToOne: false
+            referencedRelation: "isapres"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      isapres: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          rut: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          rut: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          rut?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      laboratories: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      liquidation_statuses: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          is_final: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          is_final?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          is_final?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       liquidator_weights: {
         Row: {
           coverage_type_id: string | null
@@ -632,11 +1365,15 @@ export type Database = {
           dosage: string | null
           id: string
           is_active: boolean
+          isapre_id: string | null
           laboratory: string | null
+          laboratory_id: string | null
           name: string
+          pharmacy_id: string | null
           presentation: string | null
           updated_at: string
           updated_by: string | null
+          vademecum_id: string | null
         }
         Insert: {
           active_ingredient?: string | null
@@ -645,11 +1382,15 @@ export type Database = {
           dosage?: string | null
           id?: string
           is_active?: boolean
+          isapre_id?: string | null
           laboratory?: string | null
+          laboratory_id?: string | null
           name: string
+          pharmacy_id?: string | null
           presentation?: string | null
           updated_at?: string
           updated_by?: string | null
+          vademecum_id?: string | null
         }
         Update: {
           active_ingredient?: string | null
@@ -658,13 +1399,204 @@ export type Database = {
           dosage?: string | null
           id?: string
           is_active?: boolean
+          isapre_id?: string | null
           laboratory?: string | null
+          laboratory_id?: string | null
           name?: string
+          pharmacy_id?: string | null
           presentation?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          vademecum_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medications_isapre_id_fkey"
+            columns: ["isapre_id"]
+            isOneToOne: false
+            referencedRelation: "isapres"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medications_laboratory_id_fkey"
+            columns: ["laboratory_id"]
+            isOneToOne: false
+            referencedRelation: "laboratories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medications_pharmacy_id_fkey"
+            columns: ["pharmacy_id"]
+            isOneToOne: false
+            referencedRelation: "pharmacies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medications_vademecum_id_fkey"
+            columns: ["vademecum_id"]
+            isOneToOne: false
+            referencedRelation: "vademecum"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      parent_relationships: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          max_age_days: number | null
+          max_age_years: number | null
+          min_age_days: number | null
+          min_age_years: number | null
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          max_age_days?: number | null
+          max_age_years?: number | null
+          min_age_days?: number | null
+          min_age_years?: number | null
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          max_age_days?: number | null
+          max_age_years?: number | null
+          min_age_days?: number | null
+          min_age_years?: number | null
+          name?: string
           updated_at?: string
           updated_by?: string | null
         }
         Relationships: []
+      }
+      payment_methods: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      pending_reasons: {
+        Row: {
+          code: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      pharmacies: {
+        Row: {
+          code: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          provider_id: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          provider_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          provider_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pharmacies_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       policies: {
         Row: {
@@ -924,51 +1856,249 @@ export type Database = {
           bank_account: string | null
           bank_id: string | null
           business_name: string | null
+          cell_phone: string | null
+          city: string | null
+          commune: string | null
+          country_id: string | null
           created_at: string
           created_by: string | null
           email: string | null
           id: string
+          imed: boolean
+          imed_financier: boolean
           is_active: boolean
+          isapre_id: string | null
+          medipass: boolean
           name: string
           phone: string | null
+          postal_code: string | null
+          region_id: string | null
           rut: string
+          single_window: boolean
           specialty: string | null
+          specialty_id: string | null
           updated_at: string
           updated_by: string | null
+          web_reimbursement: boolean
         }
         Insert: {
           bank_account?: string | null
           bank_id?: string | null
           business_name?: string | null
+          cell_phone?: string | null
+          city?: string | null
+          commune?: string | null
+          country_id?: string | null
           created_at?: string
           created_by?: string | null
           email?: string | null
           id?: string
+          imed?: boolean
+          imed_financier?: boolean
           is_active?: boolean
+          isapre_id?: string | null
+          medipass?: boolean
           name: string
           phone?: string | null
+          postal_code?: string | null
+          region_id?: string | null
           rut: string
+          single_window?: boolean
           specialty?: string | null
+          specialty_id?: string | null
           updated_at?: string
           updated_by?: string | null
+          web_reimbursement?: boolean
         }
         Update: {
           bank_account?: string | null
           bank_id?: string | null
           business_name?: string | null
+          cell_phone?: string | null
+          city?: string | null
+          commune?: string | null
+          country_id?: string | null
           created_at?: string
           created_by?: string | null
           email?: string | null
           id?: string
+          imed?: boolean
+          imed_financier?: boolean
           is_active?: boolean
+          isapre_id?: string | null
+          medipass?: boolean
           name?: string
           phone?: string | null
+          postal_code?: string | null
+          region_id?: string | null
           rut?: string
+          single_window?: boolean
           specialty?: string | null
+          specialty_id?: string | null
+          updated_at?: string
+          updated_by?: string | null
+          web_reimbursement?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "providers_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "providers_isapre_id_fkey"
+            columns: ["isapre_id"]
+            isOneToOne: false
+            referencedRelation: "isapres"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "providers_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "providers_specialty_id_fkey"
+            columns: ["specialty_id"]
+            isOneToOne: false
+            referencedRelation: "specialties"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      regions: {
+        Row: {
+          code: string
+          country_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code: string
+          country_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string
+          country_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "regions_country_id_fkey"
+            columns: ["country_id"]
+            isOneToOne: false
+            referencedRelation: "countries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      specialties: {
+        Row: {
+          code: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
           updated_at?: string
           updated_by?: string | null
         }
         Relationships: []
+      }
+      vademecum: {
+        Row: {
+          active_ingredient: string | null
+          code: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          is_active: boolean
+          laboratory_id: string | null
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          active_ingredient?: string | null
+          code: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          laboratory_id?: string | null
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          active_ingredient?: string | null
+          code?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          laboratory_id?: string | null
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vademecum_laboratory_id_fkey"
+            columns: ["laboratory_id"]
+            isOneToOne: false
+            referencedRelation: "laboratories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
