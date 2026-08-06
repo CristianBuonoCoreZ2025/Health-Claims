@@ -2,7 +2,7 @@
 
 Migraciones versionadas en `supabase/migrations/`, gestionadas con Supabase CLI.
 Ver `supabase/README.md` para el flujo de aplicacion (`supabase link`,
-`npm run db:push`, `npm run db:gen`).
+`pnpm db:push`, `pnpm db:gen`).
 
 ## Migraciones iniciales (Fase 1)
 

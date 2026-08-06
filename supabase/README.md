@@ -16,10 +16,10 @@ manual en el dashboard; todo cambio al esquema vive como archivo en
 supabase link --project-ref <PROJECT_REF>
 
 # 2. Aplicar todas las migraciones pendientes al proyecto remoto
-npm run db:push        # equivale a: supabase db push
+pnpm db:push        # equivale a: supabase db push
 
 # 3. Regenerar tipos TypeScript para el frontend
-npm run db:gen         # requiere SUPABASE_PROJECT_ID en el entorno
+pnpm db:gen         # requiere SUPABASE_PROJECT_ID en el entorno
 ```
 
 > `db:gen` escribe `src/types/database.generated.ts` (commitado para builds
@@ -28,9 +28,9 @@ npm run db:gen         # requiere SUPABASE_PROJECT_ID en el entorno
 ## Desarrollo local (opcional)
 
 ```bash
-npm run supabase:start   # levanta stack local (Postgres, Auth, Storage, Realtime)
-npm run supabase:stop    # detiene el stack local
-npm run db:reset         # reinicia la DB local y reaplica migraciones
+pnpm supabase:start   # levanta stack local (Postgres, Auth, Storage, Realtime)
+pnpm supabase:stop    # detiene el stack local
+pnpm db:reset         # reinicia la DB local y reaplica migraciones
 ```
 
 ## Migraciones iniciales (Fase 1)

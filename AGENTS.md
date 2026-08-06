@@ -13,9 +13,9 @@ Guia para agentes de codigo (Devin u otros) que trabajan en este repo.
 ## Comandos de verificacion (obligatorios antes de cerrar una tarea)
 
 ```bash
-npm run lint        # eslint .  -> 0 errores
-npm run typecheck   # tsc --noEmit -> 0 errores
-npm run build       # next build -> exitoso
+pnpm lint        # eslint .  -> 0 errores
+pnpm typecheck   # tsc --noEmit -> 0 errores
+pnpm build       # next build -> exitoso
 ```
 
 Si alguno falla, corregir antes de marcar la tarea como completada.
@@ -23,9 +23,9 @@ Si alguno falla, corregir antes de marcar la tarea como completada.
 ## Comandos de base de datos
 
 ```bash
-npm run db:gen      # regenera src/types/database.generated.ts (requiere SUPABASE_PROJECT_ID)
-npm run db:push     # aplica migraciones pendientes al proyecto vinculado
-npm run db:reset    # reinicia DB local y reaplica migraciones
+pnpm db:gen      # regenera src/types/database.generated.ts (requiere SUPABASE_PROJECT_ID)
+pnpm db:push     # aplica migraciones pendientes al proyecto vinculado
+pnpm db:reset    # reinicia DB local y reaplica migraciones
 ```
 
 ## Reglas de codigo (no negociables)
@@ -51,13 +51,13 @@ idempotencia.
 
 ## Notas de seguridad conocidas
 
-`npm audit` reporta vulnerabilidades transitorias en dependencias internas de
+`pnpm audit` reporta vulnerabilidades transitorias en dependencias internas de
 `next` (postcss, sharp) y `exceljs` (uuid) cuyas fixes requieren `next@16` o
 `exceljs@3` (breaking changes rechazados por decision del proyecto: pin Next
-15.5.x). No aplicar `npm audit fix --force`. Revisar periodicamente.
+15.5.x). No aplicar `pnpm audit fix --force`. Revisar periodicamente.
 
 ## Tipos de Supabase
 
 `src/types/database.generated.ts` es una version manual que refleja las
-migraciones iniciales. Tras vincular el proyecto, ejecutar `npm run db:gen` para
+migraciones iniciales. Tras vincular el proyecto, ejecutar `pnpm db:gen` para
 regenerarlo desde el schema remoto (formato compatible con @supabase/supabase-js).

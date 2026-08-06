@@ -8,7 +8,7 @@ Supabase (Project Settings > API).
 | `NEXT_PUBLIC_SUPABASE_URL` | Publica (cliente + server) | URL del proyecto Supabase. |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Publica (cliente + server) | Anon key. Usa RLS. |
 | `SUPABASE_SERVICE_ROLE_KEY` | **Solo server** | Service role key. Bypass RLS. NUNCA en cliente. |
-| `SUPABASE_PROJECT_ID` | Build/CLI | Project ref para `npm run db:gen`. |
+| `SUPABASE_PROJECT_ID` | Build/CLI | Project ref para `pnpm db:gen`. |
 
 ## Seguridad
 
