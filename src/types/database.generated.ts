@@ -67,6 +67,209 @@ export type Database = {
           },
         ]
       }
+      claim_details: {
+        Row: {
+          amount: number
+          claim_id: string
+          copayment_applied: number
+          coverage_type_id: string | null
+          created_at: string
+          created_by: string | null
+          deductible_applied: number
+          diagnostic_id: string | null
+          final_reimbursement: number
+          id: string
+          is_active: boolean
+          medication_id: string | null
+          observation: string | null
+          provider_id: string | null
+          service_date: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          amount?: number
+          claim_id: string
+          copayment_applied?: number
+          coverage_type_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          deductible_applied?: number
+          diagnostic_id?: string | null
+          final_reimbursement?: number
+          id?: string
+          is_active?: boolean
+          medication_id?: string | null
+          observation?: string | null
+          provider_id?: string | null
+          service_date: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          amount?: number
+          claim_id?: string
+          copayment_applied?: number
+          coverage_type_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          deductible_applied?: number
+          diagnostic_id?: string | null
+          final_reimbursement?: number
+          id?: string
+          is_active?: boolean
+          medication_id?: string | null
+          observation?: string | null
+          provider_id?: string | null
+          service_date?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claim_details_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "claims"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claim_details_coverage_type_id_fkey"
+            columns: ["coverage_type_id"]
+            isOneToOne: false
+            referencedRelation: "coverage_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claim_details_diagnostic_id_fkey"
+            columns: ["diagnostic_id"]
+            isOneToOne: false
+            referencedRelation: "diagnostics"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claim_details_medication_id_fkey"
+            columns: ["medication_id"]
+            isOneToOne: false
+            referencedRelation: "medications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claim_details_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      claim_timeline: {
+        Row: {
+          action_type: Database["public"]["Enums"]["claim_action_type"]
+          claim_id: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+        }
+        Insert: {
+          action_type: Database["public"]["Enums"]["claim_action_type"]
+          claim_id: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+        }
+        Update: {
+          action_type?: Database["public"]["Enums"]["claim_action_type"]
+          claim_id?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claim_timeline_claim_id_fkey"
+            columns: ["claim_id"]
+            isOneToOne: false
+            referencedRelation: "claims"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      claims: {
+        Row: {
+          amount_requested: number
+          assigned_liquidator_id: string | null
+          claim_number: string
+          created_at: string
+          created_by: string | null
+          description: string | null
+          final_reimbursement: number | null
+          id: string
+          incident_date: string
+          insured_id: string
+          is_active: boolean
+          policy_id: string
+          report_date: string
+          status: Database["public"]["Enums"]["claim_status"]
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          amount_requested?: number
+          assigned_liquidator_id?: string | null
+          claim_number: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          final_reimbursement?: number | null
+          id?: string
+          incident_date: string
+          insured_id: string
+          is_active?: boolean
+          policy_id: string
+          report_date?: string
+          status?: Database["public"]["Enums"]["claim_status"]
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          amount_requested?: number
+          assigned_liquidator_id?: string | null
+          claim_number?: string
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          final_reimbursement?: number | null
+          id?: string
+          incident_date?: string
+          insured_id?: string
+          is_active?: boolean
+          policy_id?: string
+          report_date?: string
+          status?: Database["public"]["Enums"]["claim_status"]
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "claims_insured_id_fkey"
+            columns: ["insured_id"]
+            isOneToOne: false
+            referencedRelation: "insureds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "claims_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           address: string | null
@@ -356,6 +559,53 @@ export type Database = {
             columns: ["policy_id"]
             isOneToOne: false
             referencedRelation: "policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      liquidator_weights: {
+        Row: {
+          coverage_type_id: string | null
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          level: string
+          updated_at: string
+          updated_by: string | null
+          user_id: string
+          weight_value: number
+        }
+        Insert: {
+          coverage_type_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          level?: string
+          updated_at?: string
+          updated_by?: string | null
+          user_id: string
+          weight_value?: number
+        }
+        Update: {
+          coverage_type_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          level?: string
+          updated_at?: string
+          updated_by?: string | null
+          user_id?: string
+          weight_value?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "liquidator_weights_coverage_type_id_fkey"
+            columns: ["coverage_type_id"]
+            isOneToOne: false
+            referencedRelation: "coverage_types"
             referencedColumns: ["id"]
           },
         ]
@@ -711,14 +961,62 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      assign_liquidator: {
+        Args: { p_coverage_type_id?: string }
+        Returns: string
+      }
+      calculate_claim: {
+        Args: {
+          p_amount_requested: number
+          p_coverage_type_id?: string
+          p_policy_id: string
+        }
+        Returns: {
+          applicable: boolean
+          copayment_applied: number
+          copayment_percentage: number
+          deductible_applied: number
+          deductible_percentage: number
+          event_limit: number
+          final_reimbursement: number
+          waiting_period_days: number
+          yearly_limit: number
+        }[]
+      }
       current_user_id: { Args: never; Returns: string }
       current_user_role: { Args: never; Returns: string }
       has_role: { Args: { p_role: string }; Returns: boolean }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
+      update_claim_status: {
+        Args: {
+          p_claim_id: string
+          p_description?: string
+          p_new_status: Database["public"]["Enums"]["claim_status"]
+        }
+        Returns: undefined
+      }
     }
     Enums: {
       app_role: "admin" | "supervisor" | "liquidator"
+      claim_action_type:
+        | "creado"
+        | "asignado"
+        | "en_revision"
+        | "antecedentes_solicitados"
+        | "aprobado"
+        | "rechazado"
+        | "pagado"
+        | "comentario"
+        | "documento_agregado"
+      claim_status:
+        | "ingresado"
+        | "asignado"
+        | "en_revision"
+        | "solicitando_antecedentes"
+        | "aprobado"
+        | "rechazado"
+        | "pagado"
       contract_type: "individual" | "colectivo"
       gender_type: "masculino" | "femenino" | "otro"
       policy_status: "vigente" | "vencida" | "anulada" | "pendiente"
@@ -851,6 +1149,26 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "supervisor", "liquidator"],
+      claim_action_type: [
+        "creado",
+        "asignado",
+        "en_revision",
+        "antecedentes_solicitados",
+        "aprobado",
+        "rechazado",
+        "pagado",
+        "comentario",
+        "documento_agregado",
+      ],
+      claim_status: [
+        "ingresado",
+        "asignado",
+        "en_revision",
+        "solicitando_antecedentes",
+        "aprobado",
+        "rechazado",
+        "pagado",
+      ],
       contract_type: ["individual", "colectivo"],
       gender_type: ["masculino", "femenino", "otro"],
       policy_status: ["vigente", "vencida", "anulada", "pendiente"],

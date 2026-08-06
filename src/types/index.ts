@@ -33,6 +33,14 @@ export type PreExistingCondition = Database["public"]["Tables"]["pre_existing_co
 export type InsuredAddress = Database["public"]["Tables"]["insured_addresses"]["Row"];
 export type InsuredBankAccount = Database["public"]["Tables"]["insured_bank_accounts"]["Row"];
 
+export type Claim = Database["public"]["Tables"]["claims"]["Row"];
+export type ClaimDetail = Database["public"]["Tables"]["claim_details"]["Row"];
+export type ClaimTimeline = Database["public"]["Tables"]["claim_timeline"]["Row"];
+export type LiquidatorWeight = Database["public"]["Tables"]["liquidator_weights"]["Row"];
+
+export type ClaimStatus = Database["public"]["Enums"]["claim_status"];
+export type ClaimActionType = Database["public"]["Enums"]["claim_action_type"];
+
 export type ContractType = Database["public"]["Enums"]["contract_type"];
 export type PolicyStatus = Database["public"]["Enums"]["policy_status"];
 export type RelationshipType = Database["public"]["Enums"]["relationship_type"];
