@@ -117,3 +117,19 @@ export type CompanyIsapreCodeUpdate = Database["public"]["Tables"]["company_isap
 export type CompanyMedicationCode = Database["public"]["Tables"]["company_medication_codes"]["Row"];
 export type CompanyMedicationCodeInsert = Database["public"]["Tables"]["company_medication_codes"]["Insert"];
 export type CompanyMedicationCodeUpdate = Database["public"]["Tables"]["company_medication_codes"]["Update"];
+
+export type Holding = Database["public"]["Tables"]["holdings"]["Row"];
+export type HoldingInsert = Database["public"]["Tables"]["holdings"]["Insert"];
+export type HoldingUpdate = Database["public"]["Tables"]["holdings"]["Update"];
+
+export type Contractor = Database["public"]["Tables"]["contractors"]["Row"];
+export type ContractorInsert = Database["public"]["Tables"]["contractors"]["Insert"];
+export type ContractorUpdate = Database["public"]["Tables"]["contractors"]["Update"];
+
+export type CompanyBranch = Database["public"]["Tables"]["company_branches"]["Row"];
+export type CompanyBranchInsert = Database["public"]["Tables"]["company_branches"]["Insert"];
+export type CompanyBranchUpdate = Database["public"]["Tables"]["company_branches"]["Update"];
+
+export type PolicyEndorsement = Database["public"]["Tables"]["policy_endorsements"]["Row"];
+export type PolicyEndorsementInsert = Database["public"]["Tables"]["policy_endorsements"]["Insert"];
+export type PolicyEndorsementUpdate = Database["public"]["Tables"]["policy_endorsements"]["Update"];

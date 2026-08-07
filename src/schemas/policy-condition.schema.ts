@@ -3,6 +3,7 @@ import { z } from "zod";
 export const policyConditionSchema = z.object({
   policy_id: z.string().uuid(),
   coverage_type_id: z.string().uuid("Selecciona un tipo de cobertura."),
+  endorsement_id: z.string().uuid().optional().nullable(),
   event_limit: z.number().min(0).default(0),
   yearly_limit: z.number().min(0).default(0),
   deductible_percentage: z.number().min(0).max(100).default(0),

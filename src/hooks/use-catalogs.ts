@@ -28,7 +28,11 @@ export type CatalogTable =
   | "company_bank_codes"
   | "company_pharmacy_codes"
   | "company_isapre_codes"
-  | "company_medication_codes";
+  | "company_medication_codes"
+  | "holdings"
+  | "contractors"
+  | "company_branches"
+  | "policy_endorsements";
 
 export interface CatalogConfig {
   table: CatalogTable;
@@ -58,6 +62,10 @@ export const CATALOGS: CatalogConfig[] = [
   { table: "company_pharmacy_codes", label: "Codigos de farmacia por compania", fieldNames: ["code", "company_id", "is_active", "pharmacy_id"] },
   { table: "company_isapre_codes", label: "Codigos de isapre por compania", fieldNames: ["code", "company_id", "is_active", "isapre_id", "isapre_plan_id"] },
   { table: "company_medication_codes", label: "Codigos de medicamento por compania", fieldNames: ["code", "company_id", "is_active", "medication_id"] },
+  { table: "holdings", label: "Holdings", fieldNames: ["address", "business_name", "email", "is_active", "phone", "rut"] },
+  { table: "contractors", label: "Contratantes", fieldNames: ["email", "holding_id", "is_active", "name", "phone", "rut"] },
+  { table: "company_branches", label: "Filiales", fieldNames: ["address", "code", "company_id", "is_active", "name"] },
+  { table: "policy_endorsements", label: "Endosos", fieldNames: ["end_date", "endorsement_number", "endorsement_type", "is_active", "notes", "policy_id", "start_date", "status"] },
 ];
 
 const FIELD_LABELS: Record<string, string> = {
@@ -70,6 +78,10 @@ const FIELD_LABELS: Record<string, string> = {
   laboratory_id: "laboratorio", pharmacy_id: "farmacia", isapre_id: "isapre",
   isapre_plan_id: "plan de isapre", vademecum_id: "vademecum", provider_id: "prestador",
   company_id: "compania", medication_id: "medicamento", specialty_id: "especialidad",
+  holding_id: "holding", contractor_id: "contratante", policy_id: "poliza",
+  business_name: "razon social", address: "direccion", phone: "telefono", email: "email",
+  endorsement_number: "numero de endoso", endorsement_type: "tipo de endoso",
+  start_date: "fecha inicio", end_date: "fecha termino", status: "estado", notes: "notas",
 };
 
 export function getFieldType(name: string) {
@@ -77,7 +89,7 @@ export function getFieldType(name: string) {
   if (name === "applies_to") return "array";
   if (name.endsWith("_id")) return "uuid";
   if (name.startsWith("min_age") || name.startsWith("max_age")) return "number";
-  if (name === "dispatch_date") return "date";
+  if (name.endsWith("_date")) return "date";
   return "string";
 }
 
@@ -93,7 +105,7 @@ export function useCatalog(table: CatalogTable) {
       const { data, error } = await repo.findAll();
       if (error) throw error;
       const rows = (data ?? []) as Record<string, unknown>[];
-      return rows.filter((r) => r.is_active === true);
+      return rows.filter((r) => r.is_active === true || r.is_active === undefined);
     },
   });
   const create = useMutation({

@@ -7,6 +7,10 @@ import {
   Layers,
   ShieldCheck,
   BookOpen,
+  Building,
+  Users,
+  GitBranch,
+  FileSignature,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -54,6 +58,30 @@ const CARDS: readonly ConfigCard[] = [
     description: "Tipos de cobertura disponibles",
     href: "/configuracion/coberturas",
     icon: ShieldCheck,
+  },
+  {
+    label: "Holdings",
+    description: "Grupos empresariales y tenedores de polizas",
+    href: "/configuracion/holdings",
+    icon: Building,
+  },
+  {
+    label: "Contratantes",
+    description: "Contratantes asociados a holdings",
+    href: "/configuracion/contractors",
+    icon: Users,
+  },
+  {
+    label: "Filiales",
+    description: "Sucursales y filiales por compania",
+    href: "/configuracion/company-branches",
+    icon: GitBranch,
+  },
+  {
+    label: "Endosos",
+    description: "Gestion de endosos y versiones de polizas",
+    href: "/configuracion/endosos",
+    icon: FileSignature,
   },
   {
     label: "Catalogos",

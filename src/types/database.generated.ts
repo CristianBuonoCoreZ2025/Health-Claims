@@ -1601,6 +1601,7 @@ export type Database = {
       policies: {
         Row: {
           company_id: string
+          contractor_id: string | null
           contract_type: Database["public"]["Enums"]["contract_type"]
           created_at: string
           created_by: string | null
@@ -1609,14 +1610,18 @@ export type Database = {
           holder_name: string
           id: string
           is_active: boolean
+          is_master: boolean
+          master_policy_id: string | null
           policy_number: string
           start_date: string
           status: Database["public"]["Enums"]["policy_status"]
           updated_at: string
           updated_by: string | null
+          version: number
         }
         Insert: {
           company_id: string
+          contractor_id?: string | null
           contract_type?: Database["public"]["Enums"]["contract_type"]
           created_at?: string
           created_by?: string | null
@@ -1625,14 +1630,18 @@ export type Database = {
           holder_name: string
           id?: string
           is_active?: boolean
+          is_master?: boolean
+          master_policy_id?: string | null
           policy_number: string
           start_date: string
           status?: Database["public"]["Enums"]["policy_status"]
           updated_at?: string
           updated_by?: string | null
+          version?: number
         }
         Update: {
           company_id?: string
+          contractor_id?: string | null
           contract_type?: Database["public"]["Enums"]["contract_type"]
           created_at?: string
           created_by?: string | null
@@ -1641,11 +1650,14 @@ export type Database = {
           holder_name?: string
           id?: string
           is_active?: boolean
+          is_master?: boolean
+          master_policy_id?: string | null
           policy_number?: string
           start_date?: string
           status?: Database["public"]["Enums"]["policy_status"]
           updated_at?: string
           updated_by?: string | null
+          version?: number
         }
         Relationships: [
           {
@@ -1653,6 +1665,20 @@ export type Database = {
             columns: ["company_id"]
             isOneToOne: false
             referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "policies_contractor_id_fkey"
+            columns: ["contractor_id"]
+            isOneToOne: false
+            referencedRelation: "contractors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "policies_master_policy_id_fkey"
+            columns: ["master_policy_id"]
+            isOneToOne: false
+            referencedRelation: "policies"
             referencedColumns: ["id"]
           },
         ]
@@ -1664,6 +1690,7 @@ export type Database = {
           created_at: string
           created_by: string | null
           deductible_percentage: number
+          endorsement_id: string | null
           event_limit: number
           id: string
           is_active: boolean
@@ -1679,6 +1706,7 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           deductible_percentage?: number
+          endorsement_id?: string | null
           event_limit?: number
           id?: string
           is_active?: boolean
@@ -1694,6 +1722,7 @@ export type Database = {
           created_at?: string
           created_by?: string | null
           deductible_percentage?: number
+          endorsement_id?: string | null
           event_limit?: number
           id?: string
           is_active?: boolean
@@ -1709,6 +1738,13 @@ export type Database = {
             columns: ["coverage_type_id"]
             isOneToOne: false
             referencedRelation: "coverage_types"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "policy_conditions_endorsement_id_fkey"
+            columns: ["endorsement_id"]
+            isOneToOne: false
+            referencedRelation: "policy_endorsements"
             referencedColumns: ["id"]
           },
           {
@@ -2096,6 +2132,201 @@ export type Database = {
             columns: ["laboratory_id"]
             isOneToOne: false
             referencedRelation: "laboratories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      company_branches: {
+        Row: {
+          address: string | null
+          code: string | null
+          company_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          is_active: boolean
+          name: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          address?: string | null
+          code?: string | null
+          company_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          address?: string | null
+          code?: string | null
+          company_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "company_branches_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "companies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      contractors: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          email: string | null
+          holding_id: string | null
+          id: string
+          is_active: boolean
+          name: string
+          phone: string | null
+          rut: string | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          holding_id?: string | null
+          id?: string
+          is_active?: boolean
+          name: string
+          phone?: string | null
+          rut?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          holding_id?: string | null
+          id?: string
+          is_active?: boolean
+          name?: string
+          phone?: string | null
+          rut?: string | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contractors_holding_id_fkey"
+            columns: ["holding_id"]
+            isOneToOne: false
+            referencedRelation: "holdings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      holdings: {
+        Row: {
+          address: string | null
+          business_name: string
+          created_at: string
+          created_by: string | null
+          email: string | null
+          id: string
+          is_active: boolean
+          phone: string | null
+          rut: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          address?: string | null
+          business_name: string
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          phone?: string | null
+          rut: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          address?: string | null
+          business_name?: string
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean
+          phone?: string | null
+          rut?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      policy_endorsements: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          end_date: string | null
+          endorsement_number: string
+          endorsement_type: string
+          id: string
+          is_active: boolean
+          notes: string | null
+          policy_id: string
+          start_date: string
+          status: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          end_date?: string | null
+          endorsement_number: string
+          endorsement_type: string
+          id?: string
+          is_active?: boolean
+          notes?: string | null
+          policy_id: string
+          start_date: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          end_date?: string | null
+          endorsement_number?: string
+          endorsement_type?: string
+          id?: string
+          is_active?: boolean
+          notes?: string | null
+          policy_id?: string
+          start_date?: string
+          status?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "policy_endorsements_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "policies"
             referencedColumns: ["id"]
           },
         ]

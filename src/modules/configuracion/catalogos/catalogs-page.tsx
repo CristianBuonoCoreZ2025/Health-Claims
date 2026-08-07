@@ -41,10 +41,14 @@ import {
   useCatalog,
 } from "@/hooks/use-catalogs";
 
-export function CatalogsPage() {
-  const [selected, setSelected] = useState<CatalogTable>("countries");
-  const catalog = CATALOGS.find((c) => c.table === selected)!;
-  const { items, isLoading, create, update, remove } = useCatalog(selected);
+interface CatalogManagerProps {
+  table: CatalogTable;
+  label?: string;
+}
+
+export function CatalogManager({ table, label }: CatalogManagerProps) {
+  const catalog = CATALOGS.find((c) => c.table === table)!;
+  const { items, isLoading, create, update, remove } = useCatalog(table);
   const [open, setOpen] = useState(false);
   const [editing, setEditing] = useState<Record<string, unknown> | null>(null);
   const [form, setForm] = useState<Record<string, string>>(() => getInitialForm(catalog));
@@ -94,25 +98,18 @@ export function CatalogsPage() {
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Catalogos</h1>
-          <p className="text-muted-foreground text-sm">Gestion de catalogos maestros y mapeos</p>
+          <h1 className="text-2xl font-semibold tracking-tight">
+            {label ?? catalog.label}
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            Gestion de {catalog.label.toLowerCase()}
+          </p>
         </div>
         <Button onClick={openNew}>
           <Plus className="mr-2 size-4" />
           Nuevo
         </Button>
       </div>
-
-      <Select value={selected} onValueChange={(v) => setSelected(v as CatalogTable)}>
-        <SelectTrigger className="w-80">
-          <SelectValue placeholder="Seleccionar catalogo" />
-        </SelectTrigger>
-        <SelectContent>
-          {CATALOGS.map((c) => (
-            <SelectItem key={c.table} value={c.table}>{c.label}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
 
       <div className="rounded-lg border overflow-x-auto">
         <Table>
@@ -170,17 +167,17 @@ export function CatalogsPage() {
               const t = getFieldType(f);
               if (t === "boolean") {
                 return (
-                  <div key={f} className="grid gap-2">
-                    <Label>{getFieldLabel(f)}</Label>
-                    <Select value={form[f]} onValueChange={(v) => setForm((prev) => ({ ...prev, [f]: v }))}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="true">Si</SelectItem>
-                        <SelectItem value="false">No</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                );
+                <div key={f} className="grid gap-2">
+                  <Label>{getFieldLabel(f)}</Label>
+                  <Select value={form[f]} onValueChange={(v) => setForm((prev) => ({ ...prev, [f]: v }))}>
+                    <SelectTrigger><SelectValue /></SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="true">Si</SelectItem>
+                      <SelectItem value="false">No</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              );
               }
               return (
                 <div key={f} className="grid gap-2">
@@ -204,6 +201,34 @@ export function CatalogsPage() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+    </div>
+  );
+}
+
+export function CatalogsPage() {
+  const [selected, setSelected] = useState<CatalogTable>("countries");
+
+  return (
+    <div className="flex flex-col gap-6 p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold tracking-tight">Catalogos</h1>
+          <p className="text-muted-foreground text-sm">Gestion de catalogos maestros y mapeos</p>
+        </div>
+      </div>
+
+      <Select value={selected} onValueChange={(v) => setSelected(v as CatalogTable)}>
+        <SelectTrigger className="w-80">
+          <SelectValue placeholder="Seleccionar catalogo" />
+        </SelectTrigger>
+        <SelectContent>
+          {CATALOGS.map((c) => (
+            <SelectItem key={c.table} value={c.table}>{c.label}</SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <CatalogManager table={selected} />
     </div>
   );
 }
