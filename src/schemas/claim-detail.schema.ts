@@ -13,6 +13,17 @@ export const claimDetailSchema = z.object({
   final_reimbursement: z.number().min(0).default(0),
   observation: z.string().optional(),
   is_active: z.boolean().default(true),
+  service_group_id: z.string().uuid().optional().nullable(),
+  service_subgroup_id: z.string().uuid().optional().nullable(),
+  service_item_id: z.string().uuid().optional().nullable(),
+  company_code: z.string().optional(),
+  pharmacy_id: z.string().uuid().optional().nullable(),
+  imed_amount: z.number().min(0).default(0),
+  medipass_amount: z.number().min(0).default(0),
+  web_reimbursement_amount: z.number().min(0).default(0),
+  financier_amount: z.number().min(0).default(0),
+  excess_amount: z.number().min(0).default(0),
+  pharmacy_limit_applied: z.boolean().default(false),
 });
 
 export type ClaimDetailInput = z.input<typeof claimDetailSchema>;

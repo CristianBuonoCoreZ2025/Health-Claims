@@ -22,6 +22,17 @@ export const claimSchema = z.object({
   final_reimbursement: z.number().optional(),
   assigned_liquidator_id: z.string().uuid().optional().nullable(),
   is_active: z.boolean().default(true),
+  form_number: z.string().optional(),
+  receipt_date: z.string().optional().nullable(),
+  dispatch_date: z.string().optional().nullable(),
+  payment_date: z.string().optional().nullable(),
+  payment_amount: z.number().optional().nullable(),
+  remittance_number: z.string().optional(),
+  settlement_type: z.string().optional(),
+  company_settlement_code: z.string().optional(),
+  insured_settlement_code: z.string().optional(),
+  medical_id: z.string().optional(),
+  beneficiary_id: z.string().uuid().optional().nullable(),
 });
 
 export type ClaimInput = z.input<typeof claimSchema>;

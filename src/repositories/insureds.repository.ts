@@ -83,7 +83,7 @@ export class InsuredsRepository extends BaseRepository<"insureds"> {
   }> {
     const { data, error } = await this.client
       .from("insureds")
-      .select("*, pre_existing_conditions(*), insured_addresses(*), insured_bank_accounts(*)")
+      .select("*, pre_existing_conditions!insured_id(*), insured_addresses!insured_id(*), insured_bank_accounts!insured_id(*)")
       .eq("id", id)
       .maybeSingle();
     return { data: data ?? null, error };

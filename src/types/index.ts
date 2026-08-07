@@ -153,3 +153,23 @@ export type PolicyConditionHeaderUpdate = Database["public"]["Tables"]["policy_c
 export type PolicyConditionLine = Database["public"]["Tables"]["policy_condition_lines"]["Row"];
 export type PolicyConditionLineInsert = Database["public"]["Tables"]["policy_condition_lines"]["Insert"];
 export type PolicyConditionLineUpdate = Database["public"]["Tables"]["policy_condition_lines"]["Update"];
+
+export type ClaimForm = Database["public"]["Tables"]["claim_forms"]["Row"];
+export type ClaimFormInsert = Database["public"]["Tables"]["claim_forms"]["Insert"];
+export type ClaimFormUpdate = Database["public"]["Tables"]["claim_forms"]["Update"];
+
+export type ClaimReceipt = Database["public"]["Tables"]["claim_receipts"]["Row"];
+export type ClaimReceiptInsert = Database["public"]["Tables"]["claim_receipts"]["Insert"];
+export type ClaimReceiptUpdate = Database["public"]["Tables"]["claim_receipts"]["Update"];
+
+export type ClaimDispatch = Database["public"]["Tables"]["claim_dispatches"]["Row"];
+export type ClaimDispatchInsert = Database["public"]["Tables"]["claim_dispatches"]["Insert"];
+export type ClaimDispatchUpdate = Database["public"]["Tables"]["claim_dispatches"]["Update"];
+
+export type ClaimPayment = Database["public"]["Tables"]["claim_payments"]["Row"];
+export type ClaimPaymentInsert = Database["public"]["Tables"]["claim_payments"]["Insert"];
+export type ClaimPaymentUpdate = Database["public"]["Tables"]["claim_payments"]["Update"];
+
+export type ClaimWorkflowStage = Database["public"]["Tables"]["claim_workflow_stages"]["Row"];
+export type ClaimWorkflowStageInsert = Database["public"]["Tables"]["claim_workflow_stages"]["Insert"];
+export type ClaimWorkflowStageUpdate = Database["public"]["Tables"]["claim_workflow_stages"]["Update"];

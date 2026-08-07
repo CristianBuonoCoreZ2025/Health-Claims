@@ -75,7 +75,7 @@ export class ClaimsRepository extends BaseRepository<"claims"> {
   }> {
     const { data, error } = await this.client
       .from("claims")
-      .select("*, policies(*, companies(*)), insureds(*), claim_details(*)")
+      .select("*, policies!policy_id(*, companies(*)), insureds!insured_id(*), claim_details!claim_id(*)")
       .eq("id", id)
       .maybeSingle();
     return { data: data ?? null, error };
@@ -89,7 +89,7 @@ export class ClaimsRepository extends BaseRepository<"claims"> {
   }> {
     const { data, error } = await this.client
       .from("claims")
-      .select("*, claim_timeline(*)")
+      .select("*, claim_timeline!claim_id(*)")
       .eq("id", id)
       .maybeSingle();
     return { data: data ?? null, error };
