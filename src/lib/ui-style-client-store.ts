@@ -1,0 +1,64 @@
+"use client";
+
+const UI_STYLE_KEY = "healthclaims-ui-style";
+
+export type UiStyleSkin =
+  | "nordic-air"
+  | "pastel-dream"
+  | "bubble-play"
+  | "kinetic-pop"
+  | "neo-playful";
+
+export const UI_STYLE_LABELS: Record<UiStyleSkin, string> = {
+  "nordic-air": "Aire Nordico",
+  "pastel-dream": "Pastel Dream",
+  "bubble-play": "Bubble Play",
+  "kinetic-pop": "Kinetic Pop",
+  "neo-playful": "Neo Playful",
+};
+
+export const UI_STYLE_SWATCHES: Record<UiStyleSkin, string> = {
+  "nordic-air": "#7aaec7",
+  "pastel-dream": "#c4b5fd",
+  "bubble-play": "#f472b6",
+  "kinetic-pop": "#34d399",
+  "neo-playful": "#fb923c",
+};
+
+export function getUiStyleSnapshot(): UiStyleSkin {
+  if (typeof window === "undefined") return "nordic-air";
+  try {
+    const stored = localStorage.getItem(UI_STYLE_KEY) as UiStyleSkin | null;
+    if (stored && UI_STYLE_LABELS[stored]) return stored;
+  } catch {
+    return "nordic-air";
+  }
+  return "nordic-air";
+}
+
+export function getUiStyleServerSnapshot(): UiStyleSkin {
+  return "nordic-air";
+}
+
+export function subscribeUiStyle(callback: () => void): () => void {
+  const handler = (e: StorageEvent) => {
+    if (e.key === UI_STYLE_KEY) callback();
+  };
+  window.addEventListener("storage", handler);
+  const customHandler = () => callback();
+  window.addEventListener("ui-style-change", customHandler);
+  return () => {
+    window.removeEventListener("storage", handler);
+    window.removeEventListener("ui-style-change", customHandler);
+  };
+}
+
+export function persistUiStyleChoice(skin: UiStyleSkin) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(UI_STYLE_KEY, skin);
+    window.dispatchEvent(new Event("ui-style-change"));
+  } catch {
+    return;
+  }
+}

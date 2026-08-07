@@ -1,102 +1,103 @@
+/*
+ * COMPONENTES DE LAYOUT — hub-stock-ai
+ * Clases reutilizables para páginas, paneles, tablas y alertas.
+ */
+
 @layer components {
-  .app-page {
-    width: 100%;
-    max-width: min(120rem, calc(100% - 1rem));
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-left: 0.25rem;
-    padding-right: 0.25rem;
+  .premium-bg-base {
+    background-color: var(--surface-canvas);
   }
 
-  .app-page-header {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+  /* Premium mesh background v2 — much more vibrant and professional */
+  .premium-bg-mesh {
+    background-image:
+      radial-gradient(ellipse 80% 70% at 10% 15%, rgb(139 92 246 / 0.22), transparent 55%),
+      radial-gradient(ellipse 70% 60% at 90% 10%, rgb(14 165 233 / 0.18), transparent 50%),
+      radial-gradient(ellipse 80% 70% at 50% 95%, rgb(236 72 153 / 0.16), transparent 55%),
+      radial-gradient(ellipse 60% 50% at 95% 85%, rgb(34 197 94 / 0.12), transparent 45%),
+      radial-gradient(ellipse 60% 50% at 25% 65%, rgb(251 146 60 / 0.10), transparent 45%),
+      radial-gradient(ellipse 50% 40% at 70% 40%, rgb(59 130 246 / 0.08), transparent 40%);
   }
 
-  .app-page-title {
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.01em !important;
-    line-height: 1.3 !important;
-    color: var(--foreground) !important;
+  .dark .premium-bg-mesh {
+    background-image:
+      radial-gradient(ellipse 80% 70% at 10% 15%, rgb(139 92 246 / 0.12), transparent 55%),
+      radial-gradient(ellipse 70% 60% at 90% 10%, rgb(14 165 233 / 0.10), transparent 50%),
+      radial-gradient(ellipse 80% 70% at 50% 95%, rgb(236 72 153 / 0.08), transparent 55%),
+      radial-gradient(ellipse 60% 50% at 95% 85%, rgb(34 197 94 / 0.06), transparent 45%),
+      radial-gradient(ellipse 60% 50% at 25% 65%, rgb(251 146 60 / 0.05), transparent 45%),
+      radial-gradient(ellipse 50% 40% at 70% 40%, rgb(59 130 246 / 0.06), transparent 40%);
   }
 
-  .app-page-lead {
-    font-size: 11px !important;
-    font-weight: 500 !important;
-    line-height: 1.4 !important;
-    color: var(--muted-foreground) !important;
+  /* Animated floating orbs background */
+  .premium-orbs {
+    position: relative;
+  }
+  .premium-orbs::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(circle 180px at 15% 25%, rgb(139 92 246 / 0.35), transparent 70%),
+      radial-gradient(circle 220px at 80% 20%, rgb(14 165 233 / 0.30), transparent 70%),
+      radial-gradient(circle 200px at 60% 80%, rgb(236 72 153 / 0.25), transparent 70%),
+      radial-gradient(circle 160px at 30% 70%, rgb(34 197 94 / 0.18), transparent 70%);
+    filter: blur(60px);
+    animation: orbs-drift 25s ease-in-out infinite alternate;
   }
 
-  .app-section-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: var(--foreground) !important;
+  .dark .premium-orbs::before {
+    background-image:
+      radial-gradient(circle 180px at 15% 25%, rgb(139 92 246 / 0.18), transparent 70%),
+      radial-gradient(circle 220px at 80% 20%, rgb(14 165 233 / 0.15), transparent 70%),
+      radial-gradient(circle 200px at 60% 80%, rgb(236 72 153 / 0.12), transparent 70%),
+      radial-gradient(circle 160px at 30% 70%, rgb(34 197 94 / 0.08), transparent 70%);
   }
 
-  .app-card {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    padding: 1.25rem;
-    border-radius: 16px !important;
-    border: 1px solid var(--border) !important;
-    background: var(--card) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
-    transition: all 0.18s ease;
+  @keyframes orbs-drift {
+    0% {
+      transform: translate(-2%, -2%) scale(1);
+      opacity: 0.8;
+    }
+    33% {
+      transform: translate(2%, 1%) scale(1.05);
+      opacity: 1;
+    }
+    66% {
+      transform: translate(-1%, 2%) scale(0.98);
+      opacity: 0.85;
+    }
+    100% {
+      transform: translate(1%, -1%) scale(1.02);
+      opacity: 0.95;
+    }
   }
 
-  .app-card:hover {
-    border-color: color-mix(in srgb, var(--primary) 40%, var(--border)) !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06) !important;
+  .premium-grid-lines {
+    opacity: 0.4;
+    background-image:
+      linear-gradient(rgb(0 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(0 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
   }
 
-  .app-card-title {
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    color: var(--foreground) !important;
+  .dark .premium-grid-lines {
+    opacity: 0.15;
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
   }
 
-  .app-card-body {
-    font-size: 11px !important;
-    line-height: 1.4 !important;
-    color: var(--muted-foreground) !important;
-  }
-
-  .app-card-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 10px;
-    background: color-mix(in srgb, var(--primary) 10%, transparent) !important;
-    color: var(--primary) !important;
-  }
-
-  .app-panel {
-    padding: 0.75rem;
-    border-radius: 16px !important;
-    border: 1px solid var(--border) !important;
-    background: var(--card) !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
-  }
-
+  /* Glass panel — tarjetas premium tipo referencias 2, 5, 6, 7 */
   .glass-panel {
     border-radius: 18px !important;
     border: 1px solid rgba(255, 255, 255, 0.25) !important;
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--surface-elevated, var(--card)) 45%, transparent) 0%,
-      color-mix(in srgb, var(--surface-elevated, var(--card)) 25%, transparent) 100%
+      color-mix(in srgb, var(--surface-elevated) 45%, transparent) 0%,
+      color-mix(in srgb, var(--surface-elevated) 25%, transparent) 100%
     ) !important;
     backdrop-filter: blur(30px) saturate(180%);
     -webkit-backdrop-filter: blur(30px) saturate(180%);
@@ -108,32 +109,3106 @@
     overflow: hidden;
   }
 
-  .app-data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 11px !important;
+  .glass-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      120% 100% at 0% 0%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 60%
+    );
   }
 
-  .app-data-table th,
-  .app-data-table td {
-    padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid var(--border) !important;
+  .dark .glass-panel {
+    border-color: oklch(0.30 0.02 250 / 40%) !important;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--surface-elevated) 50%, transparent) 0%,
+      color-mix(in srgb, var(--surface-elevated) 25%, transparent) 100%
+    ) !important;
+    box-shadow:
+      0 8px 40px rgba(0, 0, 0, 0.4),
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+  }
+
+  .dark .glass-panel::before {
+    background: radial-gradient(
+      120% 100% at 0% 0%,
+      rgba(255, 255, 255, 0.06) 0%,
+      transparent 60%
+    );
+  }
+
+  .glass-panel-subtle {
+    border-radius: 14px !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    background-color: color-mix(in srgb, var(--muted) 30%, transparent) !important;
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05) !important;
+  }
+
+  .dark .glass-panel-subtle {
+    border-color: rgba(255, 255, 255, 0.08) !important;
+    background-color: rgb(39 39 42 / 0.3) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2) !important;
+  }
+
+  .auth-shell {
+    @apply relative flex min-h-dvh w-full flex-col items-center justify-center px-4 py-12 sm:px-6;
+  }
+
+  .auth-card {
+    @apply w-full max-w-[400px] rounded-2xl border border-border p-8 shadow-[var(--shadow-card)];
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 60%, transparent) 0%,
+      color-mix(in srgb, var(--card) 35%, transparent) 100%
+    ) !important;
+    backdrop-filter: blur(24px) saturate(160%);
+    -webkit-backdrop-filter: blur(24px) saturate(160%);
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(255, 255, 255, 0.15) inset !important;
+  }
+
+  .dark .auth-card {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 40%, transparent) 0%,
+      color-mix(in srgb, var(--card) 20%, transparent) 100%
+    ) !important;
+    border-color: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.08) inset !important;
+  }
+
+  .auth-brand {
+    @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-muted-foreground;
+  }
+
+  .auth-title {
+    @apply text-xl font-semibold tracking-tight text-foreground sm:text-[1.35rem];
+  }
+
+  .auth-subtitle {
+    @apply mt-1 text-[13px] leading-relaxed text-muted-foreground;
+  }
+
+  .text-gradient-warm {
+    background: linear-gradient(
+      105deg,
+      var(--accent-warm-start) 0%,
+      var(--accent-warm-end) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .app-page {
+    @apply mx-auto flex w-full max-w-[min(120rem,calc(100%-1rem))] flex-col gap-2 px-1;
+  }
+
+  .app-page-stock-wide {
+    @apply max-w-[min(96rem,calc(100%-1rem))] px-2 sm:px-4;
+  }
+
+  .app-page-header {
+    @apply flex flex-col gap-1;
+  }
+
+  .app-page-title {
+    @apply text-lg font-semibold tracking-tight text-foreground sm:text-xl;
+  }
+
+  .app-page-lead {
+    @apply text-[13px] font-medium leading-relaxed text-muted-foreground;
+  }
+
+  .app-panel {
+    @apply border border-border p-3 text-card-foreground sm:p-4;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 50%, transparent) 0%,
+      color-mix(in srgb, var(--card) 28%, transparent) 100%
+    ) !important;
+    backdrop-filter: blur(26px) saturate(170%);
+    -webkit-backdrop-filter: blur(26px) saturate(170%);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.07),
+      0 1px 0 rgba(255, 255, 255, 0.12) inset,
+      0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+    position: relative;
+    overflow: hidden !important;
+  }
+
+  .app-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      120% 100% at 0% 0%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 55%
+    );
+  }
+
+  .dark .app-panel {
+    border-color: oklch(0.30 0.02 250 / 40%) !important;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 55%, transparent) 0%,
+      color-mix(in srgb, var(--card) 30%, transparent) 100%
+    ) !important;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+  }
+
+  .dark .app-panel::before {
+    background: radial-gradient(
+      120% 100% at 0% 0%,
+      rgba(255, 255, 255, 0.05) 0%,
+      transparent 55%
+    );
+  }
+
+  .app-panel-title {
+    @apply text-[11px] font-semibold text-muted-foreground mb-2;
+  }
+
+  .app-data-label {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: var(--muted-foreground) !important;
+    display: block;
+    line-height: 1.3 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .app-toolbar {
+    @apply flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between;
+  }
+
+  .app-data-table-wrap {
+    @apply overflow-x-auto border border-border;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 50%, transparent) 0%,
+      color-mix(in srgb, var(--card) 28%, transparent) 100%
+    ) !important;
+    backdrop-filter: blur(24px) saturate(170%);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.07),
+      0 1px 0 rgba(255, 255, 255, 0.12) inset,
+      0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+    position: relative;
+    overflow: hidden !important;
+  }
+
+  .app-data-table-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      120% 100% at 0% 0%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 55%
+    );
+  }
+
+  .dark .app-data-table-wrap {
+    border-color: oklch(0.30 0.02 250 / 40%) !important;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 55%, transparent) 0%,
+      color-mix(in srgb, var(--card) 30%, transparent) 100%
+    ) !important;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
+  }
+
+  .dark .app-data-table-wrap::before {
+    background: radial-gradient(
+      120% 100% at 0% 0%,
+      rgba(255, 255, 255, 0.05) 0%,
+      transparent 55%
+    );
+  }
+
+  .app-data-table {
+    @apply w-full border-collapse text-[11px] text-foreground;
+  }
+
+  .app-data-table thead tr {
+    @apply text-left;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent) !important;
   }
 
   .app-data-table th {
-    font-weight: 600 !important;
-    color: var(--foreground) !important;
+    @apply px-3 py-1.5 text-[11px] font-semibold normal-case text-muted-foreground/70;
     background: color-mix(in srgb, var(--muted) 30%, transparent) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   .app-data-table td {
+    @apply px-3 py-1.5 text-[11px];
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent) !important;
+    transition: background-color 0.15s ease;
+  }
+
+  .app-data-table tbody tr {
+    transition: background-color 0.15s ease;
+  }
+
+  .app-data-table tbody tr:hover {
+    background: color-mix(in srgb, var(--primary) 6%, transparent) !important;
+  }
+
+  .app-data-table tbody tr:hover td {
+    background: transparent !important;
+  }
+
+  .app-data-table tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  /* Observaciones dentro de la fila de la grilla */
+  .grid-observation {
+    font-size: 9px !important;
+    font-style: italic !important;
+    color: #6d28d9 !important;
+    line-height: 1.3 !important;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * Badges de error para carga masiva / validación de filas
+   * Muestra cada error como un pill rojo en su propia línea,
+   * sin truncar el texto.
+   * ────────────────────────────────────────────────────────────── */
+  .bulk-error-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    padding: 2px 0 !important;
+    max-width: 280px !important;
+  }
+
+  .bulk-error-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 2px 7px !important;
+    border-radius: 9999px !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    color: #b91c1c !important;
+    background: color-mix(in srgb, #ef4444 12%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #ef4444 25%, transparent) !important;
+  }
+
+  .dark .bulk-error-badge {
+    color: #fca5a5 !important;
+    background: color-mix(in srgb, #ef4444 18%, transparent) !important;
+    border-color: color-mix(in srgb, #ef4444 30%, transparent) !important;
+  }
+
+  .bulk-error-badge::before {
+    content: "•";
+    font-weight: 700 !important;
+    margin-right: 1px !important;
+  }
+
+  /* Columna de errores en tabla de carga masiva — ancho fijo, sin truncate */
+  .bulk-error-col {
+    width: 280px !important;
+    min-width: 200px !important;
+  }
+
+  /* Celdas de tabla con truncate controlado para carga masiva */
+  .bulk-cell-narrow {
+    max-width: 150px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .bulk-cell-medium {
+    max-width: 120px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * Panel de mapeo de columnas (match de importación)
+   * ────────────────────────────────────────────────────────────── */
+  .bulk-mapper-panel {
+    border-radius: 16px !important;
+    border: 1px solid color-mix(in srgb, var(--border) 70%, transparent) !important;
+    background: color-mix(in srgb, var(--card) 60%, transparent) !important;
+    padding: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .bulk-mapper-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* Botón toggle para colapsar/expandir el mapper */
+  .bulk-mapper-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    width: 100% !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+    text-align: left !important;
+  }
+
+  .bulk-mapper-toggle:hover {
+    opacity: 0.85 !important;
+  }
+
+  .bulk-mapper-toggle-left {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .bulk-mapper-toggle-right {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .bulk-mapper-header-left {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+
+  .bulk-mapper-title {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+    margin: 0 0 4px 0 !important;
+  }
+
+  .bulk-mapper-subtitle {
+    font-size: 12px !important;
+    color: var(--muted-foreground) !important;
+    margin: 0 !important;
+    max-width: 540px !important;
+    line-height: 1.5 !important;
+  }
+
+  .bulk-mapper-status {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .bulk-mapper-status-warn,
+  .bulk-mapper-status-ok {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+  }
+
+  .bulk-mapper-status-warn {
+    color: #b45309 !important;
+    background: color-mix(in srgb, #f59e0b 14%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent) !important;
+  }
+
+  .bulk-mapper-status-ok {
+    color: #047857 !important;
+    background: color-mix(in srgb, #10b981 14%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #10b981 30%, transparent) !important;
+  }
+
+  .dark .bulk-mapper-status-warn {
+    color: #fcd34d !important;
+    background: color-mix(in srgb, #f59e0b 20%, transparent) !important;
+  }
+
+  .dark .bulk-mapper-status-ok {
+    color: #6ee7b7 !important;
+    background: color-mix(in srgb, #10b981 20%, transparent) !important;
+  }
+
+  /* Columnas detectadas — chips */
+  .bulk-mapper-detected {
+    padding: 12px 14px !important;
+    border-radius: 10px !important;
+    background: color-mix(in srgb, var(--muted) 30%, transparent) !important;
+    border: 1px solid color-mix(in srgb, var(--border) 50%, transparent) !important;
+  }
+
+  .bulk-mapper-detected-label {
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: var(--muted-foreground) !important;
+    margin: 0 0 8px 0 !important;
+  }
+
+  .bulk-mapper-detected-chips {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  .bulk-detected-chip {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 10px !important;
+    border-radius: 9999px !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    color: var(--foreground) !important;
+    background: color-mix(in srgb, var(--background) 70%, transparent) !important;
+    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent) !important;
+  }
+
+  .bulk-detected-chip em {
+    font-style: normal !important;
+    color: var(--primary) !important;
+    font-weight: 600 !important;
+  }
+
+  .bulk-detected-chip-sample {
+    color: var(--muted-foreground) !important;
+    font-weight: 400 !important;
+    font-style: italic !important;
+    max-width: 120px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .bulk-detected-chip-used {
+    border-color: color-mix(in srgb, var(--primary) 40%, transparent) !important;
+    background: color-mix(in srgb, var(--primary) 8%, transparent) !important;
+  }
+
+  /* Tabla de mapeo */
+  .bulk-mapper-table-wrap {
+    overflow-x: auto !important;
+    border-radius: 12px !important;
+    border: 1px solid color-mix(in srgb, var(--border) 50%, transparent) !important;
+  }
+
+  .bulk-mapper-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 12px !important;
+  }
+
+  .bulk-mapper-table thead tr {
+    background: color-mix(in srgb, var(--muted) 40%, transparent) !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 60%, transparent) !important;
+  }
+
+  .bulk-mapper-table th {
+    padding: 10px 12px !important;
+    text-align: left !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: var(--muted-foreground) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .bulk-mapper-table td {
+    padding: 10px 12px !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent) !important;
+    vertical-align: middle !important;
+  }
+
+  .bulk-mapper-table tbody tr:last-child td {
+    border-bottom: none !important;
+  }
+
+  .bulk-mapper-row-required {
+    background: color-mix(in srgb, var(--primary) 4%, transparent) !important;
+  }
+
+  .bulk-mapper-th-arrow {
+    width: 32px !important;
+  }
+
+  .bulk-mapper-th-status {
+    width: 160px !important;
+  }
+
+  .bulk-mapper-td-arrow {
+    text-align: center !important;
+    color: var(--muted-foreground) !important;
+  }
+
+  .bulk-mapper-field-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+
+  .bulk-mapper-field-label {
+    font-size: 13px !important;
+    font-weight: 600 !important;
     color: var(--foreground) !important;
   }
 
-  .app-empty-state {
-    text-align: center;
-    padding: 1.5rem;
+  .bulk-mapper-field-sample {
+    display: block !important;
+    font-size: 10px !important;
+    font-style: italic !important;
     color: var(--muted-foreground) !important;
+    margin-top: 2px !important;
+    max-width: 220px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+  }
+
+  .bulk-mapper-required-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    align-self: flex-start !important;
+    padding: 1px 7px !important;
+    border-radius: 9999px !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: #b91c1c !important;
+    background: color-mix(in srgb, #ef4444 12%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #ef4444 25%, transparent) !important;
+  }
+
+  .dark .bulk-mapper-required-badge {
+    color: #fca5a5 !important;
+    background: color-mix(in srgb, #ef4444 18%, transparent) !important;
+  }
+
+  .bulk-mapper-field-desc {
+    font-size: 10px !important;
+    color: var(--muted-foreground) !important;
+    line-height: 1.4 !important;
+  }
+
+  .bulk-mapper-select {
+    width: 100% !important;
+    min-width: 180px !important;
+  }
+
+  .bulk-mapper-option-used {
+    opacity: 0.5 !important;
+  }
+
+  /* Pills de estado del mapeo */
+  .bulk-mapper-status-pill {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 3px 9px !important;
+    border-radius: 9999px !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+  }
+
+  .bulk-mapper-status-pill-error {
+    color: #b91c1c !important;
+    background: color-mix(in srgb, #ef4444 12%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #ef4444 25%, transparent) !important;
+  }
+
+  .bulk-mapper-status-pill-warn {
+    color: #b45309 !important;
+    background: color-mix(in srgb, #f59e0b 14%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent) !important;
+  }
+
+  .bulk-mapper-status-pill-ok {
+    color: #047857 !important;
+    background: color-mix(in srgb, #10b981 14%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #10b981 30%, transparent) !important;
+  }
+
+  .bulk-mapper-status-pill-neutral {
+    color: var(--muted-foreground) !important;
+    background: color-mix(in srgb, var(--muted) 40%, transparent) !important;
+    border: 1px solid color-mix(in srgb, var(--border) 50%, transparent) !important;
+  }
+
+  .bulk-mapper-required-warning {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 14px !important;
+    border-radius: 8px !important;
+    border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent) !important;
+    background: color-mix(in srgb, #f59e0b 6%, var(--card)) !important;
+    font-size: 12px !important;
+    color: color-mix(in srgb, #f59e0b 80%, var(--foreground)) !important;
+    margin-top: 8px !important;
+  }
+
+  .dark .bulk-mapper-required-warning {
+    color: #fbbf24 !important;
+    background: color-mix(in srgb, #f59e0b 12%, transparent) !important;
+  }
+
+  .bulk-fixed-values-section {
+    margin-top: 12px !important;
+    padding: 14px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    background: color-mix(in srgb, var(--muted) 20%, var(--card)) !important;
+  }
+
+  .bulk-fixed-values-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .bulk-fixed-values-title {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+  }
+
+  .bulk-fixed-values-desc {
     font-size: 11px !important;
+    color: var(--muted-foreground) !important;
+  }
+
+  .bulk-fixed-values-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .bulk-fixed-values-existing {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+
+  .bulk-fixed-value-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 6px 10px !important;
+    border-radius: 6px !important;
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    font-size: 12px !important;
+  }
+
+  .bulk-fixed-value-field {
+    font-weight: 500 !important;
+    color: var(--foreground) !important;
+  }
+
+  .bulk-fixed-value-arrow {
+    color: var(--muted-foreground) !important;
+  }
+
+  .bulk-fixed-value-val {
+    color: var(--primary) !important;
+    font-weight: 500 !important;
+  }
+
+  .bulk-fixed-value-remove {
+    margin-left: auto !important;
+    background: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    color: var(--muted-foreground) !important;
+    padding: 2px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  .bulk-fixed-value-remove:hover {
+    color: #ef4444 !important;
+  }
+
+  .bulk-fixed-values-add {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .bulk-fixed-values-select {
+    width: 100% !important;
+  }
+
+  .bulk-fixed-values-pending-label {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+    white-space: nowrap !important;
+  }
+
+  .bulk-fixed-values-input {
+    padding: 6px 10px !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    background: var(--background) !important;
+    color: var(--foreground) !important;
+    outline: none !important;
+  }
+
+  .bulk-fixed-values-input:focus {
+    border-color: var(--primary) !important;
+  }
+
+  .dark .bulk-mapper-status-pill-error {
+    color: #fca5a5 !important;
+    background: color-mix(in srgb, #ef4444 18%, transparent) !important;
+  }
+
+  .dark .bulk-mapper-status-pill-warn {
+    color: #fcd34d !important;
+    background: color-mix(in srgb, #f59e0b 20%, transparent) !important;
+  }
+
+  .dark .bulk-mapper-status-pill-ok {
+    color: #6ee7b7 !important;
+    background: color-mix(in srgb, #10b981 20%, transparent) !important;
+  }
+
+  /* Acciones del mapper */
+  .bulk-mapper-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .bulk-mapper-actions-hint {
+    font-size: 12px !important;
+    color: var(--muted-foreground) !important;
+    margin: 0 !important;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * Badges de error por tipo (en preview)
+   * ────────────────────────────────────────────────────────────── */
+  .bulk-error-badge-missing_column {
+    color: #b45309 !important;
+    background: color-mix(in srgb, #f59e0b 12%, transparent) !important;
+    border-color: color-mix(in srgb, #f59e0b 25%, transparent) !important;
+  }
+
+  .bulk-error-badge-empty_value {
+    color: #b91c1c !important;
+    background: color-mix(in srgb, #ef4444 12%, transparent) !important;
+    border-color: color-mix(in srgb, #ef4444 25%, transparent) !important;
+  }
+
+  .bulk-error-badge-invalid_value {
+    color: #6d28d9 !important;
+    background: color-mix(in srgb, #8b5cf6 12%, transparent) !important;
+    border-color: color-mix(in srgb, #8b5cf6 25%, transparent) !important;
+  }
+
+  .dark .bulk-error-badge-missing_column {
+    color: #fcd34d !important;
+    background: color-mix(in srgb, #f59e0b 18%, transparent) !important;
+  }
+
+  .dark .bulk-error-badge-empty_value {
+    color: #fca5a5 !important;
+    background: color-mix(in srgb, #ef4444 18%, transparent) !important;
+  }
+
+  .dark .bulk-error-badge-invalid_value {
+    color: #c4b5fd !important;
+    background: color-mix(in srgb, #8b5cf6 18%, transparent) !important;
+  }
+
+  /* ──────────────────────────────────────────────────────────────
+   * Panel de mapeo de valores (aseguradoras no reconocidas)
+   * ────────────────────────────────────────────────────────────── */
+  .bulk-value-mapper-panel {
+    border-radius: 16px !important;
+    border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent) !important;
+    background: color-mix(in srgb, #f59e0b 4%, var(--card)) !important;
+    padding: 20px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+
+  .bulk-value-mapper-header {
+    display: flex !important;
+    align-items: flex-start !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+  }
+
+  .bulk-value-mapper-table-wrap {
+    overflow-x: auto !important;
+    border-radius: 12px !important;
+    border: 1px solid color-mix(in srgb, var(--border) 50%, transparent) !important;
+  }
+
+  .bulk-value-mapper-section {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .bulk-value-mapper-section-title {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+    margin: 0 !important;
+    padding-left: 2px !important;
+  }
+
+  /* Resumen de errores */
+  .bulk-error-summary {
+    padding: 12px 14px !important;
+    border-radius: 10px !important;
+    background: color-mix(in srgb, #ef4444 6%, transparent) !important;
+    border: 1px solid color-mix(in srgb, #ef4444 20%, transparent) !important;
+  }
+
+  .bulk-error-summary-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #b91c1c !important;
+    margin: 0 0 8px 0 !important;
+  }
+
+  .dark .bulk-error-summary-title {
+    color: #fca5a5 !important;
+  }
+
+  .bulk-error-summary-chips {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+
+  .bulk-error-summary-chip {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 10px !important;
+    border-radius: 9999px !important;
+    font-size: 11px !important;
+    color: var(--foreground) !important;
+    background: color-mix(in srgb, var(--background) 70%, transparent) !important;
+    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent) !important;
+  }
+
+  .bulk-error-summary-chip strong {
+    font-weight: 600 !important;
+  }
+
+  .bulk-error-summary-chip em {
+    font-style: normal !important;
+    color: var(--muted-foreground) !important;
+    font-size: 10px !important;
+  }
+
+  .bulk-error-summary-chip-missing_column {
+    border-color: color-mix(in srgb, #f59e0b 30%, transparent) !important;
+  }
+
+  .bulk-error-summary-chip-empty_value {
+    border-color: color-mix(in srgb, #ef4444 30%, transparent) !important;
+  }
+
+  .bulk-error-summary-chip-invalid_value {
+    border-color: color-mix(in srgb, #8b5cf6 30%, transparent) !important;
+  }
+
+  /* Observaciones dentro del informe/PDF */
+  .report-observation {
+    font-size: 9px !important;
+    font-style: italic !important;
+    color: #111827 !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Agrupar fila de daño con su observación en el informe/PDF sin separación */
+  .report-with-observation td {
+    border-bottom-width: 0 !important;
+    padding-bottom: 0 !important;
+  }
+  .report-observation-row td {
+    border-top-width: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /* Agrupar fila de daño con su observación sin separación visual */
+  .app-data-table tbody tr.with-observation td {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+  .app-data-table tbody tr.observation-row td {
+    border-top: none !important;
+    padding-top: 0 !important;
+  }
+
+  .app-inline-code {
+    @apply rounded-md bg-muted px-1.5 py-0.5 font-mono text-[11px] text-foreground/80;
+  }
+
+  /* Color picker — input type="color" estilizado para formularios */
+  .color-picker-input {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    background: transparent !important;
+    cursor: pointer !important;
+    flex-shrink: 0 !important;
+  }
+  .color-picker-input::-webkit-color-swatch-wrapper {
+    padding: 2px !important;
+  }
+  .color-picker-input::-webkit-color-swatch {
+    border: none !important;
+    border-radius: 6px !important;
+  }
+  .color-picker-input::-moz-color-swatch {
+    border: none !important;
+    border-radius: 6px !important;
+  }
+
+  .app-alert-warn {
+    @apply rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-[13px] text-amber-950 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-100;
+  }
+
+  /* ═══════════════ NUEVAS CLASES GLOBALES (centralización) ═══════════════ */
+
+  /* Título de sección dentro de paneles (con ícono opcional) */
+  .app-section-title {
+    @apply font-semibold text-muted-foreground mb-2 flex items-center gap-2;
+  }
+
+  /* Label de campo a 12px (entre título 13px y valor 11px) */
+  .app-data-label-md {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Label de campo en negrita (prueba) */
+  .app-data-label-bold {
+    @apply font-semibold text-foreground;
+  }
+
+  /* Separador liquid glass entre sub-secciones dentro de un mismo panel.
+     Margen reducido para que la separación total coincida con el mt-2 (8px)
+     que se usa entre filas de datos. */
+  .app-section-divider {
+    height: 1px;
+    margin: 0.25rem 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(var(--border) / 0.5) 20%,
+      rgb(var(--border) / 0.8) 50%,
+      rgb(var(--border) / 0.5) 80%,
+      transparent 100%
+    );
+    border: 0;
+  }
+
+  /* Grid de datos — 3 columnas responsive, 4 en xl */
+  .app-data-grid {
+    @apply grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-2 text-[11px];
+  }
+
+  /* Grid de datos — 4 columnas responsive, 6 en xl */
+  .app-data-grid-4 {
+    @apply grid grid-cols-2 md:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-2 text-[11px];
+  }
+
+  /* Grid de datos — 2 columnas, 3 en xl */
+  .app-data-grid-2 {
+    @apply grid grid-cols-2 xl:grid-cols-3 gap-x-4 gap-y-2 text-[11px];
+  }
+
+  /* Campo de datos: label + valor */
+  .app-data-field {
+    @apply flex flex-col;
+  }
+
+  /* Valor de un campo de datos */
+  .app-data-value {
+    @apply font-medium text-foreground;
+  }
+
+  /* Texto de cuerpo (párrafos descriptivos) */
+  .app-body-text {
+    @apply text-[11px] text-foreground leading-relaxed;
+  }
+
+  /* Barra de tabs — glassmorphism delicado y refinado */
+  .app-tab-bar {
+    @apply p-1;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 22%, transparent) 0%,
+      color-mix(in srgb, var(--card) 10%, transparent) 100%
+    ) !important;
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.04),
+      0 1px 0 rgba(255, 255, 255, 0.08) inset !important;
+  }
+
+  .dark .app-tab-bar {
+    border-color: oklch(0.30 0.02 250 / 30%) !important;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 35%, transparent) 0%,
+      color-mix(in srgb, var(--card) 15%, transparent) 100%
+    ) !important;
+    box-shadow:
+      0 4px 16px rgba(0, 0, 0, 0.25),
+      0 1px 0 rgba(255, 255, 255, 0.05) inset !important;
+  }
+
+  .app-tab-bar-inner {
+    @apply flex flex-wrap gap-0.5;
+  }
+
+  /* Tab individual */
+  .app-tab {
+    @apply relative flex items-center gap-2 px-3.5 py-1.5 text-[11px] font-medium transition-all duration-200 whitespace-nowrap rounded-lg text-muted-foreground;
+    border: 0 !important;
+  }
+
+  .app-tab:hover {
+    color: var(--foreground);
+    background-color: rgba(255, 255, 255, 0.06);
+  }
+
+  .app-tab-active {
+    color: var(--foreground) !important;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--primary) 14%, transparent) 0%,
+      color-mix(in srgb, var(--primary) 6%, transparent) 100%
+    ) !important;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.04),
+      0 0 0 1px color-mix(in srgb, var(--primary) 16%, transparent) inset !important;
+  }
+
+  .app-tab-active::before {
+    content: "";
+    position: absolute;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 2px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--primary) 50%, transparent);
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Sub-tabs pequeños (dentro de paneles) */
+  .app-sub-tab-bar {
+    @apply inline-flex items-center p-0.5 gap-0.5;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 18%, transparent) 0%,
+      color-mix(in srgb, var(--card) 8%, transparent) 100%
+    ) !important;
+    backdrop-filter: blur(12px) saturate(140%);
+    -webkit-backdrop-filter: blur(12px) saturate(140%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+  }
+
+  .dark .app-sub-tab-bar {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 12%, transparent) 0%,
+      color-mix(in srgb, var(--card) 5%, transparent) 100%
+    ) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * OVERRIDE MOBILE: tabs con scroll horizontal
+   * En mobile, los tabs no deben wrap (genera 2 filas que cortan
+   * el contenido). En su lugar, scroll horizontal en una sola fila.
+   * Aplica en ≤639px.
+   * ═══════════════════════════════════════════════════════════════ */
+  @media (max-width: 639px) {
+    .app-tab-bar-inner {
+      overflow-x: auto !important;
+      flex-wrap: nowrap !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .app-sub-tab-bar {
+      overflow-x: auto !important;
+      flex-wrap: nowrap !important;
+      max-width: 100% !important;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * DYNAMIC SCREEN FIELDS GRID — grid de 60 columnas para pantallas
+   * dinámicas de gestiones. Tailwind v4 no incluye grid-cols-60 por
+   * defecto (solo 1-12), así que se define aquí.
+   * Responsive: en mobile (<=639px) se apila en 1 columna.
+   * ═══════════════════════════════════════════════════════════════ */
+  .dynamic-screen-fields-grid {
+    grid-template-columns: repeat(60, minmax(0, 1fr)) !important;
+  }
+
+  @media (max-width: 639px) {
+    .dynamic-screen-fields-grid {
+      grid-template-columns: 1fr !important;
+    }
+    /* En mobile, todos los col-span-* se ignoran y ocupan 1 columna */
+    .dynamic-screen-fields-grid > * {
+      grid-column: span 1 / span 1 !important;
+    }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * ADMIN MENU PALETTE — paleta lateral del editor de menú
+   * Responsive: en mobile ocupa 100% (apilada bajo el canvas),
+   * en tablet/desktop tiene ancho fijo.
+   * ═══════════════════════════════════════════════════════════════ */
+  .admin-menu-palette {
+    width: 100% !important;
+  }
+  @media (min-width: 640px) {
+    .admin-menu-palette {
+      width: 240px !important;
+    }
+  }
+  @media (min-width: 1024px) {
+    .admin-menu-palette {
+      width: 280px !important;
+    }
+  }
+
+  .app-sub-tab {
+    @apply px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all duration-200 text-muted-foreground;
+  }
+
+  .app-sub-tab:hover {
+    color: var(--foreground);
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .app-sub-tab-active {
+    color: var(--foreground) !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.04) 100%
+    ) !important;
+    box-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.03),
+      0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
+  }
+
+  /* Sidebar — Liquid Glass definitivo */
+  .sidebar-glass {
+    border-radius: 28px !important;
+    border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent) !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.03) 100%
+    ) !important;
+    backdrop-filter: blur(40px) saturate(200%);
+    -webkit-backdrop-filter: blur(40px) saturate(200%);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.06) !important;
+    position: relative;
+    z-index: 50;
+  }
+
+  .sidebar-glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 28px;
+    overflow: hidden;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      transparent 45%
+    );
+  }
+
+  .dark .sidebar-glass {
+    border-color: color-mix(in srgb, var(--foreground) 8%, transparent) !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    ) !important;
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  .dark .sidebar-glass::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 45%
+    );
+  }
+
+  /* Sidebar item — Liquid Glass */
+  .sidebar-item {
+    @apply relative flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-all duration-200;
+    color: var(--muted-foreground);
+  }
+
+  .sidebar-item:hover {
+    background-color: color-mix(in srgb, var(--foreground) 6%, transparent);
+    color: var(--foreground);
+  }
+
+  .sidebar-item-active {
+    color: var(--primary) !important;
+    background-color: color-mix(in srgb, var(--primary) 6%, transparent) !important;
+    box-shadow: 0 0 32px color-mix(in srgb, var(--primary) 12%, transparent) !important;
+  }
+
+  .sidebar-item-active::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    border: none;
+    background: color-mix(in srgb, var(--primary) 4%, transparent);
+    pointer-events: none;
+  }
+
+  /* Sidebar divider — Liquid Glass */
+  .sidebar-divider {
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in srgb, var(--foreground) 6%, transparent) 50%,
+      transparent 100%
+    );
+  }
+
+  /* Espaciado vertical estándar entre paneles */
+  .app-stack {
+    @apply space-y-2;
+  }
+
+  /* Contenedor de acciones en fila de tabla */
+  .app-row-actions {
+    @apply flex items-center justify-end gap-1.5;
+  }
+
+  /* Botones dentro de filas de tabla — estilo glass pill por defecto.
+     IMPORTANTE: .btn-icon-sm tiene sus propios estilos glass (fondo, borde,
+     blur, sombra) que deben preservarse — ver override más abajo. */
+  .app-row-actions button,
+  .app-row-actions [data-slot="button"] {
+    height: 26px !important;
+    padding: 0 10px !important;
+    border-radius: 8px !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    border: 1px solid transparent !important;
+    background: transparent !important;
+    backdrop-filter: blur(8px);
+    transition: all 0.15s ease !important;
+  }
+
+  .app-row-actions button:hover,
+  .app-row-actions [data-slot="button"]:hover {
+    background: color-mix(in srgb, var(--foreground) 8%, transparent) !important;
+    transform: translateY(-1px);
+  }
+
+  .app-row-actions button:active,
+  .app-row-actions [data-slot="button"]:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * OVERRIDE: .btn-icon-sm dentro de .app-row-actions
+   * Los botones de icono de tabla (btn-icon-sm) DEBEN conservar su
+   * estilo glass solid (fondo, borde visible, blur, sombra) en vez
+   * de ser pisados por el estilo transparent por defecto de row-actions.
+   * Mayor especificidad (doble clase) para ganar sobre las reglas above.
+   * ═══════════════════════════════════════════════════════════════ */
+  .app-row-actions .btn-icon-sm {
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    border: 1px solid color-mix(in srgb, var(--foreground) 15%, transparent) !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.03) 100%
+    ) !important;
+    backdrop-filter: blur(8px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(8px) saturate(140%) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+    color: var(--foreground) !important;
+  }
+
+  .app-row-actions .btn-icon-sm:hover {
+    transform: translateY(-1px) !important;
+    border-color: color-mix(in srgb, var(--foreground) 25%, transparent) !important;
+    box-shadow:
+      0 4px 12px rgba(0, 0, 0, 0.06),
+      inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  }
+
+  .app-row-actions .btn-icon-sm.btn-danger-hover:hover {
+    color: rgb(244, 63, 94) !important;
+    border-color: rgba(244, 63, 94, 0.25) !important;
+    background: linear-gradient(
+      180deg,
+      rgba(244, 63, 94, 0.12) 0%,
+      rgba(244, 63, 94, 0.04) 100%
+    ) !important;
+    box-shadow:
+      0 4px 14px rgba(244, 63, 94, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Dark mode — bordes más visibles */
+  .dark .app-row-actions .btn-icon-sm {
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.06) 0%,
+      rgba(255, 255, 255, 0.01) 100%
+    ) !important;
+  }
+
+  .dark .app-row-actions .btn-icon-sm:hover {
+    border-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .dark .app-row-actions .btn-icon-sm.btn-danger-hover:hover {
+    border-color: rgba(244, 63, 94, 0.3) !important;
+    background: linear-gradient(
+      180deg,
+      rgba(244, 63, 94, 0.15) 0%,
+      rgba(244, 63, 94, 0.05) 100%
+    ) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * HEADER COMPACTO — título + filtros + botón en una sola fila
+   * Evita espacio vacío arriba y reduce scroll.
+   * ═══════════════════════════════════════════════════════════════ */
+
+  /* Header de página compacto: título a la izq, acciones a la der */
+  .app-header-row {
+    @apply flex items-center gap-3 mb-3;
+  }
+
+  /* Header de grilla: título + búsqueda + filtros + Agregar en una fila */
+  .app-grid-header {
+    @apply flex items-center gap-3 flex-wrap mb-3;
+  }
+
+  /* Contenedor flexible para búsqueda + filtros (crece para llenar) */
+  .app-grid-filters {
+    @apply flex items-center gap-2 flex-1 min-w-[280px];
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * LAYOUT DE FORMULARIOS — 2 columnas en xl
+   * Columna izq: config principal + workflow
+   * Columna der: datos relacionados
+   * Footer: full-width debajo del grid
+   * ═══════════════════════════════════════════════════════════════ */
+
+  .app-form-grid {
+    @apply grid grid-cols-1 xl:grid-cols-[1fr_1fr] gap-4 items-start;
+  }
+
+  .app-form-col {
+    @apply space-y-4;
+  }
+
+  .app-form-footer {
+    @apply flex items-center justify-end gap-2 pt-2;
+  }
+
+  /* Grid de 3 columnas para campos dentro de cards de configuración */
+  .app-form-fields {
+    @apply grid grid-cols-3 gap-x-4 gap-y-2;
+  }
+
+  /* Grid [auto_1fr] para toggle + chips en una fila */
+  .app-form-toggle-row {
+    @apply grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 items-start;
+  }
+
+  /* Estado vacío en columna derecha de formularios */
+  .app-empty-state {
+    @apply rounded-lg border border-dashed border-border/60 p-6 text-center text-[11px] text-muted-foreground;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * BADGES / CHIPS — etiquetas pequeñas en grillas
+   * ═══════════════════════════════════════════════════════════════ */
+
+  .app-badge {
+    @apply inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium transition-colors;
+  }
+  .app-badge-active {
+    @apply border-primary bg-primary/10 text-primary;
+  }
+  .app-badge-inactive {
+    @apply border-border text-muted-foreground hover:bg-muted/50;
+  }
+
+  /* Origin badge — W (Workflow) morado, A (Automática) azul, M (Manual) café */
+  /* Sin fondo — solo la letra con definición HD */
+  .app-origin-badge {
+    @apply inline-flex items-center justify-center rounded leading-none;
+    font-size: 9px;
+    font-weight: 400;
+    min-width: 13px;
+    height: 13px;
+    padding: 0 3px;
+    font-style: italic;
+    text-transform: lowercase;
+    background-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+    font-feature-settings: "kern" 1;
+  }
+  .app-origin-w {
+    @apply text-purple-700 dark:text-purple-300;
+    border: 1px solid rgb(168 85 247 / 0.15);
+    opacity: 0.75;
+  }
+  .app-origin-a {
+    @apply text-blue-600 dark:text-blue-400;
+    border: 1px solid rgb(59 130 246 / 0.15);
+    opacity: 0.75;
+  }
+  .app-origin-m {
+    @apply text-amber-700 dark:text-amber-300;
+    border: 1px solid rgb(245 158 11 / 0.15);
+    opacity: 0.75;
+  }
+  .app-origin-default {
+    @apply text-slate-500 dark:text-slate-400;
+    border: 1px solid rgb(115 115 115 / 0.15);
+    opacity: 0.75;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * Badge de código de gestión — estilo workflow config
+   * Fondo tenue + borde sutil + glow decorativo + letra que destaca
+   * El color se setea via --gestion-color (hex) en style inline
+   * ═══════════════════════════════════════════════════════════════ */
+  .app-gestion-code {
+    @apply relative inline-flex items-center justify-center gap-1 rounded-md px-2 backdrop-blur-sm border transition-all font-bold;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 9px;
+    line-height: 18px;
+    min-width: 60px;
+    height: 18px;
+    /* Fondo y borde usan la variable --gestion-color con opacidad baja */
+    background-color: color-mix(in srgb, var(--gestion-color, transparent) 6%, transparent);
+    border-color: color-mix(in srgb, var(--gestion-color, transparent) 18%, transparent);
+    color: var(--gestion-color, inherit);
+    opacity: 0.85;
+  }
+  .app-gestion-code-plain {
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 18px;
+  }
+  /* Glow decorativo detrás del badge */
+  .app-gestion-code-glow {
+    @apply pointer-events-none absolute -inset-0.5 rounded-md blur-sm opacity-20 -z-10;
+    background-color: color-mix(in srgb, var(--gestion-color, transparent) 8%, transparent);
+  }
+
+  /* Variante mini — icono cuadrado del código (workflow nodes/palette) */
+  .app-gestion-code-icon {
+    @apply flex items-center justify-center rounded-md border transition-transform;
+    background-color: color-mix(in srgb, var(--gestion-color, transparent) 6%, transparent);
+    border-color: color-mix(in srgb, var(--gestion-color, transparent) 18%, transparent);
+    color: var(--gestion-color, inherit);
+  }
+  .app-gestion-code-icon-text {
+    @apply font-mono font-bold leading-none;
+    font-size: 8px;
+  }
+
+  /* Variante nodo de workflow — card más grande con padding */
+  .app-gestion-node {
+    @apply relative flex items-center gap-1.5 rounded-lg px-2 py-1 backdrop-blur-sm border transition-all duration-150;
+    background-color: color-mix(in srgb, var(--gestion-color, transparent) 6%, transparent);
+    border-color: color-mix(in srgb, var(--gestion-color, transparent) 18%, transparent);
+  }
+  .app-gestion-node-glow {
+    @apply pointer-events-none absolute -inset-0.5 rounded-lg blur-sm opacity-20 -z-10;
+    background-color: color-mix(in srgb, var(--gestion-color, transparent) 8%, transparent);
+  }
+  .app-gestion-node-code {
+    @apply font-mono text-[10px] font-semibold leading-tight;
+    color: var(--gestion-color, inherit);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * Email Preview Modal — Liquid Glass Card
+   * Contenedor exterior lila/azul suave + inner card blanco
+   * El body del correo (plantilla) NO se toca — solo el shell
+   * ═══════════════════════════════════════════════════════════════ */
+  .app-email-glass {
+    @apply relative rounded-2xl border backdrop-blur-md p-5 sm:p-6;
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--primary) 6%, transparent) 0%,
+      color-mix(in srgb, rgb(99 102 241) 4%, transparent) 50%,
+      color-mix(in srgb, rgb(168 85 247) 4%, transparent) 100%);
+    border-color: color-mix(in srgb, var(--primary) 12%, transparent);
+    box-shadow:
+      0 4px 24px -8px rgb(99 102 241 / 0.15),
+      0 1px 3px rgb(0 0 0 / 0.04),
+      inset 0 1px 0 rgb(255 255 255 / 0.4);
+  }
+  .dark .app-email-glass {
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--primary) 10%, transparent) 0%,
+      color-mix(in srgb, rgb(99 102 241) 6%, transparent) 50%,
+      color-mix(in srgb, rgb(168 85 247) 6%, transparent) 100%);
+    border-color: color-mix(in srgb, var(--primary) 18%, transparent);
+    box-shadow:
+      0 4px 24px -8px rgb(0 0 0 / 0.4),
+      inset 0 1px 0 rgb(255 255 255 / 0.06);
+  }
+
+  /* Píldora de empresa centrada arriba del inner card */
+  .app-email-company-badge {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 mx-auto;
+    background: color-mix(in srgb, var(--primary) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--primary) 15%, transparent);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Inner card — fondo blanco, esquinas redondeadas, separada del exterior */
+  .app-email-inner-card {
+    @apply rounded-xl bg-white shadow-sm overflow-hidden;
+    box-shadow:
+      0 1px 3px rgb(0 0 0 / 0.06),
+      0 4px 12px -4px rgb(0 0 0 / 0.08);
+  }
+
+  /* ═══ Email Preview — layout de 1 solo nivel ═══ */
+  /* modal-body — único contenedor con scroll + p-6 uniforme (incluye abajo) */
+  .app-email-modal-body {
+    @apply flex-1 overflow-auto p-6;
+  }
+  /* email-card — tarjeta blanca con border-radius 12px + overflow hidden */
+  .app-email-card {
+    @apply w-full rounded-xl overflow-hidden;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgb(0 0 0 / 0.06);
+  }
+  .dark .app-email-card {
+    background: color-mix(in srgb, var(--card) 92%, transparent);
+  }
+
+  /* Metadata limpia — label | valor alineados */
+  .app-email-meta {
+    @apply grid grid-cols-[auto_1fr] gap-x-3 gap-y-1.5 text-[11px] leading-tight;
+  }
+  .app-email-meta-label {
+    @apply text-muted-foreground font-medium tabular-nums;
+    min-width: 56px;
+  }
+  .app-email-meta-value {
+    @apply text-foreground break-all;
+  }
+  /* Barra de metadata — fondo sutil + borde liquid glass coherente */
+  .app-email-meta-bar {
+    background: color-mix(in srgb, var(--muted) 20%, transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+    box-shadow: 0 4px 8px -4px rgb(0 0 0 / 0.08);
+  }
+
+  /* ═══ Header del submenu de correos enviados — 2 líneas compactas ═══ */
+  .app-email-submenu-header {
+    @apply px-3 pt-1.5 pb-0.5 border-b border-border flex flex-col;
+    background: linear-gradient(to bottom right,
+      color-mix(in srgb, var(--primary) 10%, transparent),
+      color-mix(in srgb, var(--primary) 5%, transparent),
+      transparent);
+  }
+  .app-email-submenu-title {
+    @apply font-semibold tracking-tight text-foreground;
+    font-size: 11px;
+    line-height: 14px;
+  }
+  .app-email-submenu-meta {
+    @apply flex items-center justify-between gap-2;
+    margin-top: 1px;
+  }
+  .app-email-submenu-meta-code {
+    @apply font-mono text-muted-foreground;
+    font-size: 9px;
+    line-height: 13px;
+  }
+  .app-email-submenu-meta-count {
+    @apply text-muted-foreground;
+    font-size: 9px;
+    line-height: 13px;
+  }
+  .app-email-submenu-list {
+    @apply overflow-auto;
+    max-height: 288px;
+  }
+
+  /* EMAIL COMPOSE + CONTACT BOOK — ahora usan inline Tailwind como el preview. Sin clases custom. */
+
+  /* Header del modal — banner con ícono (liquid glass coherente con sistema) */
+  .app-email-header {
+    @apply flex items-center gap-3 px-4 py-3;
+    background: linear-gradient(135deg,
+      color-mix(in srgb, var(--primary) 8%, transparent),
+      transparent);
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+  }
+  .app-email-header-icon {
+    @apply flex h-9 w-9 items-center justify-center rounded-xl text-white shrink-0;
+    background: linear-gradient(135deg, rgb(99 102 241), rgb(168 85 247));
+    box-shadow: 0 2px 8px -2px rgb(99 102 241 / 0.5);
+  }
+
+  /* Botones de acción rápida del header (liquid glass) */
+  .app-email-action-btn {
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-all hover:text-foreground;
+    background: color-mix(in srgb, var(--card) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
+    backdrop-filter: blur(8px);
+  }
+  .app-email-action-btn:hover {
+    background: color-mix(in srgb, var(--muted) 60%, transparent);
+    border-color: color-mix(in srgb, var(--border) 60%, transparent);
+  }
+
+  /* Badge de estado del correo */
+  .app-email-status {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold;
+  }
+  .app-email-status-sent {
+    @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300;
+  }
+  .app-email-status-queued {
+    @apply bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300;
+  }
+  .app-email-status-error {
+    @apply bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300;
+  }
+
+  /* Estado activo/inactivo (bolita de color) */
+  .app-status-dot {
+    @apply inline-block h-2 w-2 rounded-full;
+  }
+  .app-status-on {
+    @apply bg-emerald-500;
+  }
+  .app-status-off {
+    @apply bg-zinc-400;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * RESPONSIVE GLOBAL — Overrides para todas las pantallas
+   * Asegura que todas las páginas sean usables en movil y tablet.
+   * ═══════════════════════════════════════════════════════════════ */
+
+  /* ── Tablet (≤1023px) ── */
+  @media (max-width: 1023px) {
+    /* Header de grilla: permitir wrap */
+    .app-grid-header {
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* Filtros de grilla: reducir min-width */
+    .app-grid-filters {
+      min-width: 200px;
+    }
+
+    /* Inputs en toolbar: hacer flex-1 en vez de fixed */
+    .app-toolbar .shrink-0[class*="w-["] {
+      width: auto !important;
+      min-width: 120px;
+      flex: 1 1 120px;
+    }
+  }
+
+  /* ── Mobile (≤767px) ── */
+  @media (max-width: 767px) {
+    /* Página: reducir padding */
+    .app-page {
+      max-width: 100% !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      gap: 8px;
+    }
+
+    /* Header de página: apilar vertical */
+    .app-page-header > .flex.items-center.justify-between {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    /* Título: más pequeño */
+    .app-page-title {
+      font-size: 16px !important;
+    }
+
+    /* Toolbar: siempre vertical en movil */
+    .app-toolbar {
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Toolbar items: full width */
+    .app-toolbar > * {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      flex: 1 1 100% !important;
+    }
+
+    /* Inputs: full width en toolbar */
+    .app-toolbar .app-input,
+    .app-toolbar input,
+    .app-toolbar select {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    /* Grid header: apilar */
+    .app-grid-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+    }
+
+    /* Grid filters: full width */
+    .app-grid-filters {
+      min-width: 0 !important;
+      width: 100%;
+    }
+
+    /* Grid filters inputs: full width */
+    .app-grid-filters .app-input,
+    .app-grid-filters input {
+      max-width: 100% !important;
+      width: 100% !important;
+      flex: 1;
+    }
+
+    /* Tabla: scroll horizontal garantizado */
+    .app-data-table-wrap {
+      border-radius: 12px !important;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Tabla: texto más pequeño */
+    .app-data-table {
+      font-size: 10px !important;
+    }
+
+    /* Header cells: no wrap */
+    .app-data-table th {
+      white-space: nowrap;
+    }
+
+    /* Row actions: siempre visible, no shrink */
+    .app-row-actions {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Form fields: 1 columna en movil */
+    .app-form-fields {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Form grid: 1 columna */
+    .app-form-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    /* Header row: apilar */
+    .app-header-row {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 6px;
+    }
+
+    /* Liquid button: full width en movil */
+    .liquid-button {
+      width: 100% !important;
+      justify-content: center;
+    }
+  }
+
+  /* ── Mobile pequeño (≤480px) ── */
+  @media (max-width: 480px) {
+    .app-page-title {
+      font-size: 15px !important;
+    }
+
+    /* Tabla: aún más compacta */
+    .app-data-table {
+      font-size: 9px !important;
+    }
+
+    /* Row action buttons: el override táctil de 44px está en buttons.css
+       (@media max-width: 639px) — aquí solo aseguramos min-size para
+       botones que NO son btn-icon-sm (botones de texto, links). */
+    .app-row-actions button:not(.btn-icon-sm),
+    .app-row-actions a:not(.btn-icon-sm) {
+      min-width: 44px;
+      min-height: 44px;
+    }
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+ * GRILLA CON BUSCADOR INTEGRADO — patrón de página compacto
+ * ═══════════════════════════════════════════════════════════════
+ * Estructura:
+ *   <div class="app-page">
+ *     <div class="app-grid-header">           ← header unificado
+ *       <div class="app-grid-header-left">    ← icono + título + breadcrumbs
+ *         <div class="app-grid-icon">📍</div>
+ *         <h1 class="app-page-title">Título</h1>
+ *         <span class="app-grid-sep">·</span>
+ *         <nav class="app-grid-breadcrumbs">...</nav>
+ *       </div>
+ *       <div class="app-grid-header-right">   ← contador + botón "Nueva"
+ *         <span class="app-grid-count">12 registros</span>
+ *         <Button className="pg-btn-platinum">Nueva</Button>
+ *       </div>
+ *     </div>
+ *     <div class="app-panel">
+ *       <div class="app-grid-toolbar">        ← buscador + controles paginación
+ *         <Input className="app-grid-search" />
+ *         <Pagination variant="controls" />
+ *       </div>
+ *       <div class="app-data-table-wrap">
+ *         <table class="app-data-table">...</table>
+ *       </div>
+ *       <Pagination />                        ← paginación completa abajo
+ *     </div>
+ *   </div>
+ * ═══════════════════════════════════════════════════════════════ */
+@layer components {
+
+  /* ── Header unificado: icono + título + breadcrumbs + acciones ── */
+  .app-grid-header {
+    @apply flex items-center justify-between gap-3;
+  }
+
+  .app-grid-header-left {
+    @apply flex items-center gap-2.5 min-w-0;
+  }
+
+  /* Icono del header — 36px, gradiente, redondeado */
+  .app-grid-icon {
+    @apply flex items-center justify-center rounded-xl text-white shadow-sm shrink-0;
+    width: 36px;
+    height: 36px;
+  }
+
+  .app-grid-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Contenedor interno: título + separador + breadcrumbs */
+  .app-grid-title-row {
+    @apply flex items-center gap-2 min-w-0;
+  }
+
+  /* Separador "·" entre título y breadcrumbs */
+  .app-grid-sep {
+    @apply text-muted-foreground/40 shrink-0;
+  }
+
+  /* Breadcrumbs dentro del header */
+  .app-grid-breadcrumbs {
+    @apply flex items-center gap-1 text-sm text-muted-foreground min-w-0;
+  }
+
+  .app-grid-breadcrumbs button,
+  .app-grid-breadcrumb-btn {
+    @apply hover:text-foreground transition-colors truncate;
+  }
+
+  .app-grid-breadcrumbs button.is-current,
+  .app-grid-breadcrumb-btn.is-current {
+    @apply font-medium text-foreground cursor-default;
+  }
+
+  .app-grid-breadcrumbs button:not(.is-current),
+  .app-grid-breadcrumb-btn:not(.is-current) {
+    @apply hover:underline;
+  }
+
+  /* ── Lado derecho del header: contador + botón ── */
+  .app-grid-header-right {
+    @apply flex items-center gap-2 shrink-0;
+  }
+
+  /* Contador de registros — misma tipografía que el Pagination inferior */
+  .app-grid-count {
+    @apply text-[11px] text-muted-foreground hidden sm:inline;
+  }
+
+  .app-grid-count .num {
+    @apply font-medium text-foreground;
+  }
+
+  /* ── Toolbar integrado en el panel (título + controles) ──
+     Sin margen negativo: respeta el padding del app-panel y su
+     border-radius de 16px (igual que la paginación inferior). */
+  .app-grid-toolbar {
+    @apply flex flex-wrap items-center justify-between gap-2 -mt-3 sm:-mt-4 px-3 py-2;
+  }
+
+  .pagination-footer {
+    @apply py-2;
+  }
+
+  .app-grid-toolbar-left {
+    @apply flex items-center gap-2;
+    height: 100%;
+  }
+
+  .app-grid-toolbar-left .app-section-title {
+    margin: 0 !important;
+    line-height: 1 !important;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px !important;
+  }
+
+  .app-grid-toolbar-left .btn-icon-sm {
+    width: 22px !important;
+    height: 22px !important;
+  }
+
+  .app-grid-toolbar-left .btn-icon-sm svg {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  /* Buscador con icono — ancho fijo 180px, shrink-0 */
+  .app-grid-search-wrap {
+    @apply relative w-[180px] shrink-0;
+  }
+
+  .app-grid-search-wrap svg {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground;
+  }
+
+  /* ── Fila clickeable — toda la fila dispara la acción del primer botón ──
+     Útil en móvil donde los botones de icono son difíciles de tocar. */
+  .app-data-table tbody tr.row-clickable {
+    cursor: pointer;
+  }
+
+  .app-data-table tbody tr.row-clickable:hover {
+    background: color-mix(in srgb, var(--primary) 10%, transparent) !important;
+  }
+
+  .app-data-table tbody tr.row-clickable:hover td {
+    color: hsl(var(--primary)) !important;
+  }
+
+  /* ── Mobile (≤767px) ── */
+  @media (max-width: 767px) {
+    /* Header: apilar vertical en móvil */
+    .app-grid-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    /* Breadcrumbs: scroll horizontal si son muy largos */
+    .app-grid-breadcrumbs {
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Buscador: full width en móvil */
+    .app-grid-search-wrap {
+      width: 100% !important;
+    }
+
+    /* Contador: oculto en móvil (ya está en el Pagination inferior) */
+    .app-grid-count {
+      display: none !important;
+    }
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+ * REPORTE DE INSPECCIÓN (Acta)
+ * Clases semánticas para el PDF/imprimir del reporte de inspección.
+ * Evita estilos inline en report-tab.tsx.
+ * ═══════════════════════════════════════════════════════════════ */
+
+/* Contenedor scroll del preview tipo PDF */
+.report-pdf-viewer {
+  @apply rounded-lg p-4 overflow-auto;
+  max-height: calc(100vh - 200px);
+  background-color: #e5e7eb;
+}
+
+/* Página Letter (carta) del reporte */
+.report-pdf-page {
+  @apply shadow-lg mx-auto relative;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  width: 8.5in;
+  max-width: 8.5in;
+  min-height: 11in;
+  padding: 0.5in;
+  background-color: #ffffff;
+  color: #1a1a1a;
+}
+
+/* Marca de agua BORRADOR */
+.report-watermark {
+  @apply absolute inset-0 flex items-center justify-center pointer-events-none z-10;
+}
+.report-watermark-text {
+  @apply font-bold text-gray-300 opacity-30 select-none;
+  transform: rotate(-30deg);
+  letter-spacing: 8px;
+}
+
+/* Header del acta */
+.report-acta-header {
+  @apply flex items-start justify-between border-b-[3px] border-gray-900 pb-3 mb-4;
+}
+.report-header-info {
+  @apply text-right;
+}
+.report-acta-h1 {
+  @apply font-bold text-gray-900;
+}
+.report-logo {
+  @apply h-14 w-auto;
+}
+.report-logo-text {
+  @apply font-bold;
+}
+.report-header-meta {
+  @apply text-gray-500 mt-1;
+}
+
+/* Título de sección del acta */
+.report-acta-title {
+  @apply font-bold uppercase text-gray-900 bg-gray-100 px-2.5 py-1.5 my-4 border-l-4 border-gray-900;
+}
+
+/* Fila de campo label: valor */
+.report-field-row {
+  @apply flex mb-0.5;
+}
+.report-field-label {
+  @apply font-semibold text-muted-foreground min-w-50 uppercase;
+}
+.report-field-value {
+  @apply flex-1;
+}
+
+/* Caja de cancelación */
+.report-cancellation-box {
+  @apply border-2 border-rose-600 bg-rose-50 p-3 rounded mb-3;
+}
+.report-cancellation-title {
+  @apply text-rose-700 font-bold mb-1;
+}
+
+/* Texto de declaración / observaciones (HTML rich text) */
+.report-statement {
+  @apply text-gray-800 leading-relaxed mb-3;
+}
+.report-statement p,
+.report-statement div {
+  margin: 0 0 8px;
+}
+.report-statement p:last-child,
+.report-statement div:last-child {
+  margin-bottom: 0;
+}
+
+/* Tablas del reporte (terceros, daños, evidencias, videos, etc.) */
+.report-table {
+  @apply w-full border-collapse my-1.5;
+}
+.report-th {
+  @apply text-left p-1.5 bg-gray-100 border border-gray-300 font-bold uppercase;
+}
+.report-th-right {
+  @apply text-right p-1.5 bg-gray-100 border border-gray-300 font-bold uppercase;
+}
+.report-td {
+  @apply p-1.5 border border-gray-300;
+}
+.report-td-right {
+  @apply text-right p-1.5 border border-gray-300;
+}
+
+/* Grilla de fotos */
+.report-photo-grid {
+  @apply grid grid-cols-3 gap-1.5 my-1.5;
+}
+.report-photo-item {
+  @apply border border-gray-300 p-1 bg-gray-50;
+}
+.report-photo-img {
+  @apply w-full h-32 object-contain;
+}
+.report-photo-label {
+  @apply text-gray-600 text-center mt-0.5;
+}
+
+/* Item de documento adjunto */
+.report-doc-item {
+  @apply border border-gray-300 p-2 mb-2 bg-gray-50;
+}
+.report-doc-title {
+  @apply font-semibold text-gray-700 mb-1;
+}
+.report-doc-desc {
+  @apply text-gray-600 mb-1;
+}
+.report-doc-summary {
+  @apply text-gray-700 italic mb-1 border-l-2 border-gray-300 pl-2;
+}
+.report-doc-img {
+  @apply w-full max-h-48 object-contain border border-gray-200;
+}
+.report-doc-placeholder {
+  @apply text-gray-500 italic;
+}
+
+/* Firmas */
+.report-sig-grid {
+  @apply grid grid-cols-2 gap-5 mt-6;
+}
+.report-sig-box {
+  @apply text-center;
+}
+.report-sig-img {
+  @apply max-h-16 max-w-45 border-b border-gray-700 pb-1 mx-auto;
+}
+.report-sig-name {
+  @apply font-semibold mt-1;
+}
+.report-sig-role {
+  @apply text-gray-500;
+}
+
+/* Footer del reporte */
+.report-footer {
+  @apply mt-8 pt-2.5 border-t border-gray-300 text-center text-gray-400;
+}
+
+/* Acciones del reporte (botones) */
+.report-actions {
+  @apply flex items-center gap-2 flex-wrap;
+}
+
+/* Badge de acta definitiva */
+.report-final-badge {
+  @apply flex items-center gap-2 text-emerald-600 dark:text-emerald-400;
+}
+.report-final-badge-text {
+  @apply font-semibold;
+}
+
+/* Mensaje de carga */
+.report-loading {
+  @apply text-center py-8 text-muted-foreground;
+}
+
+/* ════════════════════════════════════════════════════════════════
+ * Staging — Carga temporal de siniestros (flujo de 2 fases)
+ * ════════════════════════════════════════════════════════════════ */
+
+.staging-warning-banner {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 12px 16px !important;
+  border-radius: 10px !important;
+  border: 1px solid color-mix(in srgb, #f59e0b 30%, transparent) !important;
+  background: color-mix(in srgb, #f59e0b 6%, var(--card)) !important;
+  font-size: 12px !important;
+  color: color-mix(in srgb, #f59e0b 80%, var(--foreground)) !important;
+}
+
+.dark .staging-warning-banner {
+  color: #fbbf24 !important;
+  background: color-mix(in srgb, #f59e0b 12%, transparent) !important;
+}
+
+.staging-done-banner {
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 24px !important;
+  border-radius: 14px !important;
+  border: 1px solid color-mix(in srgb, #10b981 30%, transparent) !important;
+  background: color-mix(in srgb, #10b981 6%, var(--card)) !important;
+}
+
+.dark .staging-done-banner {
+  background: color-mix(in srgb, #10b981 12%, transparent) !important;
+}
+
+  /* ═══════════════════════════════════════════════════════════════
+   * CLASES UTILITARIAS PARA REEMPLAZAR INLINE STYLES (regla #2)
+   * Creadas en Fase 12 del plan v2 de responsive.
+   * ═══════════════════════════════════════════════════════════════ */
+
+  /* ── Scroll containers para contenido acotado ── */
+  .scroll-box-sm {
+    max-height: 240px !important;
+    overflow-y: auto !important;
+  }
+  .ai-summary-scroll {
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* ── Informe de análisis IA ── */
+  .ai-report-body {
+    max-height: 55vh !important;
+    overflow-y: auto !important;
+    padding: 16px 20px !important;
+    background: var(--card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+  }
+  .ai-report-text {
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    color: var(--foreground) !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+  .ai-report-meta {
+    font-size: 10px !important;
+    color: var(--muted-foreground) !important;
+    padding-top: 10px !important;
+    border-top: 1px solid var(--border) !important;
+    margin-top: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .ai-report-code {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+    font-family: var(--font-mono), monospace !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  /* ── Popover de análisis IA ── */
+  .ai-popover-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 10px 14px !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .ai-popover-code {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+    font-family: var(--font-mono), monospace !important;
+  }
+  .ai-popover-body {
+    padding: 12px 14px !important;
+    max-height: 50vh !important;
+    overflow-y: auto !important;
+  }
+
+  /* ── Textareas de configuración de prompts IA ── */
+  .ai-prompt-textarea {
+    width: 100% !important;
+    height: 200px !important;
+    max-height: 200px !important;
+    resize: none !important;
+    overflow-y: auto !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    font-family: var(--font-mono), ui-monospace, monospace !important;
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    white-space: pre-wrap !important;
+  }
+  .ai-prompt-textarea-sm {
+    width: 100% !important;
+    height: 100px !important;
+    max-height: 100px !important;
+    resize: none !important;
+    overflow-y: auto !important;
+    border-radius: 8px !important;
+    padding: 10px 12px !important;
+    font-family: var(--font-mono), ui-monospace, monospace !important;
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+    white-space: pre-wrap !important;
+  }
+
+  /* ── Panel lateral de progreso IA (tipo widget CPU) ── */
+  .ai-progress-overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    display: flex !important;
+    align-items: stretch !important;
+    justify-content: flex-end !important;
+    pointer-events: none !important;
+    z-index: 5 !important;
+  }
+  .ai-progress-panel {
+    pointer-events: auto !important;
+    width: 33% !important;
+    min-width: 100px !important;
+    max-width: 140px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: rgba(2, 12, 27, 0.78) !important;
+    backdrop-filter: blur(10px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(10px) saturate(140%) !important;
+    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: -4px 0 16px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden !important;
+  }
+  /* Header: timer + cancel */
+  .ai-progress-panel-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 6px 8px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+  .ai-progress-panel-timer-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  .ai-progress-panel-cpu {
+    width: 12px !important;
+    height: 12px !important;
+    flex-shrink: 0 !important;
+  }
+  .ai-progress-cpu-run {
+    color: #fbbf24 !important;
+    animation: ai-cpu-pulse 1.2s ease-in-out infinite !important;
+  }
+  .ai-progress-cpu-ok {
+    color: #4ade80 !important;
+  }
+  .ai-progress-cpu-fail {
+    color: #f87171 !important;
+  }
+  @keyframes ai-cpu-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .ai-progress-panel-timer {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #fbbf24 !important;
+    font-variant-numeric: tabular-nums !important;
+    line-height: 1 !important;
+  }
+  .ai-progress-panel-cancel {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 4px !important;
+    border: none !important;
+    background: rgba(239, 68, 68, 0.2) !important;
+    color: #fca5a5 !important;
+    cursor: pointer !important;
+    transition: all 0.15s !important;
+  }
+  .ai-progress-panel-cancel:hover {
+    background: rgba(239, 68, 68, 0.5) !important;
+    color: #fff !important;
+  }
+  .ai-progress-panel-cancel:disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+  }
+  /* Log de pasos acumulados */
+  .ai-progress-panel-log {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    padding: 6px 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+  }
+  .ai-progress-panel-log-init {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 9px !important;
+    color: #94a3b8 !important;
+  }
+  .ai-progress-log-phase {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+  .ai-progress-log-phase-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    margin-bottom: 1px !important;
+  }
+  .ai-progress-log-phase-icon {
+    width: 9px !important;
+    height: 9px !important;
+    color: #818cf8 !important;
+    flex-shrink: 0 !important;
+  }
+  .ai-progress-log-phase-label {
+    font-size: 8px !important;
+    font-weight: 700 !important;
+    color: #c7d2fe !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+  }
+  .ai-progress-log-step {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    padding-left: 12px !important;
+    font-size: 9px !important;
+    line-height: 1.4 !important;
+  }
+  .ai-progress-log-step-ok {
+    color: #4ade80 !important;
+  }
+  .ai-progress-log-step-failed {
+    color: #f87171 !important;
+  }
+  .ai-progress-log-step-trying {
+    color: #fbbf24 !important;
+  }
+  .ai-progress-log-step-model {
+    font-family: ui-monospace, monospace !important;
+    font-size: 8px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    min-width: 0 !important;
+  }
+  /* Estado en cola */
+  .ai-progress-panel-queued {
+    display: flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 8px 10px !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    color: #94a3b8 !important;
+  }
+  .ai-progress-panel-queued button {
+    margin-left: auto !important;
+  }
+  /* Barra de actividad animada */
+  .ai-progress-panel-bar {
+    height: 3px !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    overflow: hidden !important;
+  }
+  .ai-progress-panel-bar-pulse {
+    height: 100% !important;
+    width: 40% !important;
+    background: linear-gradient(90deg, transparent, #fbbf24, transparent) !important;
+    animation: ai-bar-slide 1.5s ease-in-out infinite !important;
+  }
+  @keyframes ai-bar-slide {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(350%); }
+  }
+
+  /* ── Control segmentado de IA en cards de imágenes ── */
+  .ai-card-controls {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 3px !important;
+  }
+
+  .ai-card-time-ago {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 3px !important;
+    font-size: 9px !important;
+    color: var(--muted-foreground) !important;
+    font-variant-numeric: tabular-nums !important;
+    width: 100% !important;
+    line-height: 1 !important;
+  }
+
+  .ai-card-controls-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+  }
+
+  .ai-card-controls-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 2px !important;
+    padding: 2px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(148, 163, 184, 0.25) !important;
+    background: rgba(148, 163, 184, 0.08) !important;
+  }
+
+  .ai-card-ctrl-btn {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 4px 8px !important;
+    border-radius: 6px !important;
+    border: none !important;
+    background: transparent !important;
+    color: #94a3b8 !important;
+    font-size: 9px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.15s !important;
+    white-space: nowrap !important;
+  }
+
+  .ai-card-ctrl-reanalyze:hover {
+    background: rgba(168, 85, 247, 0.15) !important;
+    color: #c084fc !important;
+  }
+
+  .ai-card-ctrl-log:hover {
+    background: rgba(99, 102, 241, 0.15) !important;
+    color: #818cf8 !important;
+  }
+
+  .ai-card-ctrl-error:hover {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: #f87171 !important;
+  }
+  .ai-copy-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 22px !important;
+    height: 22px !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(148, 163, 184, 0.3) !important;
+    background: transparent !important;
+    color: #94a3b8 !important;
+    cursor: pointer !important;
+    transition: all 0.15s !important;
+    flex-shrink: 0 !important;
+  }
+  .ai-copy-btn:hover {
+    background: rgba(99, 102, 241, 0.15) !important;
+    border-color: rgba(99, 102, 241, 0.4) !important;
+    color: #818cf8 !important;
+  }
+
+  /* ── Iconos compuestos de IA (robot + badge) ── */
+  .ai-bot-icon-wrap {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 0 !important;
+  }
+  .ai-bot-icon-main {
+    width: 14px !important;
+    height: 14px !important;
+  }
+  .ai-bot-icon-badge {
+    position: absolute !important;
+    bottom: -2px !important;
+    right: -2px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    border: 1px solid var(--card) !important;
+  }
+  .ai-bot-icon-badge-svg {
+    width: 7px !important;
+    height: 7px !important;
+  }
+  .ai-bot-icon-badge-refresh {
+    background: #a855f7 !important;
+    color: #fff !important;
+  }
+  .ai-bot-icon-badge-doc {
+    background: #6366f1 !important;
+    color: #fff !important;
+  }
+
+  /* ── Popover del log de IA ── */
+  .ai-log-popover {
+    width: 370px !important;
+    max-width: 90vw !important;
+    min-width: 320px !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--card) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  }
+  .ai-log-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 8px 12px !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+  .ai-log-code {
+    font-family: ui-monospace, monospace !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    color: var(--foreground) !important;
+  }
+  .ai-log-date {
+    margin-left: auto !important;
+    font-size: 9px !important;
+    color: var(--muted-foreground) !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+  /* Modelos separados: visión + razonamiento, una línea cada uno */
+  .ai-log-models {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+    padding: 6px 12px !important;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent) !important;
+  }
+  .ai-log-model-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+  .ai-log-model-tag {
+    font-size: 8px !important;
+    font-weight: 600 !important;
+    color: #818cf8 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+  }
+  .ai-log-model-name {
+    font-size: 9px !important;
+    font-family: ui-monospace, monospace !important;
+    color: var(--muted-foreground) !important;
+  }
+  /* Resumen — sección principal, primero y grande */
+  .ai-log-section {
+    padding: 10px 12px !important;
+  }
+  .ai-log-section-summary {
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 50%, transparent) !important;
+  }
+  .ai-log-summary {
+    font-size: 11px !important;
+    line-height: 1.6 !important;
+    color: var(--foreground) !important;
+    max-height: 180px !important;
+    overflow-y: auto !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+  }
+  /* Trigger del tooltip del prompt */
+  .ai-log-prompt-trigger {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    width: 100% !important;
+    padding: 6px 12px !important;
+    border: none !important;
+    border-top: 1px solid color-mix(in srgb, var(--border) 40%, transparent) !important;
+    background: transparent !important;
+    font-size: 9px !important;
+    font-weight: 500 !important;
+    color: var(--muted-foreground) !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    transition: background 0.15s !important;
+  }
+  .ai-log-prompt-trigger:hover {
+    background: color-mix(in srgb, var(--muted) 15%, transparent) !important;
+    color: #818cf8 !important;
+  }
+  /* Tooltip popover del prompt — chiquitito */
+  .ai-prompt-tooltip {
+    width: 280px !important;
+    max-width: 90vw !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border) !important;
+    background: var(--card) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12) !important;
+  }
+  .ai-log-prompt {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    padding: 8px 10px !important;
+  }
+  .ai-log-prompt-block {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+  .ai-log-prompt-tag {
+    font-size: 8px !important;
+    font-weight: 600 !important;
+    color: #818cf8 !important;
+    text-transform: uppercase !important;
+  }
+  .ai-log-prompt-text {
+    font-size: 9px !important;
+    font-family: ui-monospace, monospace !important;
+    line-height: 1.4 !important;
+    color: var(--muted-foreground) !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    max-height: 100px !important;
+    overflow-y: auto !important;
+    margin: 0 !important;
+    padding: 4px 6px !important;
+    background: color-mix(in srgb, var(--muted) 30%, transparent) !important;
+    border-radius: 4px !important;
+  }
+
+  /* ── Filas de cola de subida ── */
+  .upload-result-row {
+    padding: 10px 12px !important;
+    border-radius: 10px !important;
+    border: 1px solid var(--border) !important;
+    background: color-mix(in srgb, var(--card) 80%, transparent) !important;
+  }
+  .upload-result-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 32px !important;
+    height: 32px !important;
+    flex-shrink: 0 !important;
+    border-radius: 8px !important;
+    background: var(--muted) !important;
+  }
+
+  /* ── Gradientes estáticos de dashboard ── */
+  .progress-bar-amber {
+    background: linear-gradient(90deg, #f59e0b, #d97706) !important;
+  }
+  .activity-icon-gradient {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--primary) 15%, transparent),
+      color-mix(in srgb, var(--primary) 5%, transparent)
+    ) !important;
+  }
+
+  /* ── Glass variants para backdrop filter ── */
+  .glass-heavy {
+    backdrop-filter: blur(20px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+  }
+  .glass-medium {
+    backdrop-filter: blur(12px) saturate(140%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(140%) !important;
+  }
+
+  /* ── Input mini para alertas ── */
+  .alert-input-mini {
+    border-radius: 6px !important;
+    height: 28px !important;
+    width: 56px !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+  }
+
+  /* ── Email preview dimensions ── */
+  .email-preview-container {
+    max-width: 600px !important;
+  }
+  .email-preview-iframe {
+    min-height: 70vh !important;
+    height: 100% !important;
+  }
+
+  /* ── Field fixed width ── */
+  .field-fixed-100 {
+    flex: 0 0 100px !important;
+  }
+
+  /* ── Table column coverage ── */
+  .col-coverage {
+    width: 45% !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * CLASES UTILITARIAS — Fase 14 (inline styles finales)
+   * ═══════════════════════════════════════════════════════════════ */
+
+  .sticky-panel-80 {
+    position: sticky !important;
+    top: 80px !important;
+    max-height: calc(100vh - 100px) !important;
+  }
+
+  .chat-max-vh-220 {
+    max-height: calc(100vh - 220px) !important;
+  }
+
+  .cn-global-loading-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    pointer-events: auto !important;
+    background: color-mix(in oklab, var(--background) 60%, transparent) !important;
+    backdrop-filter: blur(2px) !important;
+    -webkit-backdrop-filter: blur(2px) !important;
+  }
+
+  .cn-global-loading-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 20px 28px !important;
+    border-radius: var(--radius) !important;
+    background: var(--popover) !important;
+    color: var(--popover-foreground) !important;
+    border: 1px solid var(--border) !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+
+  .cn-global-loading-text {
+    text-transform: capitalize !important;
+  }
+
+  /* ────────────────────────────────────────────────────────────
+   * GroupedContactsList — iOS Stacking Sticky Headers.
+   *
+   * Headers sticky dentro del scroll que se apilan al hacer scroll.
+   * z-index decreciente: el primer header pinta encima de todos.
+   *
+   * CLAVE: isolation SOLO en el contenedor scroll, NUNCA en las secciones.
+   * Si las secciones tienen isolation, los items de secciones posteriores
+   * se pintan encima de headers de secciones anteriores (bug conocido).
+   * ──────────────────────────────────────────────────────────── */
+
+  .grouped-contacts-scroll {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    /* ÚNICO stacking context aislado. Dentro de él, todos los headers
+       e items comparten el mismo contexto de z-index. */
+    isolation: isolate;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+
+  /* SIN isolation en las secciones — deliberado.
+     Si añadimos isolation aquí, los items de la sección 2 se pintan
+     encima del header sticky de la sección 1. */
+
+  .grouped-contacts-header {
+    position: sticky;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--border) 30%, transparent);
+    /* Fondo SÓLIDO (no translúcido) — los items no se ven detrás. */
+    background: var(--card) !important;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s ease;
+  }
+
+  .grouped-contacts-header:hover {
+    background: color-mix(in srgb, var(--muted) 40%, var(--card)) !important;
+  }
+
+  .grouped-contacts-header-label {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground);
+  }
+
+  .grouped-contacts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    /* Items siempre debajo de cualquier header.
+       position: relative + z-index: 0 los mantiene en el fondo
+       del stacking context del contenedor scroll. */
+    position: relative;
+    z-index: 0;
+  }
+
+  /* Panel que solo contiene toolbar (sin grilla) — sin padding inferior */
+  .app-panel-toolbar-only {
+    padding-bottom: 0 !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+   * CHAT OVERLAY — Panel flotante de comunicación/videollamada
+   * No roba espacio del contenido: se posiciona encima (fixed).
+   * ═══════════════════════════════════════════════════════════════ */
+  .chat-overlay {
+    position: fixed !important;
+    top: 140px !important;
+    right: 24px !important;
+    z-index: 50 !important;
+    width: 420px !important;
+    max-width: calc(100vw - 48px) !important;
+    height: calc(100vh - 180px) !important;
+    max-height: 600px !important;
+  }
+
+  .chat-overlay-panel {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+    border-radius: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--card) 80%, transparent) 0%,
+      color-mix(in srgb, var(--card) 60%, transparent) 100%
+    ) !important;
+    backdrop-filter: blur(16px) saturate(150%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(150%) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+    padding: 16px !important;
+    overflow: hidden !important;
+  }
+
+  /* Ventanita minimizada de videollamada */
+  .chat-overlay.chat-overlay-minimized {
+    top: 80px !important;
+    right: 24px !important;
+    width: 100px !important;
+    height: 70px !important;
+    z-index: 50 !important;
+  }
+
+  .chat-overlay.chat-overlay-minimized .chat-overlay-panel {
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
+
