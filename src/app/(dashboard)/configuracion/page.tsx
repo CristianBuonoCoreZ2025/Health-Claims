@@ -84,6 +84,18 @@ const CARDS: readonly ConfigCard[] = [
     icon: FileSignature,
   },
   {
+    label: "Servicios",
+    description: "Jerarquia de servicios N2/N3/N5",
+    href: "/configuracion/servicios",
+    icon: Layers,
+  },
+  {
+    label: "Condiciones",
+    description: "Motor de condiciones particulares de polizas",
+    href: "/configuracion/condiciones",
+    icon: ShieldCheck,
+  },
+  {
     label: "Catalogos",
     description: "Catalogos maestros y mapeos por compania",
     href: "/configuracion/catalogos",

@@ -5,7 +5,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { BaseRepository, queryKeys } from "@/repositories/base.repository";
-import type { Database } from "@/types";
 
 export type CatalogTable =
   | "countries"
@@ -32,7 +31,10 @@ export type CatalogTable =
   | "holdings"
   | "contractors"
   | "company_branches"
-  | "policy_endorsements";
+  | "policy_endorsements"
+  | "service_groups"
+  | "service_subgroups"
+  | "service_items";
 
 export interface CatalogConfig {
   table: CatalogTable;
@@ -66,6 +68,9 @@ export const CATALOGS: CatalogConfig[] = [
   { table: "contractors", label: "Contratantes", fieldNames: ["email", "holding_id", "is_active", "name", "phone", "rut"] },
   { table: "company_branches", label: "Filiales", fieldNames: ["address", "code", "company_id", "is_active", "name"] },
   { table: "policy_endorsements", label: "Endosos", fieldNames: ["end_date", "endorsement_number", "endorsement_type", "is_active", "notes", "policy_id", "start_date", "status"] },
+  { table: "service_groups", label: "Grupos de servicios", fieldNames: ["code", "description", "is_active", "name"] },
+  { table: "service_subgroups", label: "Subgrupos de servicios", fieldNames: ["code", "description", "is_active", "name", "service_group_id"] },
+  { table: "service_items", label: "Prestaciones", fieldNames: ["code", "description", "is_active", "name", "service_subgroup_id", "specialty_id"] },
 ];
 
 const FIELD_LABELS: Record<string, string> = {
@@ -78,6 +83,7 @@ const FIELD_LABELS: Record<string, string> = {
   laboratory_id: "laboratorio", pharmacy_id: "farmacia", isapre_id: "isapre",
   isapre_plan_id: "plan de isapre", vademecum_id: "vademecum", provider_id: "prestador",
   company_id: "compania", medication_id: "medicamento", specialty_id: "especialidad",
+  service_group_id: "grupo de servicios", service_subgroup_id: "subgrupo de servicios",
   holding_id: "holding", contractor_id: "contratante", policy_id: "poliza",
   business_name: "razon social", address: "direccion", phone: "telefono", email: "email",
   endorsement_number: "numero de endoso", endorsement_type: "tipo de endoso",
@@ -110,9 +116,7 @@ export function useCatalog(table: CatalogTable) {
   });
   const create = useMutation({
     mutationFn: async (payload: Record<string, unknown>) => {
-      const { data, error } = await repo.insert(
-        payload as Database["public"]["Tables"][CatalogTable]["Insert"]
-      );
+      const { data, error } = await repo.insert(payload);
       if (error) throw error;
       return data;
     },

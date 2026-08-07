@@ -2,9 +2,9 @@
 // Re-exporta los tipos generados de Supabase y agrega tipos de dominio
 // (Role, Profile, etc.) usados en la app.
 
-export type { Database, Json } from "./database.generated";
+export type { Database, Json } from "./database.extended";
 
-import type { Database } from "./database.generated";
+import type { Database } from "./database.extended";
 
 export type Role = Database["public"]["Enums"]["app_role"];
 
@@ -133,3 +133,23 @@ export type CompanyBranchUpdate = Database["public"]["Tables"]["company_branches
 export type PolicyEndorsement = Database["public"]["Tables"]["policy_endorsements"]["Row"];
 export type PolicyEndorsementInsert = Database["public"]["Tables"]["policy_endorsements"]["Insert"];
 export type PolicyEndorsementUpdate = Database["public"]["Tables"]["policy_endorsements"]["Update"];
+
+export type ServiceGroup = Database["public"]["Tables"]["service_groups"]["Row"];
+export type ServiceGroupInsert = Database["public"]["Tables"]["service_groups"]["Insert"];
+export type ServiceGroupUpdate = Database["public"]["Tables"]["service_groups"]["Update"];
+
+export type ServiceSubgroup = Database["public"]["Tables"]["service_subgroups"]["Row"];
+export type ServiceSubgroupInsert = Database["public"]["Tables"]["service_subgroups"]["Insert"];
+export type ServiceSubgroupUpdate = Database["public"]["Tables"]["service_subgroups"]["Update"];
+
+export type ServiceItem = Database["public"]["Tables"]["service_items"]["Row"];
+export type ServiceItemInsert = Database["public"]["Tables"]["service_items"]["Insert"];
+export type ServiceItemUpdate = Database["public"]["Tables"]["service_items"]["Update"];
+
+export type PolicyConditionHeader = Database["public"]["Tables"]["policy_condition_headers"]["Row"];
+export type PolicyConditionHeaderInsert = Database["public"]["Tables"]["policy_condition_headers"]["Insert"];
+export type PolicyConditionHeaderUpdate = Database["public"]["Tables"]["policy_condition_headers"]["Update"];
+
+export type PolicyConditionLine = Database["public"]["Tables"]["policy_condition_lines"]["Row"];
+export type PolicyConditionLineInsert = Database["public"]["Tables"]["policy_condition_lines"]["Insert"];
+export type PolicyConditionLineUpdate = Database["public"]["Tables"]["policy_condition_lines"]["Update"];
