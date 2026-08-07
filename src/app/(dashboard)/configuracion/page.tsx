@@ -106,6 +106,12 @@ const CARDS: readonly ConfigCard[] = [
     icon: ShieldCheck,
   },
   {
+    label: "Arbol de coberturas",
+    description: "Arbol flexible de coberturas por poliza",
+    href: "/configuracion/arbol-coberturas",
+    icon: ShieldCheck,
+  },
+  {
     label: "Catalogos",
     description: "Catalogos maestros y mapeos por compania",
     href: "/configuracion/catalogos",

@@ -16,6 +16,10 @@ export const policySchema = z.object({
   master_policy_id: z.string().uuid("Selecciona una poliza maestra valida.").optional().nullable(),
   version: z.number().int().min(1, "La version debe ser al menos 1."),
   is_active: z.boolean(),
+  broker_id: z.string().uuid("Selecciona un corredor valido.").optional().nullable(),
+  sponsor: z.string().optional().nullable(),
+  policy_type: z.string().optional().nullable(),
+  branch_id: z.string().uuid("Selecciona una filial valida.").optional().nullable(),
 });
 
 export type PolicyInput = z.infer<typeof policySchema>;

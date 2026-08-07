@@ -13,12 +13,14 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import type { PolicyInput } from "@/schemas/policy.schema";
-import type { Company, Contractor, Policy } from "@/types";
+import type { Broker, Company, CompanyBranch, Contractor, Policy } from "@/types";
 
 interface PolicyFormFieldsProps {
   companies: Company[];
   contractors: Contractor[];
   masters: Policy[];
+  brokers: Broker[];
+  branches: CompanyBranch[];
 }
 
 const STATUS_LABELS: Record<string, string> = {
@@ -189,6 +191,8 @@ export function PolicyFormFields({
   companies,
   contractors,
   masters,
+  brokers,
+  branches,
 }: PolicyFormFieldsProps) {
   return (
     <div className="space-y-4">
@@ -213,6 +217,40 @@ export function PolicyFormFields({
             </SelectItem>
           ))}
         </SelectField>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <SelectField
+          name="broker_id"
+          label="Corredor"
+          placeholder="Selecciona corredor"
+          optional
+          noneLabel="Sin corredor"
+        >
+          {brokers.map((b) => (
+            <SelectItem key={b.id} value={b.id}>
+              {b.name}
+            </SelectItem>
+          ))}
+        </SelectField>
+        <SelectField
+          name="branch_id"
+          label="Filiales"
+          placeholder="Selecciona filial"
+          optional
+          noneLabel="Sin filial"
+        >
+          {branches.map((b) => (
+            <SelectItem key={b.id} value={b.id}>
+              {b.name}
+            </SelectItem>
+          ))}
+        </SelectField>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <TextField name="sponsor" label="Patrocinador" placeholder="Patrocinador" />
+        <TextField name="policy_type" label="Tipo de poliza" placeholder="Tipo de poliza" />
       </div>
 
       <div className="grid grid-cols-2 gap-4">

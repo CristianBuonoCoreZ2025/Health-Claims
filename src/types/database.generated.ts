@@ -1618,6 +1618,10 @@ export type Database = {
           updated_at: string
           updated_by: string | null
           version: number
+          broker_id: string | null
+          sponsor: string | null
+          policy_type: string | null
+          branch_id: string | null
         }
         Insert: {
           company_id: string
@@ -1638,6 +1642,10 @@ export type Database = {
           updated_at?: string
           updated_by?: string | null
           version?: number
+          broker_id?: string | null
+          sponsor?: string | null
+          policy_type?: string | null
+          branch_id?: string | null
         }
         Update: {
           company_id?: string
@@ -1658,6 +1666,10 @@ export type Database = {
           updated_at?: string
           updated_by?: string | null
           version?: number
+          broker_id?: string | null
+          sponsor?: string | null
+          policy_type?: string | null
+          branch_id?: string | null
         }
         Relationships: [
           {
@@ -2327,6 +2339,204 @@ export type Database = {
             columns: ["policy_id"]
             isOneToOne: false
             referencedRelation: "policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      brokers: {
+        Row: {
+          id: string
+          code: string
+          name: string
+          tax_id: string | null
+          email: string | null
+          phone: string | null
+          is_active: boolean
+          created_at: string
+          updated_at: string
+          created_by: string | null
+          updated_by: string | null
+        }
+        Insert: {
+          id?: string
+          code: string
+          name: string
+          tax_id?: string | null
+          email?: string | null
+          phone?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+          updated_by?: string | null
+        }
+        Update: {
+          id?: string
+          code?: string
+          name?: string
+          tax_id?: string | null
+          email?: string | null
+          phone?: string | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      policy_tree_nodes: {
+        Row: {
+          id: string
+          policy_id: string
+          parent_id: string | null
+          level_code: number
+          node_type: string
+          code: string | null
+          name: string
+          description: string | null
+          sort_order: number
+          is_active: boolean
+          metadata: Json | null
+          created_at: string
+          updated_at: string
+          created_by: string | null
+          updated_by: string | null
+        }
+        Insert: {
+          id?: string
+          policy_id: string
+          parent_id?: string | null
+          level_code: number
+          node_type: string
+          code?: string | null
+          name: string
+          description?: string | null
+          sort_order?: number
+          is_active?: boolean
+          metadata?: Json | null
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+          updated_by?: string | null
+        }
+        Update: {
+          id?: string
+          policy_id?: string
+          parent_id?: string | null
+          level_code?: number
+          node_type?: string
+          code?: string | null
+          name?: string
+          description?: string | null
+          sort_order?: number
+          is_active?: boolean
+          metadata?: Json | null
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "policy_tree_nodes_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "policies"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "policy_tree_nodes_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "policy_tree_nodes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      policy_tree_conditions: {
+        Row: {
+          id: string
+          node_id: string
+          condition_type: string
+          name: string
+          yearly_limit: number | null
+          per_event_limit: number | null
+          lifetime_limit: number | null
+          deductible_amount: number | null
+          deductible_percentage: number | null
+          copay_percentage: number | null
+          waiting_period_days: number | null
+          currency_id: string | null
+          frequency: string | null
+          effective_date: string | null
+          end_date: string | null
+          rules: Json | null
+          is_active: boolean
+          created_at: string
+          updated_at: string
+          created_by: string | null
+          updated_by: string | null
+        }
+        Insert: {
+          id?: string
+          node_id: string
+          condition_type: string
+          name: string
+          yearly_limit?: number | null
+          per_event_limit?: number | null
+          lifetime_limit?: number | null
+          deductible_amount?: number | null
+          deductible_percentage?: number | null
+          copay_percentage?: number | null
+          waiting_period_days?: number | null
+          currency_id?: string | null
+          frequency?: string | null
+          effective_date?: string | null
+          end_date?: string | null
+          rules?: Json | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+          updated_by?: string | null
+        }
+        Update: {
+          id?: string
+          node_id?: string
+          condition_type?: string
+          name?: string
+          yearly_limit?: number | null
+          per_event_limit?: number | null
+          lifetime_limit?: number | null
+          deductible_amount?: number | null
+          deductible_percentage?: number | null
+          copay_percentage?: number | null
+          waiting_period_days?: number | null
+          currency_id?: string | null
+          frequency?: string | null
+          effective_date?: string | null
+          end_date?: string | null
+          rules?: Json | null
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+          created_by?: string | null
+          updated_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "policy_tree_conditions_node_id_fkey"
+            columns: ["node_id"]
+            isOneToOne: false
+            referencedRelation: "policy_tree_nodes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "policy_tree_conditions_currency_id_fkey"
+            columns: ["currency_id"]
+            isOneToOne: false
+            referencedRelation: "currencies"
             referencedColumns: ["id"]
           },
         ]

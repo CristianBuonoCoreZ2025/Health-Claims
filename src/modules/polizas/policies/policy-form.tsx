@@ -19,6 +19,8 @@ import { policySchema, type PolicyInput } from "@/schemas/policy.schema";
 import { useCreatePolicy, useUpdatePolicy, usePolicies } from "@/hooks/use-policies";
 import { useCompanies } from "@/hooks/use-companies";
 import { useContractors } from "@/hooks/use-contractors";
+import { useBrokers } from "@/hooks/use-brokers";
+import { useCompanyBranchesByCompany } from "@/hooks/use-company-branches";
 import { PolicyFormFields } from "./policy-form-fields";
 import type { Policy } from "@/types";
 
@@ -45,6 +47,10 @@ function getDefaultValues(policy?: Policy | null): PolicyInput {
     master_policy_id: policy?.master_policy_id ?? null,
     version: policy?.version ?? 1,
     is_active: policy?.is_active ?? true,
+    broker_id: policy?.broker_id ?? null,
+    sponsor: policy?.sponsor ?? null,
+    policy_type: policy?.policy_type ?? null,
+    branch_id: policy?.branch_id ?? null,
   };
 }
 
@@ -55,16 +61,20 @@ export function PolicyFormDialog({ open, onOpenChange, policy }: PolicyFormDialo
   const { data: companies } = useCompanies();
   const { data: contractors } = useContractors();
   const { data: allPolicies } = usePolicies();
-
-  const masters = useMemo(
-    () => (allPolicies ?? []).filter((p) => p.is_master && p.is_active && p.id !== policy?.id),
-    [allPolicies, policy?.id]
-  );
+  const { data: brokers } = useBrokers();
 
   const form = useForm<PolicyInput>({
     resolver: zodResolver(policySchema),
     defaultValues: getDefaultValues(policy),
   });
+
+  const companyId = form.watch("company_id");
+  const { data: branches } = useCompanyBranchesByCompany(companyId ?? "");
+
+  const masters = useMemo(
+    () => (allPolicies ?? []).filter((p) => p.is_master && p.is_active && p.id !== policy?.id),
+    [allPolicies, policy?.id]
+  );
 
   useEffect(() => {
     if (open) {
@@ -114,6 +124,8 @@ export function PolicyFormDialog({ open, onOpenChange, policy }: PolicyFormDialo
                 companies={companies ?? []}
                 contractors={contractors ?? []}
                 masters={masters}
+                brokers={brokers ?? []}
+                branches={branches ?? []}
               />
               <div className="modal-footer">
                 <Button

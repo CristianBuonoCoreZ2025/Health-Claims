@@ -41,10 +41,51 @@ type PolicyConditionLineRow = {
 };
 
 type Policies = {
-  Row: GeneratedDatabase["public"]["Tables"]["policies"]["Row"] & { effective_date: string | null; renewal_date: string | null };
-  Insert: GeneratedDatabase["public"]["Tables"]["policies"]["Insert"] & { effective_date?: string | null; renewal_date?: string | null };
-  Update: GeneratedDatabase["public"]["Tables"]["policies"]["Update"] & { effective_date?: string | null; renewal_date?: string | null };
+  Row: GeneratedDatabase["public"]["Tables"]["policies"]["Row"] & {
+    effective_date: string | null;
+    renewal_date: string | null;
+    broker_id: string | null;
+    sponsor: string | null;
+    policy_type: string | null;
+    branch_id: string | null;
+  };
+  Insert: GeneratedDatabase["public"]["Tables"]["policies"]["Insert"] & {
+    effective_date?: string | null;
+    renewal_date?: string | null;
+    broker_id?: string | null;
+    sponsor?: string | null;
+    policy_type?: string | null;
+    branch_id?: string | null;
+  };
+  Update: GeneratedDatabase["public"]["Tables"]["policies"]["Update"] & {
+    effective_date?: string | null;
+    renewal_date?: string | null;
+    broker_id?: string | null;
+    sponsor?: string | null;
+    policy_type?: string | null;
+    branch_id?: string | null;
+  };
   Relationships: GeneratedDatabase["public"]["Tables"]["policies"]["Relationships"];
+};
+
+type BrokerRow = {
+  id: string; code: string; name: string; tax_id: string | null; email: string | null; phone: string | null;
+  is_active: boolean; created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type PolicyTreeNodeRow = {
+  id: string; policy_id: string; parent_id: string | null; level_code: number; node_type: string;
+  code: string | null; name: string; description: string | null; sort_order: number; is_active: boolean;
+  metadata: Json | null; created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type PolicyTreeConditionRow = {
+  id: string; node_id: string; condition_type: string; name: string;
+  yearly_limit: number | null; per_event_limit: number | null; lifetime_limit: number | null;
+  deductible_amount: number | null; deductible_percentage: number | null; copay_percentage: number | null;
+  waiting_period_days: number | null; currency_id: string | null; frequency: string | null;
+  effective_date: string | null; end_date: string | null; rules: Json | null; is_active: boolean;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
 };
 
 type InsuredRow = {
@@ -205,6 +246,9 @@ type ExtendedTables = Omit<ExistingTables, "insureds" | "pre_existing_conditions
   report_templates: TableDefinition<ReportTemplateRow>;
   documents: TableDefinition<DocumentRow>;
   document_templates: TableDefinition<DocumentTemplateRow>;
+  brokers: TableDefinition<BrokerRow>;
+  policy_tree_nodes: TableDefinition<PolicyTreeNodeRow>;
+  policy_tree_conditions: TableDefinition<PolicyTreeConditionRow>;
 };
 
 export type Database = {

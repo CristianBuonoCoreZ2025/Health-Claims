@@ -207,3 +207,13 @@ export type DocumentUpdate = Database["public"]["Tables"]["documents"]["Update"]
 export type DocumentTemplate = Database["public"]["Tables"]["document_templates"]["Row"];
 export type DocumentTemplateInsert = Database["public"]["Tables"]["document_templates"]["Insert"];
 export type DocumentTemplateUpdate = Database["public"]["Tables"]["document_templates"]["Update"];
+
+export type Broker = Database["public"]["Tables"]["brokers"]["Row"];
+export type BrokerInsert = Database["public"]["Tables"]["brokers"]["Insert"];
+export type BrokerUpdate = Database["public"]["Tables"]["brokers"]["Update"];
+export type PolicyTreeNode = Database["public"]["Tables"]["policy_tree_nodes"]["Row"];
+export type PolicyTreeNodeInsert = Database["public"]["Tables"]["policy_tree_nodes"]["Insert"];
+export type PolicyTreeNodeUpdate = Database["public"]["Tables"]["policy_tree_nodes"]["Update"];
+export type PolicyTreeCondition = Database["public"]["Tables"]["policy_tree_conditions"]["Row"];
+export type PolicyTreeConditionInsert = Database["public"]["Tables"]["policy_tree_conditions"]["Insert"];
+export type PolicyTreeConditionUpdate = Database["public"]["Tables"]["policy_tree_conditions"]["Update"];

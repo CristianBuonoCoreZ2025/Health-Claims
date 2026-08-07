@@ -20,8 +20,12 @@ import { useCompanies } from "@/hooks/use-companies";
 import { useContractors } from "@/hooks/use-contractors";
 import { usePolicies } from "@/hooks/use-policies";
 import { usePolicyEndorsementsByPolicy } from "@/hooks/use-policy-endorsements";
+import { useBrokers } from "@/hooks/use-brokers";
+import { useCompanyBranches } from "@/hooks/use-company-branches";
+import { usePolicyTree } from "@/hooks/use-policy-tree";
 import { PolicyConditionsPanel } from "./policy-conditions-panel";
 import { InsuredsPanel } from "./insureds-panel";
+import { PolicyTreeView } from "@/modules/polizas/policy-tree/policy-tree-view";
 import { formatDate, formatCurrency } from "@/utils/format";
 import { cn } from "@/lib/utils";
 import type { PolicyStatus } from "@/types";
@@ -47,9 +51,14 @@ export function PolicyDetailPage({ policyId }: { policyId: string }) {
   const { data: companies } = useCompanies();
   const { data: contractors } = useContractors();
   const { data: allPolicies } = usePolicies();
+  const { data: brokers } = useBrokers();
+  const { data: branches } = useCompanyBranches();
+  const treeQuery = usePolicyTree(policyId);
 
   const companyName = companies?.find((c) => c.id === policy?.company_id)?.name ?? policy?.company_id ?? "-";
   const contractorName = contractors?.find((c) => c.id === policy?.contractor_id)?.name ?? policy?.contractor_id ?? "-";
+  const brokerName = brokers?.find((b) => b.id === policy?.broker_id)?.name ?? "-";
+  const branchName = branches?.find((b) => b.id === policy?.branch_id)?.name ?? "-";
   const masterPolicy = allPolicies?.find((p) => p.id === policy?.master_policy_id);
   const masterName = masterPolicy
     ? `${masterPolicy.policy_number} - ${masterPolicy.holder_name}`
@@ -88,6 +97,10 @@ export function PolicyDetailPage({ policyId }: { policyId: string }) {
     { label: "Titular", value: policy.holder_name },
     { label: "Compania", value: companyName },
     { label: "Contratista", value: contractorName },
+    { label: "Corredor", value: brokerName },
+    { label: "Filiales", value: branchName },
+    { label: "Patrocinador", value: policy.sponsor ?? "-" },
+    { label: "Tipo de poliza", value: policy.policy_type ?? "-" },
     { label: "Tipo de contrato", value: policy.contract_type, className: "capitalize" },
     { label: "Estado", value: STATUS_LABELS[policy.status] ?? policy.status },
     { label: "Fecha inicio", value: formatDate(policy.start_date) },
@@ -135,6 +148,7 @@ export function PolicyDetailPage({ policyId }: { policyId: string }) {
           <TabsTrigger value="general">General</TabsTrigger>
           <TabsTrigger value="vigencia">Vigencia/Permanencia</TabsTrigger>
           <TabsTrigger value="condiciones">Condiciones ({conditions.length})</TabsTrigger>
+          <TabsTrigger value="arbol">Arbol de Coberturas ({treeQuery.data?.length ?? 0})</TabsTrigger>
           <TabsTrigger value="asegurados">Asegurados ({insureds.length})</TabsTrigger>
           <TabsTrigger value="endosos">Endosos ({endorsements.length})</TabsTrigger>
         </TabsList>
@@ -157,6 +171,10 @@ export function PolicyDetailPage({ policyId }: { policyId: string }) {
 
         <TabsContent value="condiciones" className="mt-4">
           <PolicyConditionsPanel policyId={policyId} />
+        </TabsContent>
+
+        <TabsContent value="arbol" className="mt-4">
+          <PolicyTreeView policyId={policyId} nodes={treeQuery.data ?? []} />
         </TabsContent>
 
         <TabsContent value="asegurados" className="mt-4">
