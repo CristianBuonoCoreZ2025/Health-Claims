@@ -2,12 +2,15 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   webpack: (config, { dev }) => {
-    const cfg = config as Record<string, unknown>;
-    const isDev = typeof dev === "boolean" && dev;
-    if (isDev) {
-      Object.assign(cfg, { cache: { type: "memory" } });
+    if (dev) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      config.cache = { type: "memory" };
     }
-    return cfg;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return config;
+  },
+  experimental: {
+    optimizePackageImports: ["lucide-react", "date-fns"],
   },
 };
 
