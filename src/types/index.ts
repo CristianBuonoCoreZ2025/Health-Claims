@@ -27,6 +27,8 @@ export type Arancel = Database["public"]["Tables"]["aranceles"]["Row"];
 export type ProviderCoverage = Database["public"]["Tables"]["provider_coverages"]["Row"];
 
 export type Policy = Database["public"]["Tables"]["policies"]["Row"];
+export type PolicyInsert = Database["public"]["Tables"]["policies"]["Insert"];
+export type PolicyUpdate = Database["public"]["Tables"]["policies"]["Update"];
 export type PolicyCondition = Database["public"]["Tables"]["policy_conditions"]["Row"];
 export type Insured = Database["public"]["Tables"]["insureds"]["Row"];
 export type PreExistingCondition = Database["public"]["Tables"]["pre_existing_conditions"]["Row"];

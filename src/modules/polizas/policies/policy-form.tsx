@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -9,30 +10,16 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { policySchema, type PolicyInput } from "@/schemas/policy.schema";
-import { useCreatePolicy, useUpdatePolicy } from "@/hooks/use-policies";
+import { useCreatePolicy, useUpdatePolicy, usePolicies } from "@/hooks/use-policies";
 import { useCompanies } from "@/hooks/use-companies";
+import { useContractors } from "@/hooks/use-contractors";
+import { PolicyFormFields } from "./policy-form-fields";
 import type { Policy } from "@/types";
 
 interface PolicyFormDialogProps {
@@ -41,33 +28,49 @@ interface PolicyFormDialogProps {
   policy?: Policy | null;
 }
 
-const STATUS_LABELS: Record<string, string> = {
-  vigente: "Vigente",
-  vencida: "Vencida",
-  anulada: "Anulada",
-  pendiente: "Pendiente",
-};
+function getDefaultValues(policy?: Policy | null): PolicyInput {
+  return {
+    company_id: policy?.company_id ?? "",
+    contractor_id: policy?.contractor_id ?? null,
+    policy_number: policy?.policy_number ?? "",
+    endorsement_number: policy?.endorsement_number ?? "0",
+    start_date: policy?.start_date ?? "",
+    end_date: policy?.end_date ?? "",
+    effective_date: policy?.effective_date ?? null,
+    renewal_date: policy?.renewal_date ?? null,
+    holder_name: policy?.holder_name ?? "",
+    contract_type: policy?.contract_type ?? "individual",
+    status: policy?.status ?? "pendiente",
+    is_master: policy?.is_master ?? false,
+    master_policy_id: policy?.master_policy_id ?? null,
+    version: policy?.version ?? 1,
+    is_active: policy?.is_active ?? true,
+  };
+}
 
 export function PolicyFormDialog({ open, onOpenChange, policy }: PolicyFormDialogProps) {
   const isEdit = Boolean(policy);
   const createMutation = useCreatePolicy();
   const updateMutation = useUpdatePolicy();
   const { data: companies } = useCompanies();
+  const { data: contractors } = useContractors();
+  const { data: allPolicies } = usePolicies();
+
+  const masters = useMemo(
+    () => (allPolicies ?? []).filter((p) => p.is_master && p.is_active && p.id !== policy?.id),
+    [allPolicies, policy?.id]
+  );
 
   const form = useForm<PolicyInput>({
     resolver: zodResolver(policySchema),
-    defaultValues: {
-      company_id: policy?.company_id ?? "",
-      policy_number: policy?.policy_number ?? "",
-      endorsement_number: policy?.endorsement_number ?? "0",
-      start_date: policy?.start_date ?? "",
-      end_date: policy?.end_date ?? "",
-      holder_name: policy?.holder_name ?? "",
-      contract_type: policy?.contract_type ?? "individual",
-      status: policy?.status ?? "pendiente",
-      is_active: policy?.is_active ?? true,
-    },
+    defaultValues: getDefaultValues(policy),
   });
+
+  useEffect(() => {
+    if (open) {
+      form.reset(getDefaultValues(policy));
+    }
+  }, [open, policy, form]);
 
   const onSubmit = form.handleSubmit(async (values) => {
     const payload: PolicyInput = {
@@ -95,168 +98,40 @@ export function PolicyFormDialog({ open, onOpenChange, policy }: PolicyFormDialo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[560px]">
-        <DialogHeader>
-          <DialogTitle>{isEdit ? "Editar poliza" : "Nueva poliza"}</DialogTitle>
+      <DialogContent className="modal-lg">
+        <DialogHeader className="modal-header">
+          <DialogTitle className="modal-title">
+            {isEdit ? "Editar poliza" : "Nueva poliza"}
+          </DialogTitle>
           <DialogDescription>
             {isEdit ? "Modifica los datos de la poliza." : "Registra una nueva poliza."}
           </DialogDescription>
         </DialogHeader>
-
-        <Form {...form}>
-          <form onSubmit={onSubmit} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="company_id"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Compania</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Selecciona compania" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {(companies ?? []).map((c) => (
-                        <SelectItem key={c.id} value={c.id}>
-                          {c.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="policy_number"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Numero de poliza</FormLabel>
-                    <FormControl>
-                      <Input placeholder="POL-001" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+        <div className="modal-body">
+          <Form {...form}>
+            <form onSubmit={onSubmit} className="space-y-4">
+              <PolicyFormFields
+                companies={companies ?? []}
+                contractors={contractors ?? []}
+                masters={masters}
               />
-              <FormField
-                control={form.control}
-                name="endorsement_number"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Endoso</FormLabel>
-                    <FormControl>
-                      <Input placeholder="0" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <FormField
-              control={form.control}
-              name="holder_name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Titular del contrato</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Empresa ABC" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="start_date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fecha inicio</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="end_date"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fecha termino</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="contract_type"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Tipo de contrato</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="individual">Individual</SelectItem>
-                        <SelectItem value="colectivo">Colectivo</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="status"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Estado</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Object.entries(STATUS_LABELS).map(([value, label]) => (
-                          <SelectItem key={value} value={value}>
-                            {label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
-                Cancelar
-              </Button>
-              <Button type="submit" disabled={isPending}>
-                {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
-                {isEdit ? "Guardar" : "Crear"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+              <div className="modal-footer">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="pg-btn-platinum"
+                  onClick={() => onOpenChange(false)}
+                >
+                  Cerrar
+                </Button>
+                <Button type="submit" disabled={isPending} className="pg-btn-platinum">
+                  {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
+                  Guardar
+                </Button>
+              </div>
+            </form>
+          </Form>
+        </div>
       </DialogContent>
     </Dialog>
   );

@@ -29,6 +29,7 @@ import {
   useSearchPoliciesByNumber,
   usePoliciesByStatus,
 } from "@/hooks/use-policies";
+import { useContractors } from "@/hooks/use-contractors";
 import { PolicyFormDialog } from "./policy-form";
 import { formatDate } from "@/utils/format";
 import type { Policy, PolicyStatus } from "@/types";
@@ -58,6 +59,7 @@ export function PoliciesPage() {
   const { data: allPolicies, isLoading } = usePolicies();
   const searchQuery = useSearchPoliciesByNumber(search);
   const statusQuery = usePoliciesByStatus(statusFilter !== "all" ? (statusFilter as PolicyStatus) : "vigente");
+  const { data: contractors } = useContractors();
 
   const mode: FilterMode = search.length > 0 ? "search" : statusFilter !== "all" ? "status" : "all";
 
@@ -69,6 +71,9 @@ export function PoliciesPage() {
 
   const showLoading = mode === "search" ? searchQuery.isLoading : mode === "status" ? statusQuery.isLoading : isLoading;
   const deleteMutation = useDeletePolicy();
+
+  const contractorName = (id: string | null) =>
+    contractors?.find((c) => c.id === id)?.name ?? "-";
 
   const handleNew = () => {
     setEditing(null);
@@ -95,14 +100,12 @@ export function PoliciesPage() {
     <div className="flex flex-col gap-6 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Polizas</h1>
-          <p className="text-muted-foreground text-sm">
-            Contratos de seguro y condiciones
-          </p>
+          <h1 className="app-page-title">Polizas</h1>
+          <p className="app-page-lead">Contratos de seguro y condiciones</p>
         </div>
-        <Button onClick={handleNew}>
-          <Plus className="mr-2 size-4" />
-          Nueva poliza
+        <Button onClick={handleNew} className="pg-btn-platinum">
+          <Plus className="size-4" />
+          Nuevo
         </Button>
       </div>
 
@@ -146,8 +149,11 @@ export function PoliciesPage() {
             <TableRow>
               <TableHead>Numero</TableHead>
               <TableHead>Titular</TableHead>
+              <TableHead>Contratista</TableHead>
               <TableHead>Inicio</TableHead>
               <TableHead>Termino</TableHead>
+              <TableHead>Efectiva</TableHead>
+              <TableHead>Version</TableHead>
               <TableHead>Tipo</TableHead>
               <TableHead>Estado</TableHead>
               <TableHead className="text-right">Acciones</TableHead>
@@ -156,14 +162,14 @@ export function PoliciesPage() {
           <TableBody>
             {showLoading && (
               <TableRow>
-                <TableCell colSpan={7} className="text-muted-foreground text-center">
+                <TableCell colSpan={10} className="text-muted-foreground text-center">
                   <Loader2 className="mx-auto size-5 animate-spin" />
                 </TableCell>
               </TableRow>
             )}
             {!showLoading && policies.length === 0 && (
               <TableRow>
-                <TableCell colSpan={7} className="text-muted-foreground text-center">
+                <TableCell colSpan={10} className="text-muted-foreground text-center">
                   <div className="flex flex-col items-center gap-2 py-8">
                     <FileText className="size-8 opacity-40" />
                     <p>No se encontraron polizas</p>
@@ -174,19 +180,14 @@ export function PoliciesPage() {
             {!showLoading &&
               policies.map((policy) => (
                 <TableRow key={policy.id}>
-                  <TableCell className="font-mono font-medium">
-                    {policy.policy_number}
-                  </TableCell>
+                  <TableCell className="font-mono font-medium">{policy.policy_number}</TableCell>
                   <TableCell>{policy.holder_name}</TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {formatDate(policy.start_date)}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {formatDate(policy.end_date)}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground capitalize">
-                    {policy.contract_type}
-                  </TableCell>
+                  <TableCell>{contractorName(policy.contractor_id)}</TableCell>
+                  <TableCell className="text-muted-foreground">{formatDate(policy.start_date)}</TableCell>
+                  <TableCell className="text-muted-foreground">{formatDate(policy.end_date)}</TableCell>
+                  <TableCell className="text-muted-foreground">{formatDate(policy.effective_date)}</TableCell>
+                  <TableCell>{policy.version}</TableCell>
+                  <TableCell className="text-muted-foreground capitalize">{policy.contract_type}</TableCell>
                   <TableCell>
                     <Badge variant={STATUS_VARIANT[policy.status]}>
                       {STATUS_LABELS[policy.status] ?? policy.status}
