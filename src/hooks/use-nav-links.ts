@@ -17,6 +17,7 @@ export function useNavLinks(isMobile = false) {
     queryKey: ["nav-menu-config"],
     queryFn: getNavMenuConfig,
     staleTime: 60_000,
+    retry: false,
   });
 
   const linkByHref = new Map<string, NavLink>();

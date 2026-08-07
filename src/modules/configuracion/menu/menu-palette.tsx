@@ -35,7 +35,7 @@ function PaletteItem({ item }: PaletteItemProps) {
       )}
     >
       <GripVertical className="h-3.5 w-3.5 text-muted-foreground shrink-0 cursor-grab" />
-      <Icon className={cn("h-4 w-4 shrink-0", item.type === "group" ? "text-violet-500" : "text-sky-500")} />
+      <Icon className={cn("h-4 w-4 shrink-0", item.type === "group" ? "text-emerald-500" : "text-teal-500")} />
       <span className="text-xs truncate">{item.label}</span>
     </button>
   );

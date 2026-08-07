@@ -5,6 +5,7 @@ import {
   UI_STYLE_LABELS,
   UI_STYLE_SWATCHES,
   getUiStyleSnapshot,
+  getUiStyleServerSnapshot,
   subscribeUiStyle,
   persistUiStyleChoice,
   type UiStyleSkin,
@@ -22,7 +23,7 @@ export function TemasPage() {
   const currentSkin = useSyncExternalStore(
     subscribeUiStyle,
     getUiStyleSnapshot,
-    getUiStyleSnapshot,
+    getUiStyleServerSnapshot,
   );
 
   const handleSelect = (skin: UiStyleSkin) => {

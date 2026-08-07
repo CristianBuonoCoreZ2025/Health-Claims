@@ -10,19 +10,19 @@ export type UiStyleSkin =
   | "neo-playful";
 
 export const UI_STYLE_LABELS: Record<UiStyleSkin, string> = {
-  "nordic-air": "Aire Nordico",
-  "pastel-dream": "Pastel Dream",
-  "bubble-play": "Bubble Play",
-  "kinetic-pop": "Kinetic Pop",
-  "neo-playful": "Neo Playful",
+  "nordic-air": "Mint Calido",
+  "pastel-dream": "Salvia Suave",
+  "bubble-play": "Lima Vivo",
+  "kinetic-pop": "Esmeralda",
+  "neo-playful": "Oliva Organico",
 };
 
 export const UI_STYLE_SWATCHES: Record<UiStyleSkin, string> = {
-  "nordic-air": "#7aaec7",
-  "pastel-dream": "#c4b5fd",
-  "bubble-play": "#f472b6",
-  "kinetic-pop": "#34d399",
-  "neo-playful": "#fb923c",
+  "nordic-air": "#5eead4",
+  "pastel-dream": "#86efac",
+  "bubble-play": "#a3e635",
+  "kinetic-pop": "#10b981",
+  "neo-playful": "#65a30d",
 };
 
 export function getUiStyleSnapshot(): UiStyleSkin {

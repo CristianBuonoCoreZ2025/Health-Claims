@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Save, RotateCcw } from "lucide-react";
@@ -28,6 +28,7 @@ export function MenuPage() {
     queryKey: ["nav-menu-config"],
     queryFn: getNavMenuConfig,
     staleTime: 60_000,
+    retry: false,
   });
 
   const [flat, setFlat] = useState<FlatItem[]>([]);
@@ -35,13 +36,14 @@ export function MenuPage() {
   const [dirty, setDirty] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
-  if (!initialized && menuConfig !== undefined) {
+  useEffect(() => {
+    if (initialized || menuConfig === undefined) return;
     const newFlat = configToFlat(menuConfig?.items ?? null);
     setFlat(newFlat);
     setExpandedGroups(computeExpanded(newFlat));
     setDirty(false);
     setInitialized(true);
-  }
+  }, [menuConfig, initialized]);
 
   const saveMut = useMutation({
     mutationFn: (items: NavMenuItem[]) => saveNavMenuConfig({ items }),

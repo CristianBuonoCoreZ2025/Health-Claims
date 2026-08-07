@@ -42,11 +42,10 @@ export function SortableMenuNode({
   const [editing, setEditing] = useState(false);
   const [editValue, setEditValue] = useState(item.label);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [prevLabel, setPrevLabel] = useState(item.label);
-  if (item.label !== prevLabel) {
-    setPrevLabel(item.label);
-    setEditValue(item.label);
-  }
+
+  useEffect(() => {
+    if (!editing) setEditValue(item.label);
+  }, [item.label, editing]);
 
   const isGroup = item.type === "group";
   const Icon = item.icon;
@@ -81,9 +80,9 @@ export function SortableMenuNode({
       style={{ opacity: isDragging ? 0.3 : 1 }}
       className={cn(
         "group relative flex items-center gap-2 rounded-lg px-2 py-1.5 border transition-all duration-150",
-        isGroup ? "bg-violet-500/10 border-violet-500/25" : "bg-sky-500/10 border-sky-500/20",
+        isGroup ? "bg-emerald-500/10 border-emerald-500/25" : "bg-teal-500/10 border-teal-500/20",
         editing ? "cursor-default" : "hover:scale-[1.01]",
-        isDropTarget && "ring-2 ring-violet-500/60 scale-[1.02]",
+        isDropTarget && "ring-2 ring-emerald-500/60 scale-[1.02]",
       )}
       onClick={isGroup && !editing ? onToggleGroup : undefined}
     >
@@ -103,7 +102,7 @@ export function SortableMenuNode({
         <GripVertical className="h-4 w-4" />
       </button>
 
-      <Icon className={cn("h-4 w-4 shrink-0", isGroup ? "text-violet-500" : "text-sky-500")} />
+      <Icon className={cn("h-4 w-4 shrink-0", isGroup ? "text-emerald-500" : "text-teal-500")} />
 
       {editing ? (
         <input
@@ -149,10 +148,10 @@ export function SortableMenuNode({
       )}
 
       {dropIndicator === "before" && (
-        <div className="absolute -top-0.5 left-0 right-0 h-0.5 bg-violet-500 rounded-full" />
+        <div className="absolute -top-0.5 left-0 right-0 h-0.5 bg-emerald-500 rounded-full" />
       )}
       {dropIndicator === "after" && (
-        <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-violet-500 rounded-full" />
+        <div className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-emerald-500 rounded-full" />
       )}
     </div>
   );

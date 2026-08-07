@@ -2,10 +2,18 @@
 
 import { useEffect } from "react";
 import { useSyncExternalStore } from "react";
-import { getUiStyleSnapshot, subscribeUiStyle } from "@/lib/ui-style-client-store";
+import {
+  getUiStyleSnapshot,
+  getUiStyleServerSnapshot,
+  subscribeUiStyle,
+} from "@/lib/ui-style-client-store";
 
 export function UiStyleInjector() {
-  const skin = useSyncExternalStore(subscribeUiStyle, getUiStyleSnapshot, getUiStyleSnapshot);
+  const skin = useSyncExternalStore(
+    subscribeUiStyle,
+    getUiStyleSnapshot,
+    getUiStyleServerSnapshot,
+  );
   useEffect(() => {
     document.documentElement.setAttribute("data-ui-style", skin);
   }, [skin]);
