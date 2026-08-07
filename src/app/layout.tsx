@@ -14,6 +14,7 @@ import {
 
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { UiStyleInjector } from "@/components/ui-style-injector";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -92,6 +93,11 @@ const fontVars = [
 export const metadata: Metadata = {
   title: "Health Claims",
   description: "Sistema profesional de liquidacion de siniestros de salud.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -106,6 +112,7 @@ export default function RootLayout({
       className={`${fontVars} h-full antialiased`}
     >
       <body className="bg-background text-foreground min-h-full">
+        <UiStyleInjector />
         <ThemeProvider>
           {children}
           <Toaster richColors position="top-right" />

@@ -23,6 +23,9 @@ import {
   BookOpen,
   CheckSquare,
   List,
+  Palette,
+  LayoutGrid,
+  Menu as MenuIcon,
 } from "lucide-react";
 
 interface ConfigCard {
@@ -206,6 +209,24 @@ const CARDS: readonly ConfigCard[] = [
     description: "Etapas de workflow de siniestros",
     href: "/configuracion/siniestros-workflow",
     icon: List,
+  },
+  {
+    label: "Menu",
+    description: "Configura el orden y los items del menu lateral",
+    href: "/configuracion/menu",
+    icon: MenuIcon,
+  },
+  {
+    label: "Temas",
+    description: "Selecciona la piel visual de la interfaz",
+    href: "/configuracion/temas",
+    icon: Palette,
+  },
+  {
+    label: "Modales",
+    description: "Ejemplos y componentes de modales del design system",
+    href: "/configuracion/modales",
+    icon: LayoutGrid,
   },
 ];
 

@@ -25,6 +25,9 @@ import {
   Banknote,
   Scale,
   Ban,
+  Palette,
+  LayoutGrid,
+  Menu as MenuIcon,
   type LucideIcon,
 } from "lucide-react";
 
@@ -120,6 +123,12 @@ const documentosLinks: NavLink[] = [
   { href: "/configuracion/descargas-masivas", label: "Descargas Masivas", icon: Files },
 ];
 
+const sistemaLinks: NavLink[] = [
+  { href: "/configuracion/menu", label: "Menu", icon: MenuIcon },
+  { href: "/configuracion/temas", label: "Temas", icon: Palette },
+  { href: "/configuracion/modales", label: "Modales", icon: LayoutGrid },
+];
+
 const operacionesLinks: NavLink[] = [
   { href: "/operaciones/liquidadores", label: "Dashboard de Liquidadores", icon: Users },
   { href: "/operaciones/pesos", label: "Matriz de Peso", icon: Scale },
@@ -140,6 +149,7 @@ export const navGroups: NavGroup[] = [
       { title: "Siniestros", section: "config_siniestros", icon: FileText, links: siniestrosLinks },
       { title: "Liquidadores", section: "config_liquidadores", icon: Users, links: liquidadoresLinks },
       { title: "Documentos", section: "config_documentos", icon: Files, links: documentosLinks, hideOnMobile: true },
+      { title: "Sistema", section: "config_sistema", icon: Settings, links: sistemaLinks },
     ],
     hideOnMobile: true,
   },

@@ -218,6 +218,10 @@ type DocumentTemplateRow = {
   created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
 };
 
+type NavMenuConfigRow = {
+  id: number; config: Json; updated_at: string; updated_by: string | null;
+};
+
 type ExistingTables = GeneratedDatabase["public"]["Tables"];
 
 type ExtendedTables = Omit<ExistingTables, "insureds" | "pre_existing_conditions" | "claims" | "claim_details" | "claim_timeline" | "profiles"> & {
@@ -249,6 +253,7 @@ type ExtendedTables = Omit<ExistingTables, "insureds" | "pre_existing_conditions
   brokers: TableDefinition<BrokerRow>;
   policy_tree_nodes: TableDefinition<PolicyTreeNodeRow>;
   policy_tree_conditions: TableDefinition<PolicyTreeConditionRow>;
+  nav_menu_config: TableDefinition<NavMenuConfigRow>;
 };
 
 export type Database = {
