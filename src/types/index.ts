@@ -173,3 +173,35 @@ export type ClaimPaymentUpdate = Database["public"]["Tables"]["claim_payments"][
 export type ClaimWorkflowStage = Database["public"]["Tables"]["claim_workflow_stages"]["Row"];
 export type ClaimWorkflowStageInsert = Database["public"]["Tables"]["claim_workflow_stages"]["Insert"];
 export type ClaimWorkflowStageUpdate = Database["public"]["Tables"]["claim_workflow_stages"]["Update"];
+
+export type LiquidatorCompetency = Database["public"]["Tables"]["liquidator_competencies"]["Row"];
+export type LiquidatorCompetencyInsert = Database["public"]["Tables"]["liquidator_competencies"]["Insert"];
+export type LiquidatorCompetencyUpdate = Database["public"]["Tables"]["liquidator_competencies"]["Update"];
+
+export type LiquidatorLoadCap = Database["public"]["Tables"]["liquidator_load_caps"]["Row"];
+export type LiquidatorLoadCapInsert = Database["public"]["Tables"]["liquidator_load_caps"]["Insert"];
+export type LiquidatorLoadCapUpdate = Database["public"]["Tables"]["liquidator_load_caps"]["Update"];
+
+export type LiquidatorSchedule = Database["public"]["Tables"]["liquidator_schedules"]["Row"];
+export type LiquidatorScheduleInsert = Database["public"]["Tables"]["liquidator_schedules"]["Insert"];
+export type LiquidatorScheduleUpdate = Database["public"]["Tables"]["liquidator_schedules"]["Update"];
+
+export type ReassignmentRule = Database["public"]["Tables"]["reassignment_rules"]["Row"];
+export type ReassignmentRuleInsert = Database["public"]["Tables"]["reassignment_rules"]["Insert"];
+export type ReassignmentRuleUpdate = Database["public"]["Tables"]["reassignment_rules"]["Update"];
+
+export type BatchDownload = Database["public"]["Tables"]["batch_downloads"]["Row"];
+export type BatchDownloadInsert = Database["public"]["Tables"]["batch_downloads"]["Insert"];
+export type BatchDownloadUpdate = Database["public"]["Tables"]["batch_downloads"]["Update"];
+
+export type ReportTemplate = Database["public"]["Tables"]["report_templates"]["Row"];
+export type ReportTemplateInsert = Database["public"]["Tables"]["report_templates"]["Insert"];
+export type ReportTemplateUpdate = Database["public"]["Tables"]["report_templates"]["Update"];
+
+export type Document = Database["public"]["Tables"]["documents"]["Row"];
+export type DocumentInsert = Database["public"]["Tables"]["documents"]["Insert"];
+export type DocumentUpdate = Database["public"]["Tables"]["documents"]["Update"];
+
+export type DocumentTemplate = Database["public"]["Tables"]["document_templates"]["Row"];
+export type DocumentTemplateInsert = Database["public"]["Tables"]["document_templates"]["Insert"];
+export type DocumentTemplateUpdate = Database["public"]["Tables"]["document_templates"]["Update"];

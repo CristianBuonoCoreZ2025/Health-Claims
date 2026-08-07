@@ -1,4 +1,4 @@
-import type { Database as GeneratedDatabase } from "./database.generated";
+import type { Database as GeneratedDatabase, Json } from "./database.generated";
 
 export type { Json } from "./database.generated";
 
@@ -127,9 +127,59 @@ type ClaimWorkflowStageRow = {
   created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
 };
 
+type ProfileRow = {
+  id: string; role: GeneratedDatabase["public"]["Enums"]["app_role"]; full_name: string; is_active: boolean;
+  team_id: string | null; competency_level: string | null; max_load: number | null;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type LiquidatorCompetencyRow = {
+  id: string; user_id: string; service_group_id: string; level: number; is_active: boolean;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type LiquidatorLoadCapRow = {
+  id: string; user_id: string; max_active_claims: number; company_id: string | null; coverage_type_id: string | null;
+  is_active: boolean; created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type LiquidatorScheduleRow = {
+  id: string; user_id: string; day_of_week: number; start_time: string; end_time: string; is_active: boolean;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type ReassignmentRuleRow = {
+  id: string; name: string; from_user_id: string | null; to_user_id: string | null; coverage_type_id: string | null;
+  company_id: string | null; priority: number; is_active: boolean;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type BatchDownloadRow = {
+  id: string; user_id: string; entity_type: string; status: string; file_path: string | null;
+  started_at: string; completed_at: string | null;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type ReportTemplateRow = {
+  id: string; name: string; template_type: string; applies_to: string[]; file_path: string | null;
+  is_active: boolean; created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type DocumentRow = {
+  id: string; entity_type: string; entity_id: string; document_type_id: string | null; file_path: string | null;
+  status: string; uploaded_by: string | null;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
+type DocumentTemplateRow = {
+  id: string; name: string; document_type_id: string | null; template_type: string; file_path: string | null;
+  variables: Json; is_active: boolean;
+  created_at: string; updated_at: string; created_by: string | null; updated_by: string | null;
+};
+
 type ExistingTables = GeneratedDatabase["public"]["Tables"];
 
-type ExtendedTables = Omit<ExistingTables, "insureds" | "pre_existing_conditions" | "claims" | "claim_details" | "claim_timeline"> & {
+type ExtendedTables = Omit<ExistingTables, "insureds" | "pre_existing_conditions" | "claims" | "claim_details" | "claim_timeline" | "profiles"> & {
   policies: Policies;
   service_groups: TableDefinition<ServiceGroupRow>;
   service_subgroups: TableDefinition<ServiceSubgroupRow>;
@@ -146,6 +196,15 @@ type ExtendedTables = Omit<ExistingTables, "insureds" | "pre_existing_conditions
   claim_dispatches: TableDefinition<ClaimDispatchRow>;
   claim_payments: TableDefinition<ClaimPaymentRow>;
   claim_workflow_stages: TableDefinition<ClaimWorkflowStageRow>;
+  profiles: TableDefinition<ProfileRow>;
+  liquidator_competencies: TableDefinition<LiquidatorCompetencyRow>;
+  liquidator_load_caps: TableDefinition<LiquidatorLoadCapRow>;
+  liquidator_schedules: TableDefinition<LiquidatorScheduleRow>;
+  reassignment_rules: TableDefinition<ReassignmentRuleRow>;
+  batch_downloads: TableDefinition<BatchDownloadRow>;
+  report_templates: TableDefinition<ReportTemplateRow>;
+  documents: TableDefinition<DocumentRow>;
+  document_templates: TableDefinition<DocumentTemplateRow>;
 };
 
 export type Database = {
