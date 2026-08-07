@@ -1,0 +1,62 @@
+@layer components {
+  .pg-btn-platinum {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100px !important;
+    height: 30px !important;
+    padding: 0 8px !important;
+    border-radius: 10px !important;
+    border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent) !important;
+    background: color-mix(in srgb, var(--muted) 20%, transparent) !important;
+    color: var(--foreground) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .pg-btn-platinum:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--muted) 60%, transparent) !important;
+    color: var(--foreground) !important;
+  }
+
+  .pg-btn-platinum:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .btn-icon-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    border: 1px solid var(--border) !important;
+    background: color-mix(in srgb, var(--card) 75%, transparent) !important;
+    color: var(--foreground) !important;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .btn-icon-sm:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--accent) 50%, transparent) !important;
+  }
+
+  .btn-icon-sm.btn-danger-hover:hover:not(:disabled) {
+    background: color-mix(in srgb, var(--destructive) 15%, transparent) !important;
+    color: var(--destructive) !important;
+    border-color: color-mix(in srgb, var(--destructive) 30%, transparent) !important;
+  }
+
+  .btn-icon-sm:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

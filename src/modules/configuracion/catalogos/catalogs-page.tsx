@@ -19,7 +19,6 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
@@ -95,43 +94,39 @@ export function CatalogManager({ table, label }: CatalogManagerProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">
-            {label ?? catalog.label}
-          </h1>
-          <p className="text-muted-foreground text-sm">
-            Gestion de {catalog.label.toLowerCase()}
-          </p>
+        <div className="app-page-header">
+          <h1 className="app-page-title">{label ?? catalog.label}</h1>
+          <p className="app-page-lead">Gestion de {catalog.label.toLowerCase()}</p>
         </div>
-        <Button onClick={openNew}>
-          <Plus className="mr-2 size-4" />
+        <Button className="pg-btn-platinum" onClick={openNew}>
+          <Plus className="size-4" />
           Nuevo
         </Button>
       </div>
 
-      <div className="rounded-lg border overflow-x-auto">
-        <Table>
+      <div className="app-panel overflow-x-auto">
+        <Table className="app-data-table">
           <TableHeader>
             <TableRow>
               {catalog.fieldNames.map((f) => (
-                <TableHead key={f}>{getFieldLabel(f)}</TableHead>
+                <TableHead key={f} className="app-grid-title">{getFieldLabel(f)}</TableHead>
               ))}
-              <TableHead className="text-right">Acciones</TableHead>
+              <TableHead className="app-grid-title text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading && (
               <TableRow>
-                <TableCell colSpan={catalog.fieldNames.length + 1} className="text-center">
+                <TableCell colSpan={catalog.fieldNames.length + 1} className="app-grid-text text-center">
                   <Loader2 className="mx-auto size-5 animate-spin" />
                 </TableCell>
               </TableRow>
             )}
             {!isLoading && items.length === 0 && (
               <TableRow>
-                <TableCell colSpan={catalog.fieldNames.length + 1} className="text-center text-muted-foreground">
+                <TableCell colSpan={catalog.fieldNames.length + 1} className="app-empty-state">
                   No hay registros
                 </TableCell>
               </TableRow>
@@ -139,14 +134,14 @@ export function CatalogManager({ table, label }: CatalogManagerProps) {
             {!isLoading && items.map((row) => (
               <TableRow key={String(row.id)}>
                 {catalog.fieldNames.map((f) => (
-                  <TableCell key={f}>{renderCell(row[f])}</TableCell>
+                  <TableCell key={f} className="app-grid-text">{renderCell(row[f])}</TableCell>
                 ))}
-                <TableCell className="text-right">
+                <TableCell className="app-grid-text text-right">
                   <div className="flex justify-end gap-1">
-                    <Button variant="ghost" size="icon" onClick={() => openEdit(row)}>
+                    <Button className="btn-icon-sm" size="icon" onClick={() => openEdit(row)}>
                       <Pencil className="size-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" onClick={() => onDelete(String(row.id))}>
+                    <Button className="btn-icon-sm btn-danger-hover" size="icon" onClick={() => onDelete(String(row.id))}>
                       <Trash2 className="size-4" />
                     </Button>
                   </div>
@@ -158,31 +153,32 @@ export function CatalogManager({ table, label }: CatalogManagerProps) {
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{editing ? "Editar" : "Nuevo"} {catalog.label.toLowerCase()}</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
+        <DialogContent className="modal-md" showCloseButton={false}>
+          <div className="modal-header">
+            <DialogTitle className="modal-title">{editing ? "Editar" : "Nuevo"} {catalog.label.toLowerCase()}</DialogTitle>
+          </div>
+          <div className="modal-body grid gap-4">
             {catalog.fieldNames.map((f) => {
               const t = getFieldType(f);
               if (t === "boolean") {
                 return (
-                <div key={f} className="grid gap-2">
-                  <Label>{getFieldLabel(f)}</Label>
-                  <Select value={form[f]} onValueChange={(v) => setForm((prev) => ({ ...prev, [f]: v }))}>
-                    <SelectTrigger><SelectValue /></SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="true">Si</SelectItem>
-                      <SelectItem value="false">No</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              );
+                  <div key={f} className="grid gap-2">
+                    <Label className="app-field-label">{getFieldLabel(f)}</Label>
+                    <Select value={form[f]} onValueChange={(v) => setForm((prev) => ({ ...prev, [f]: v }))}>
+                      <SelectTrigger className="app-input h-7"><SelectValue /></SelectTrigger>
+                      <SelectContent side="bottom" sideOffset={0} position="popper" className="z-9999">
+                        <SelectItem value="true">Si</SelectItem>
+                        <SelectItem value="false">No</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                );
               }
               return (
                 <div key={f} className="grid gap-2">
-                  <Label>{getFieldLabel(f)}</Label>
+                  <Label className="app-field-label">{getFieldLabel(f)}</Label>
                   <Input
+                    className="app-input h-7"
                     type={t === "number" ? "number" : t === "date" ? "date" : "text"}
                     placeholder={t === "array" ? "val1, val2" : ""}
                     value={form[f] ?? ""}
@@ -192,10 +188,10 @@ export function CatalogManager({ table, label }: CatalogManagerProps) {
               );
             })}
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-            <Button onClick={onSave} disabled={create.isPending || update.isPending}>
-              {(create.isPending || update.isPending) && <Loader2 className="mr-2 size-4 animate-spin" />}
+          <DialogFooter className="modal-footer">
+            <Button className="pg-btn-platinum" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
+            <Button className="pg-btn-platinum" onClick={onSave} disabled={create.isPending || update.isPending}>
+              {(create.isPending || update.isPending) && <Loader2 className="size-4 animate-spin" />}
               Guardar
             </Button>
           </DialogFooter>
@@ -209,24 +205,24 @@ export function CatalogsPage() {
   const [selected, setSelected] = useState<CatalogTable>("countries");
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Catalogos</h1>
-          <p className="text-muted-foreground text-sm">Gestion de catalogos maestros y mapeos</p>
-        </div>
+    <div className="app-page p-6">
+      <div className="app-page-header">
+        <h1 className="app-page-title">Catalogos</h1>
+        <p className="app-page-lead">Gestion de catalogos maestros y mapeos</p>
       </div>
 
-      <Select value={selected} onValueChange={(v) => setSelected(v as CatalogTable)}>
-        <SelectTrigger className="w-80">
-          <SelectValue placeholder="Seleccionar catalogo" />
-        </SelectTrigger>
-        <SelectContent>
-          {CATALOGS.map((c) => (
-            <SelectItem key={c.table} value={c.table}>{c.label}</SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="w-80">
+        <Select value={selected} onValueChange={(v) => setSelected(v as CatalogTable)}>
+          <SelectTrigger className="app-input h-7">
+            <SelectValue placeholder="Seleccionar catalogo" />
+          </SelectTrigger>
+          <SelectContent side="bottom" sideOffset={0} position="popper" className="z-9999">
+            {CATALOGS.map((c) => (
+              <SelectItem key={c.table} value={c.table}>{c.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
       <CatalogManager table={selected} />
     </div>

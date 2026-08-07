@@ -1,0 +1,41 @@
+@keyframes app-progress-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(350%); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes count-pop {
+  0% { transform: scale(0.6); opacity: 0; }
+  60% { transform: scale(1.12); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.app-progress-indeterminate {
+  position: relative;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 9999px;
+  background: var(--muted);
+}
+
+.app-progress-indeterminate::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 35%;
+  border-radius: 9999px;
+  background: var(--primary);
+  animation: app-progress-slide 1.15s ease-in-out infinite;
+}
+
+.fade-up {
+  animation: fade-up 0.25s ease-out;
+}
+
+.count-pop {
+  animation: count-pop 0.3s ease-out;
+}

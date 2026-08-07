@@ -1,12 +1,12 @@
 import Link from "next/link";
 import {
+  type LucideIcon,
   Building2,
   Stethoscope,
   FileCode,
   Pill,
   Layers,
   ShieldCheck,
-  BookOpen,
   Building,
   Users,
   GitBranch,
@@ -20,17 +20,16 @@ import {
   Banknote,
   Truck,
   Package,
+  BookOpen,
   CheckSquare,
   List,
 } from "lucide-react";
-
-import { cn } from "@/lib/utils";
 
 interface ConfigCard {
   label: string;
   description: string;
   href: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: LucideIcon;
 }
 
 const CARDS: readonly ConfigCard[] = [
@@ -202,39 +201,28 @@ const CARDS: readonly ConfigCard[] = [
     href: "/configuracion/siniestros-workflow",
     icon: List,
   },
-] as const;
+];
 
 export default function ConfiguracionPage() {
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Configuracion</h1>
-        <p className="text-muted-foreground text-sm">
-          Maestros y parametrizacion del sistema
-        </p>
+    <div className="app-page p-6">
+      <div className="app-page-header">
+        <h1 className="app-page-title">Configuracion</h1>
+        <p className="app-page-lead">Maestros y parametrizacion del sistema</p>
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {CARDS.map((card) => {
           const Icon = card.icon;
           return (
-            <Link
-              key={card.href}
-              href={card.href}
-              className={cn(
-                "group flex flex-col gap-3 rounded-lg border p-5 transition-colors",
-                "hover:border-primary/50 hover:bg-accent/50"
-              )}
-            >
+            <Link key={card.href} href={card.href} className="app-card">
               <div className="flex items-center gap-3">
-                <div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-lg">
+                <div className="app-card-icon">
                   <Icon className="size-5" />
                 </div>
-                <span className="font-medium group-hover:text-primary">
-                  {card.label}
-                </span>
+                <span className="app-card-title">{card.label}</span>
               </div>
-              <p className="text-muted-foreground text-sm">{card.description}</p>
+              <p className="app-card-body">{card.description}</p>
             </Link>
           );
         })}

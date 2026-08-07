@@ -1,19 +1,40 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { DM_Sans, Sora, Quicksand, Manrope } from "next/font/google";
 
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sora = Sora({
+  variable: "--font-sora",
   subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
 });
+
+const quicksand = Quicksand({
+  variable: "--font-quicksand",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const manrope = Manrope({
+  variable: "--font-manrope",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const fontVars = [
+  dmSans.variable,
+  sora.variable,
+  quicksand.variable,
+  manrope.variable,
+].join(" ");
 
 export const metadata: Metadata = {
   title: "Health Claims",
@@ -29,7 +50,7 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${fontVars} h-full antialiased`}
     >
       <body className="bg-background text-foreground min-h-full">
         <ThemeProvider>

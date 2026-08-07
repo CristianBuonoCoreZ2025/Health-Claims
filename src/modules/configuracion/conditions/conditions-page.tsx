@@ -19,9 +19,15 @@ import {
   Dialog,
   DialogContent,
   DialogFooter,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   usePolicyConditionHeaders,
   useCreatePolicyConditionHeader,
@@ -126,41 +132,41 @@ export function ConditionsPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="app-page p-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Condiciones de polizas</h1>
-          <p className="text-muted-foreground text-sm">Motor de condiciones particulares N2/N5</p>
+        <div className="app-page-header">
+          <h1 className="app-page-title">Condiciones de polizas</h1>
+          <p className="app-page-lead">Motor de condiciones particulares N2/N5</p>
         </div>
-        <Button onClick={openNew}>
-          <Plus className="mr-2 size-4" />
-          Nueva cabecera
+        <Button className="pg-btn-platinum" onClick={openNew}>
+          <Plus className="size-4" />
+          Nuevo
         </Button>
       </div>
 
-      <div className="rounded-lg border overflow-x-auto">
-        <Table>
+      <div className="app-panel overflow-x-auto">
+        <Table className="app-data-table">
           <TableHeader>
             <TableRow>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Tipo</TableHead>
-              <TableHead>Vigencia</TableHead>
-              <TableHead>Expiracion</TableHead>
-              <TableHead>Activo</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
+              <TableHead className="app-grid-title">Nombre</TableHead>
+              <TableHead className="app-grid-title">Tipo</TableHead>
+              <TableHead className="app-grid-title">Vigencia</TableHead>
+              <TableHead className="app-grid-title">Expiracion</TableHead>
+              <TableHead className="app-grid-title">Activo</TableHead>
+              <TableHead className="app-grid-title text-right">Acciones</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {isLoading && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center">
+                <TableCell colSpan={6} className="app-grid-text text-center">
                   <Loader2 className="mx-auto size-5 animate-spin" />
                 </TableCell>
               </TableRow>
             )}
             {!isLoading && (headers ?? []).length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground">
+                <TableCell colSpan={6} className="app-empty-state">
                   No hay condiciones registradas
                 </TableCell>
               </TableRow>
@@ -172,17 +178,17 @@ export function ConditionsPage() {
                   className={selectedHeaderId === header.id ? "bg-accent/50" : undefined}
                   onClick={() => setSelectedHeaderId(header.id)}
                 >
-                  <TableCell className="font-medium">{header.name}</TableCell>
-                  <TableCell>{header.condition_type}</TableCell>
-                  <TableCell>{header.effective_date}</TableCell>
-                  <TableCell>{header.expiration_date ?? "-"}</TableCell>
-                  <TableCell>{header.is_active ? "Si" : "No"}</TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="app-grid-text">{header.name}</TableCell>
+                  <TableCell className="app-grid-text">{header.condition_type}</TableCell>
+                  <TableCell className="app-grid-text">{header.effective_date}</TableCell>
+                  <TableCell className="app-grid-text">{header.expiration_date ?? "-"}</TableCell>
+                  <TableCell className="app-grid-text">{header.is_active ? "Si" : "No"}</TableCell>
+                  <TableCell className="app-grid-text text-right">
                     <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => openEdit(header)}>
+                      <Button className="btn-icon-sm" onClick={() => openEdit(header)}>
                         <Pencil className="size-4" />
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => onDelete(header.id)}>
+                      <Button className="btn-icon-sm btn-danger-hover" onClick={() => onDelete(header.id)}>
                         <Trash2 className="size-4" />
                       </Button>
                     </div>
@@ -196,77 +202,78 @@ export function ConditionsPage() {
       {selectedHeaderId && <ConditionLinesPanel headerId={selectedHeaderId} />}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-lg">
-          <DialogHeader>
-            <DialogTitle>{editing ? "Editar cabecera" : "Nueva cabecera"}</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
+        <DialogContent className="modal-md" showCloseButton={false}>
+          <div className="modal-header">
+            <DialogTitle className="modal-title">{editing ? "Editar cabecera" : "Nueva cabecera"}</DialogTitle>
+          </div>
+          <div className="modal-body grid gap-4">
             <div className="grid gap-2">
-              <Label>ID de poliza</Label>
+              <Label className="app-field-label">ID de poliza</Label>
               <Input
+                className="app-input h-7"
                 value={form.policy_id}
                 onChange={(e) => setForm((prev) => ({ ...prev, policy_id: e.target.value }))}
                 placeholder="uuid de poliza"
               />
             </div>
             <div className="grid gap-2">
-              <Label>ID de endoso (opcional)</Label>
+              <Label className="app-field-label">ID de endoso (opcional)</Label>
               <Input
+                className="app-input h-7"
                 value={form.endorsement_id}
                 onChange={(e) => setForm((prev) => ({ ...prev, endorsement_id: e.target.value }))}
                 placeholder="uuid de endoso"
               />
             </div>
             <div className="grid gap-2">
-              <Label>Nombre</Label>
+              <Label className="app-field-label">Nombre</Label>
               <Input
+                className="app-input h-7"
                 value={form.name}
                 onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
               />
             </div>
             <div className="grid gap-2">
-              <Label>Tipo de condicion</Label>
+              <Label className="app-field-label">Tipo de condicion</Label>
               <Input
+                className="app-input h-7"
                 value={form.condition_type}
                 onChange={(e) => setForm((prev) => ({ ...prev, condition_type: e.target.value }))}
               />
             </div>
             <div className="grid gap-2">
-              <Label>Fecha de vigencia</Label>
+              <Label className="app-field-label">Fecha de vigencia</Label>
               <Input
+                className="app-input h-7"
                 type="date"
                 value={form.effective_date}
                 onChange={(e) => setForm((prev) => ({ ...prev, effective_date: e.target.value }))}
               />
             </div>
             <div className="grid gap-2">
-              <Label>Fecha de expiracion (opcional)</Label>
+              <Label className="app-field-label">Fecha de expiracion (opcional)</Label>
               <Input
+                className="app-input h-7"
                 type="date"
                 value={form.expiration_date}
                 onChange={(e) => setForm((prev) => ({ ...prev, expiration_date: e.target.value }))}
               />
             </div>
             <div className="grid gap-2">
-              <Label>Activo</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
-                value={form.is_active}
-                onChange={(e) => setForm((prev) => ({ ...prev, is_active: e.target.value }))}
-              >
-                <option value="true">Si</option>
-                <option value="false">No</option>
-              </select>
+              <Label className="app-field-label">Activo</Label>
+              <Select value={form.is_active} onValueChange={(v) => setForm((prev) => ({ ...prev, is_active: v }))}>
+                <SelectTrigger className="app-input h-7"><SelectValue /></SelectTrigger>
+                <SelectContent side="bottom" sideOffset={0} position="popper" className="z-9999">
+                  <SelectItem value="true">Si</SelectItem>
+                  <SelectItem value="false">No</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setOpen(false)}>
-              Cancelar
-            </Button>
-            <Button onClick={onSave} disabled={createHeader.isPending || updateHeader.isPending}>
-              {(createHeader.isPending || updateHeader.isPending) && (
-                <Loader2 className="mr-2 size-4 animate-spin" />
-              )}
+          <DialogFooter className="modal-footer">
+            <Button className="pg-btn-platinum" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
+            <Button className="pg-btn-platinum" onClick={onSave} disabled={createHeader.isPending || updateHeader.isPending}>
+              {(createHeader.isPending || updateHeader.isPending) && <Loader2 className="size-4 animate-spin" />}
               Guardar
             </Button>
           </DialogFooter>
