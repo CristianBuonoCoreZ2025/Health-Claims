@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus, FileText, FileSpreadsheet } from "lucide-react";
+import { Plus, FileText, FileSpreadsheet, TrendingUp, TrendingDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -23,10 +23,38 @@ import { formatCurrency, formatDate } from "@/utils/format";
 import type { ClaimStatus } from "@/types";
 
 const KPI_DATA = [
-  { label: "Siniestros pendientes", value: "24", variation: "+5%", trend: "positive" as const },
-  { label: "Siniestros aprobados", value: "128", variation: "+12%", trend: "positive" as const },
-  { label: "Monto liquidado", value: formatCurrency(3240000), variation: "+8%", trend: "positive" as const },
-  { label: "Rechazos", value: "9", variation: "-2%", trend: "negative" as const },
+  {
+    label: "Siniestros pendientes",
+    value: "24",
+    variation: "+5%",
+    trend: "positive" as const,
+    accent: "var(--primary)",
+    icon: FileText,
+  },
+  {
+    label: "Siniestros aprobados",
+    value: "128",
+    variation: "+12%",
+    trend: "positive" as const,
+    accent: "#10b981",
+    icon: TrendingUp,
+  },
+  {
+    label: "Monto liquidado",
+    value: formatCurrency(3240000),
+    variation: "+8%",
+    trend: "positive" as const,
+    accent: "#8b5cf6",
+    icon: FileSpreadsheet,
+  },
+  {
+    label: "Rechazos",
+    value: "9",
+    variation: "-2%",
+    trend: "negative" as const,
+    accent: "#ef4444",
+    icon: TrendingDown,
+  },
 ];
 
 const STATUS_LABELS: Record<ClaimStatus, string> = {
@@ -87,23 +115,41 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {KPI_DATA.map((kpi) => (
-          <Card key={kpi.label}>
-            <CardHeader>
-              <CardDescription>{kpi.label}</CardDescription>
-              <CardTitle className="text-2xl! font-mono tabular-nums">
-                {kpi.value}
-              </CardTitle>
-              <CardAction>
-                <Badge
-                  variant={kpi.trend === "positive" ? "default" : "outline"}
-                >
-                  {kpi.variation}
-                </Badge>
-              </CardAction>
-            </CardHeader>
-          </Card>
-        ))}
+        {KPI_DATA.map((kpi) => {
+          const KpiIcon = kpi.icon;
+          return (
+            <Card key={kpi.label} className="relative overflow-hidden">
+              <div
+                className="absolute top-0 left-0 h-1 w-full"
+                style={{ background: kpi.accent }}
+              />
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardDescription>{kpi.label}</CardDescription>
+                  <div
+                    className="flex size-8 items-center justify-center rounded-lg"
+                    style={{
+                      background: `color-mix(in srgb, ${kpi.accent} 12%, transparent)`,
+                      color: kpi.accent,
+                    }}
+                  >
+                    <KpiIcon className="size-4" />
+                  </div>
+                </div>
+                <CardTitle className="text-2xl! font-mono tabular-nums">
+                  {kpi.value}
+                </CardTitle>
+                <CardAction>
+                  <Badge
+                    variant={kpi.trend === "positive" ? "default" : "outline"}
+                  >
+                    {kpi.variation}
+                  </Badge>
+                </CardAction>
+              </CardHeader>
+            </Card>
+          );
+        })}
       </div>
 
       <div className="flex items-center gap-2">

@@ -8,6 +8,7 @@
     flex-direction: column;
     max-height: 90vh;
     width: min(96vw, 520px);
+    max-width: min(96vw, 520px);
     padding: 0;
     overflow: hidden;
     border-radius: var(--ui-modal-radius, 16px);
@@ -19,10 +20,10 @@
     animation: modal-in 220ms var(--ease-out) forwards;
   }
 
-  .modal-md { width: min(96vw, 560px); }
-  .modal-md-wide { width: min(96vw, 760px); }
-  .modal-lg { width: min(98vw, 920px); }
-  .modal-xl { width: min(98vw, 1100px); max-height: 92vh; }
+  .modal-md { width: min(96vw, 560px); max-width: min(96vw, 560px); }
+  .modal-md-wide { width: min(96vw, 760px); max-width: min(96vw, 760px); }
+  .modal-lg { width: min(98vw, 920px); max-width: min(98vw, 920px); }
+  .modal-xl { width: min(98vw, 1100px); max-width: min(98vw, 1100px); max-height: 92vh; }
 
   .modal-header {
     display: flex;
