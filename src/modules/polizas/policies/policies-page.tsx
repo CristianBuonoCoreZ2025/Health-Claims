@@ -2,12 +2,15 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Plus, Search, Pencil, Trash2, FileText, Loader2, Eye } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, FileText, Eye } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { LoadingState } from "@/components/ui/loading-state";
+import { ErrorState } from "@/components/ui/error-state";
 import {
   Table,
   TableBody,
@@ -56,7 +59,7 @@ export function PoliciesPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Policy | null>(null);
 
-  const { data: allPolicies, isLoading } = usePolicies();
+  const { data: allPolicies, isLoading, isError, error, refetch } = usePolicies();
   const searchQuery = useSearchPoliciesByNumber(search);
   const statusQuery = usePoliciesByStatus(statusFilter !== "all" ? (statusFilter as PolicyStatus) : "vigente");
   const { data: contractors } = useContractors();
@@ -96,20 +99,30 @@ export function PoliciesPage() {
     }
   };
 
+  if (isError) {
+    return (
+      <div className="app-page">
+        <PageHeader title="Polizas" lead="Contratos de seguro" />
+        <ErrorState
+          title="Error al cargar polizas"
+          description={error instanceof Error ? error.message : undefined}
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="app-page">
-      <div className="flex items-center justify-between">
-        <div className="app-page-header">
-          <h1 className="app-page-title">Polizas</h1>
-          <p className="app-page-lead">Contratos de seguro y condiciones</p>
-        </div>
-        <Button onClick={handleNew} className="pg-btn-platinum">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader title="Polizas" lead="Contratos de seguro" />
+        <Button onClick={handleNew} className="btn-primary">
           <Plus className="size-4" />
-          Nuevo
+          Nueva poliza
         </Button>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="relative max-w-sm flex-1">
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
@@ -130,7 +143,7 @@ export function PoliciesPage() {
             if (v !== "all") setSearch("");
           }}
         >
-          <SelectTrigger className="app-input h-7 w-40">
+          <SelectTrigger className="app-input h-7 w-44">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
@@ -144,51 +157,38 @@ export function PoliciesPage() {
         </Select>
       </div>
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Numero</TableHead>
-              <TableHead>Titular</TableHead>
-              <TableHead>Contratista</TableHead>
-              <TableHead>Inicio</TableHead>
-              <TableHead>Termino</TableHead>
-              <TableHead>Efectiva</TableHead>
-              <TableHead>Version</TableHead>
-              <TableHead>Tipo</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {showLoading && (
+      {showLoading && <LoadingState context="table" className="app-card" />}
+
+      {!showLoading && (
+        <div className="app-card overflow-hidden">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={10} className="text-muted-foreground text-center">
-                  <Loader2 className="mx-auto size-5 animate-spin" />
-                </TableCell>
+                <TableHead>Numero</TableHead>
+                <TableHead>Compania</TableHead>
+                <TableHead>Vigencia</TableHead>
+                <TableHead>Estado</TableHead>
+                <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
-            )}
-            {!showLoading && policies.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={10} className="text-muted-foreground text-center">
-                  <div className="flex flex-col items-center gap-2 py-8">
-                    <FileText className="size-8 opacity-40" />
-                    <p>No se encontraron polizas</p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-            {!showLoading &&
-              policies.map((policy) => (
+            </TableHeader>
+            <TableBody>
+              {policies.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center">
+                    <div className="flex flex-col items-center gap-2 py-8 text-muted-foreground">
+                      <FileText className="size-8 opacity-40" />
+                      <p>No se encontraron polizas</p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+              {policies.map((policy) => (
                 <TableRow key={policy.id}>
                   <TableCell className="font-mono font-medium">{policy.policy_number}</TableCell>
-                  <TableCell>{policy.holder_name}</TableCell>
                   <TableCell>{contractorName(policy.contractor_id)}</TableCell>
-                  <TableCell className="text-muted-foreground">{formatDate(policy.start_date)}</TableCell>
-                  <TableCell className="text-muted-foreground">{formatDate(policy.end_date)}</TableCell>
-                  <TableCell className="text-muted-foreground">{formatDate(policy.effective_date)}</TableCell>
-                  <TableCell>{policy.version}</TableCell>
-                  <TableCell className="text-muted-foreground capitalize">{policy.contract_type}</TableCell>
+                  <TableCell className="text-muted-foreground">
+                    {formatDate(policy.start_date)} - {formatDate(policy.end_date)}
+                  </TableCell>
                   <TableCell>
                     <Badge variant={STATUS_VARIANT[policy.status]}>
                       {STATUS_LABELS[policy.status] ?? policy.status}
@@ -216,9 +216,10 @@ export function PoliciesPage() {
                   </TableCell>
                 </TableRow>
               ))}
-          </TableBody>
-        </Table>
-      </div>
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       <PolicyFormDialog
         open={dialogOpen}

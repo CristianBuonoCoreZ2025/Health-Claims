@@ -2,11 +2,13 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Plus, Search, Eye, Loader2, Users } from "lucide-react";
+import { Plus, Search, Eye, Users } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { LoadingState } from "@/components/ui/loading-state";
+import { ErrorState } from "@/components/ui/error-state";
 import {
   Table,
   TableBody,
@@ -38,7 +40,7 @@ export function InsuredsPanel({ policyId }: { policyId: string }) {
   const [mode, setMode] = useState<SearchMode>("rut");
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const { data: allInsureds, isLoading } = useInsuredsByPolicy(policyId);
+  const { data: allInsureds, isLoading, isError, error, refetch } = useInsuredsByPolicy(policyId);
   const rutQuery = useSearchInsuredsByRut(mode === "rut" ? search : "");
   const nameQuery = useSearchInsuredsByName(mode === "name" ? search : "");
 
@@ -55,19 +57,27 @@ export function InsuredsPanel({ policyId }: { policyId: string }) {
         : nameQuery.isLoading
       : isLoading;
 
+  if (isError) {
+    return (
+      <ErrorState
+        title="Error al cargar asegurados"
+        description={error instanceof Error ? error.message : undefined}
+        onRetry={() => refetch()}
+      />
+    );
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <p className="text-muted-foreground text-sm">
-          Titulares y cargas de la poliza
-        </p>
-        <Button onClick={() => setDialogOpen(true)}>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <p className="app-page-lead">Titulares y cargas de la poliza</p>
+        <Button onClick={() => setDialogOpen(true)} className="btn-primary">
           <Plus className="mr-2 size-4" />
           Nuevo asegurado
         </Button>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
         <div className="relative max-w-sm flex-1">
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
@@ -104,38 +114,33 @@ export function InsuredsPanel({ policyId }: { policyId: string }) {
         </div>
       </div>
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>RUT</TableHead>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Relacion</TableHead>
-              <TableHead>Nacimiento</TableHead>
-              <TableHead className="w-24">Estado</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {showLoading && (
+      {showLoading && <LoadingState context="table" className="app-card" />}
+
+      {!showLoading && (
+        <div className="app-card overflow-hidden">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={6} className="text-center">
-                  <Loader2 className="text-muted-foreground mx-auto size-5 animate-spin" />
-                </TableCell>
+                <TableHead>RUT</TableHead>
+                <TableHead>Nombre</TableHead>
+                <TableHead>Relacion</TableHead>
+                <TableHead>Nacimiento</TableHead>
+                <TableHead className="w-24">Estado</TableHead>
+                <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
-            )}
-            {!showLoading && insureds.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={6} className="text-muted-foreground text-center">
-                  <div className="flex flex-col items-center gap-2 py-8">
-                    <Users className="size-8 opacity-40" />
-                    <p>No hay asegurados registrados</p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-            {!showLoading &&
-              insureds.map((insured: Insured) => (
+            </TableHeader>
+            <TableBody>
+              {insureds.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center text-muted-foreground">
+                    <div className="flex flex-col items-center gap-2 py-8">
+                      <Users className="size-8 opacity-40" />
+                      <p>No hay asegurados registrados</p>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              )}
+              {insureds.map((insured: Insured) => (
                 <TableRow key={insured.id}>
                   <TableCell className="font-mono">
                     {formatRut(insured.rut)}
@@ -165,9 +170,10 @@ export function InsuredsPanel({ policyId }: { policyId: string }) {
                   </TableCell>
                 </TableRow>
               ))}
-          </TableBody>
-        </Table>
-      </div>
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       <InsuredFormDialog
         open={dialogOpen}

@@ -106,8 +106,8 @@ export function PolicyTreeView({ policyId, nodes }: PolicyTreeViewProps) {
       <div key={node.id}>
         <div
           className={cn(
-            "flex items-center gap-2 rounded-md px-2 py-1.5 hover:bg-accent cursor-pointer",
-            isSelected && "bg-accent"
+            "flex items-center gap-2 rounded-md px-2 py-1.5 cursor-pointer transition-colors hover:bg-muted/60",
+            isSelected && "bg-muted"
           )}
           style={{ paddingLeft: `${depth * 20 + 8}px` }}
           onClick={() => setSelectedNodeId(node.id)}
@@ -115,7 +115,7 @@ export function PolicyTreeView({ policyId, nodes }: PolicyTreeViewProps) {
           {hasChildren ? (
             <button
               type="button"
-              className="flex size-5 items-center justify-center rounded hover:bg-muted"
+              className="flex size-5 items-center justify-center rounded hover:bg-muted/80"
               onClick={(e) => {
                 e.stopPropagation();
                 toggleExpand(node.id);
@@ -131,7 +131,7 @@ export function PolicyTreeView({ policyId, nodes }: PolicyTreeViewProps) {
           <Badge variant="outline" className="shrink-0 text-xs">
             {node.level_code}
           </Badge>
-          <span className="text-sm font-medium">{node.name}</span>
+          <span className="app-card-title">{node.name}</span>
           <span className="text-muted-foreground text-xs">{levelLabel(node.level_code)}</span>
           <div className="ml-auto flex items-center gap-1">
             <Button
@@ -167,19 +167,19 @@ export function PolicyTreeView({ policyId, nodes }: PolicyTreeViewProps) {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h3 className="app-card-title">Arbol de coberturas</h3>
-        <Button type="button" variant="outline" className="pg-btn-platinum" onClick={handleAddRoot}>
+        <Button type="button" variant="outline" onClick={handleAddRoot}>
           <Plus className="mr-1 size-4" />
           Agregar
         </Button>
       </div>
 
-      <div className="app-card min-h-50">
+      <div className="app-card min-h-50 overflow-hidden p-2">
         {nodes.length === 0 ? (
           <p className="text-muted-foreground p-6 text-center text-sm">
             No hay nodos configurados para esta poliza.
           </p>
         ) : (
-          <div className="p-2">{tree.map((item) => renderNode(item))}</div>
+          <div>{tree.map((item) => renderNode(item))}</div>
         )}
       </div>
 

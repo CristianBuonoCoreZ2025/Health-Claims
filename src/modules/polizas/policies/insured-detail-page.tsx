@@ -8,6 +8,9 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { LoadingState } from "@/components/ui/loading-state";
+import { ErrorState } from "@/components/ui/error-state";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
@@ -48,17 +51,13 @@ export function InsuredDetailPage({
   const { data: insured, isLoading } = useInsuredWithDetails(insuredId);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center p-12">
-        <Loader2 className="text-muted-foreground size-6 animate-spin" />
-      </div>
-    );
+    return <LoadingState context="card" className="app-card min-h-96" />;
   }
 
   if (!insured) {
     return (
-      <div className="flex flex-col items-center gap-4 p-12">
-        <p className="text-muted-foreground">Asegurado no encontrado</p>
+      <div className="app-page flex flex-col items-center gap-4">
+        <ErrorState title="Asegurado no encontrado" />
         <Button asChild variant="outline">
           <Link href={`/polizas/${policyId}`}>
             <ArrowLeft className="mr-2 size-4" />
@@ -74,19 +73,18 @@ export function InsuredDetailPage({
   const bankAccounts = insured.insured_bank_accounts ?? [];
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div className="flex items-center gap-4">
+    <div className="app-page">
+      <div className="flex items-start gap-4">
         <Button asChild variant="ghost" size="icon">
           <Link href={`/polizas/${policyId}`}>
             <ArrowLeft className="size-4" />
           </Link>
         </Button>
-        <div className="flex-1">
-          <h1 className="app-page-title">
-            {insured.first_name} {insured.last_name}
-          </h1>
-          <p className="text-muted-foreground text-sm">{formatRut(insured.rut)}</p>
-        </div>
+        <PageHeader
+          title={`${insured.first_name} ${insured.last_name}`}
+          lead={formatRut(insured.rut)}
+          className="flex-1"
+        />
         <Badge variant={insured.is_titular ? "default" : "secondary"}>
           {insured.is_titular ? "Titular" : "Carga"}
         </Badge>
@@ -94,7 +92,7 @@ export function InsuredDetailPage({
 
       <Tabs defaultValue="datos">
         <TabsList>
-          <TabsTrigger value="datos">Datos personales</TabsTrigger>
+          <TabsTrigger value="datos">Informacion</TabsTrigger>
           <TabsTrigger value="pre-existing">
             Pre-existencias ({preExisting.length})
           </TabsTrigger>
@@ -102,7 +100,7 @@ export function InsuredDetailPage({
             Direcciones ({addresses.length})
           </TabsTrigger>
           <TabsTrigger value="bank">
-            Cuentas bancarias ({bankAccounts.length})
+            Cuentas ({bankAccounts.length})
           </TabsTrigger>
         </TabsList>
 
@@ -149,14 +147,13 @@ function InfoCard({
   className?: string;
 }) {
   return (
-    <div className="rounded-lg border p-4">
-      <p className="text-muted-foreground text-xs">{label}</p>
+    <div className="app-card p-4">
+      <p className="app-page-lead">{label}</p>
       <p className={`mt-1 font-medium ${className ?? ""}`}>{value || "-"}</p>
     </div>
   );
 }
 
-// --- Pre-existing conditions tab ---
 
 function PreExistingTab({
   insuredId,
@@ -201,7 +198,7 @@ function PreExistingTab({
           Anadir
         </Button>
       </div>
-      <div className="rounded-lg border">
+      <div className="app-card overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -277,7 +274,6 @@ function PreExistingTab({
   );
 }
 
-// --- Addresses tab ---
 
 function AddressesTab({
   insuredId,
@@ -323,7 +319,7 @@ function AddressesTab({
           Anadir
         </Button>
       </div>
-      <div className="rounded-lg border">
+      <div className="app-card overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
@@ -395,7 +391,6 @@ function AddressesTab({
   );
 }
 
-// --- Bank accounts tab ---
 
 function BankAccountsTab({
   insuredId,
@@ -441,7 +436,7 @@ function BankAccountsTab({
           Anadir
         </Button>
       </div>
-      <div className="rounded-lg border">
+      <div className="app-card overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow>
