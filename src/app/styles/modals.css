@@ -1,1138 +1,124 @@
-/*
- * ESTÁNDAR DE MODALES — Portal de gestión (estilo premium)
- * INMUNE a skins: todas las propiedades de layout usan !important.
- *
- * 3 tamaños canónicos:
- *   modal-sm  → 520px  → formularios simples (1-3 campos)
- *   modal-md  → 560px  → formularios estándar (4-8 campos)
- *   modal-lg  → 720px  → formularios complejos, +8 campos
- *
- * NOTA: @apply es una directiva de Tailwind CSS. Warnings del CSS parser
- * del IDE son esperados y no afectan el build (PostCSS los procesa).
- */
-
 @layer components {
-  /* ═══════════════ TAMAÑOS (inmunes a --radius) ═══════════════ */
-  /* Glass sutil coherente con .app-panel — fondo translucido */
-  .modal-sm {
-    @apply flex max-h-[90vh] w-[min(96vw,520px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 94%, transparent) 0%,
-      color-mix(in srgb, var(--card) 82%, transparent) 100%
-    ) !important;
-    backdrop-filter: blur(20px) saturate(165%);
-    -webkit-backdrop-filter: blur(20px) saturate(165%);
-    box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
-  }
-
-  .modal-md {
-    @apply flex max-h-[90vh] w-[min(96vw,560px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 94%, transparent) 0%,
-      color-mix(in srgb, var(--card) 82%, transparent) 100%
-    ) !important;
-    backdrop-filter: blur(20px) saturate(165%);
-    -webkit-backdrop-filter: blur(20px) saturate(165%);
-    box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
-  }
-
-  /* modal-md-wide → 660px → modales de análisis */
-  .modal-md-wide {
-    display: flex !important;
-    flex-direction: column !important;
-    max-height: 90vh !important;
-    width: min(96vw, 660px) !important;
-    gap: 0 !important;
-    overflow: hidden !important;
-    border: 0 !important;
-    padding: 0 !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 94%, transparent) 0%,
-      color-mix(in srgb, var(--card) 82%, transparent) 100%
-    ) !important;
-    backdrop-filter: blur(20px) saturate(165%);
-    -webkit-backdrop-filter: blur(20px) saturate(165%);
-    box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
-  }
-
-  .modal-lg {
-    @apply flex max-h-[90vh] w-[min(98vw,910px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 94%, transparent) 0%,
-      color-mix(in srgb, var(--card) 82%, transparent) 100%
-    ) !important;
-    backdrop-filter: blur(20px) saturate(165%);
-    -webkit-backdrop-filter: blur(20px) saturate(165%);
-    box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    max-height: 90vh !important;
-    min-height: 0 !important;
-  }
-
-  /* modal-xl → 1100px → modales amplios */
+  .modal-sm,
+  .modal-md,
+  .modal-md-wide,
+  .modal-lg,
   .modal-xl {
-    @apply flex max-h-[92vh] w-[min(98vw,1100px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    border: 1px solid rgba(255, 255, 255, 0.22) !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 94%, transparent) 0%,
-      color-mix(in srgb, var(--card) 82%, transparent) 100%
-    ) !important;
-    backdrop-filter: blur(20px) saturate(165%);
-    -webkit-backdrop-filter: blur(20px) saturate(165%);
-    box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    max-height: 92vh !important;
-    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    width: min(96vw, 520px);
+    padding: 0;
+    overflow: hidden;
+    border-radius: var(--ui-modal-radius, 10px);
+    border: 1px solid var(--glass-border);
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    box-shadow: var(--shadow-modal);
+    animation: modal-in 220ms var(--ease-out) forwards;
   }
 
-  /* Modo oscuro — bordes y sombras ajustados */
-  .dark .modal-sm,
-  .dark .modal-md,
-  .dark .modal-md-wide,
-  .dark .modal-lg,
-  .dark .modal-xl {
-    border-color: oklch(0.30 0.02 250 / 40%) !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 88%, transparent) 0%,
-      color-mix(in srgb, var(--card) 75%, transparent) 100%
-    ) !important;
-    box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-  }
+  .modal-md { width: min(96vw, 560px); }
+  .modal-md-wide { width: min(96vw, 760px); }
+  .modal-lg { width: min(98vw, 920px); }
+  .modal-xl { width: min(98vw, 1100px); max-height: 92vh; }
 
-  /* ════════════════════════════════════════════════════════════════
-   *  modal-email → dimensiones FIJAS por breakpoint
-   *  Aplica a EmailPreviewModal y EmailComposeModal
-   *
-   *  4 escenarios:
-   *    Mobile  (<640px):      90vw × 85vh   (compacto, con aire)
-   *    Tablet  (640-1023):    90vw × 75vh
-   *    Desktop 1080p (1024-2559): 1100px × 880px
-   *    Desktop 1440p (≥2560):     1200px × 1100px
-   *
-   *  El alto y ancho NO se adaptan al contenido — siempre fijos.
-   *  max-height: 100vh como red de seguridad — el modal NUNCA supera
-   *  el viewport, incluso si el breakpoint le asigna más alto.
-   * ════════════════════════════════════════════════════════════════ */
-  .modal-email {
-    @apply flex flex-col gap-0 border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 55%, transparent) 0%,
-      color-mix(in srgb, var(--card) 35%, transparent) 100%
-    ) !important;
-    backdrop-filter: blur(26px) saturate(170%);
-    -webkit-backdrop-filter: blur(26px) saturate(170%);
-    box-shadow:
-      0 26px 55px rgba(2, 12, 27, 0.25),
-      0 1px 0 rgba(255, 255, 255, 0.12) inset,
-      0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 0 !important;
-    max-height: 100vh !important;
-
-    /* Mobile (<640px) — compacto con aire */
-    width: 90vw !important;
-    height: 85vh !important;
-    max-width: 90vw !important;
-    border-radius: 18px !important;
-
-    /* Tablet (640-1023px) */
-    @media (min-width: 640px) {
-      width: 90vw !important;
-      height: 75vh !important;
-      max-width: 90vw !important;
-    }
-
-    /* Desktop 1080p (1024-2559px) — incluye 1920×1080 */
-    @media (min-width: 1024px) {
-      width: 1100px !important;
-      height: 880px !important;
-      max-width: 1100px !important;
-    }
-
-    /* Desktop 1440p (≥2560px) — verdadera resolución 2560×1440 */
-    @media (min-width: 2560px) {
-      width: 1200px !important;
-      height: 1100px !important;
-      max-width: 1200px !important;
-    }
-  }
-
-  /* Liquid glass — glow radial en la esquina superior izquierda
-   * Coherente con .app-panel. El tono se adapta al tema de color activo. */
-  .modal-email::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    background: radial-gradient(
-      120% 100% at 0% 0%,
-      color-mix(in srgb, var(--primary) 18%, transparent) 0%,
-      transparent 55%
-    );
-  }
-
-  /* Liquid glass — modo oscuro */
-  .dark .modal-email {
-    border-color: oklch(0.30 0.02 250 / 40%) !important;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--card) 60%, transparent) 0%,
-      color-mix(in srgb, var(--card) 35%, transparent) 100%
-    ) !important;
-    box-shadow:
-      0 26px 55px rgba(0, 0, 0, 0.5),
-      0 1px 0 rgba(255, 255, 255, 0.06) inset,
-      0 0 0 1px rgba(255, 255, 255, 0.04) inset !important;
-  }
-
-  .dark .modal-email::before {
-    background: radial-gradient(
-      120% 100% at 0% 0%,
-      color-mix(in srgb, var(--primary) 12%, transparent) 0%,
-      transparent 55%
-    );
-  }
-
-  /* Asegurar que el contenido del modal quede por encima del ::before */
-  .modal-email > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-   * PIEL ÚNICA DEL BODY DE EMAIL — REGLA (AGENTS.md § 0j)
-   *
-   * Toda superficie que muestre o edite el body de un email DEBE usar la
-   * clase `email-body-render`. No existe "piel del editor" y "piel del
-   * composer": existe UNA sola piel, la del email.
-   *
-   * Lo que se diseña = lo que se envía. WYSIWYG real.
-   *
-   * Estilos canónicos: ver docs/EMAIL_BODY_RENDER.md
-   * ═══════════════════════════════════════════════════════════════ */
-  .email-body-render {
-    border: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    background: #ffffff !important;
-  }
-  .email-body-render .html-editor-wrap {
-    padding: 32px !important;
-  }
-  .email-body-render .html-editor-content {
-    font-size: 14px !important;
-    line-height: 1.7 !important;
-    color: #1e293b !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-  }
-  .email-body-render .html-editor-content p {
-    margin: 0 0 12px 0 !important;
-  }
-  .email-body-render .html-editor-content h1 {
-    font-size: 22px !important;
-    color: #0f172a !important;
-    margin: 0 0 12px 0 !important;
-    font-weight: 600 !important;
-  }
-  .email-body-render .html-editor-content h2 {
-    font-size: 18px !important;
-    color: #1e293b !important;
-    margin: 0 0 12px 0 !important;
-    font-weight: 600 !important;
-  }
-  .email-body-render .html-editor-content h3 {
-    font-size: 15px !important;
-    color: #334155 !important;
-    margin: 0 0 12px 0 !important;
-    font-weight: 600 !important;
-  }
-  .email-body-render .html-editor-content ul,
-  .email-body-render .html-editor-content ol {
-    margin: 0 0 12px 0 !important;
-    padding-left: 20px !important;
-  }
-  .email-body-render .html-editor-content li {
-    margin-bottom: 6px !important;
-  }
-  .email-body-render .html-editor-content a {
-    color: #2563eb !important;
-    text-decoration: none !important;
-  }
-  .email-body-render .html-editor-content a:hover {
-    text-decoration: underline !important;
-  }
-  .email-body-render .html-editor-content strong {
-    font-weight: 600 !important;
-  }
-  .email-body-render .html-editor-content table {
-    border-collapse: collapse !important;
-    width: 100% !important;
-  }
-  .email-body-render .html-editor-content th,
-  .email-body-render .html-editor-content td {
-    border: 1px solid #e5e7eb !important;
-    padding: 8px !important;
-  }
-
-  /* ═══════════════ CANVAS WYSIWYG DEL COMPOSER ═══════════════ */
-  /* El composer muestra el email como va a salir: toolbar + header branding + body editable + footer.
-     El body editable usa la clase email-body-render (piel única) — ver bloque de arriba. */
-  .email-composer-canvas-scroll {
-    background: #ffffff !important;
-    padding: 0 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    flex: 1 !important;
-    min-height: 0 !important;
-  }
-  .email-composer-canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-  }
-  .email-composer-canvas > .email-body-render {
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    border-radius: 0 !important;
-    overflow: hidden !important;
-    background: #ffffff !important;
-    border: 0 !important;
-  }
-  .email-composer-header {
-    padding: 24px 32px !important;
-    min-height: 56px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-  .email-composer-header-left {
-    justify-content: flex-start !important;
-  }
-  .email-composer-header-right {
-    justify-content: flex-end !important;
-  }
-  .email-composer-logo {
-    max-height: 56px !important;
-    max-width: 200px !important;
-    display: block !important;
-  }
-  .email-composer-header-center .email-composer-logo {
-    margin: 0 auto !important;
-  }
-  .email-composer-company-name {
-    font-size: 20px !important;
-    font-weight: 600 !important;
-    color: #ffffff !important;
-    letter-spacing: 0.2px !important;
-  }
-
-  /* Footer del email */
-  .email-composer-footer {
-    padding: 20px 32px !important;
-    border-top: 1px solid #e2e8f0 !important;
-    background-color: #f8fafc !important;
-    color: #64748b !important;
-    font-size: 11px !important;
-    text-align: center !important;
-    line-height: 1.5 !important;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
-  }
-  .email-composer-footer span {
-    color: #94a3b8 !important;
-  }
-
-  /* ═══════════════ IFRAME PREVIEW (composer de email) ═══════════════ */
-  .email-preview-iframe-composer {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 200px !important;
-    border: 0 !important;
-    border-radius: 0 !important;
-    background: #f1f5f9 !important;
-    display: block !important;
-  }
-
-  /* ═══════════════ ESTRUCTURA INTERNA (inmune) ═══════════════ */
-  /* Header — con sutil tinte del color primario del tema */
   .modal-header {
-    flex-shrink: 0 !important;
-    padding: 18px 20px 13px 20px !important;
-    border-bottom: 1px solid var(--border) !important;
-    background:
-      radial-gradient(ellipse 80% 70% at 10% 15%, rgba(255, 230, 170, 0.35), transparent 55%),
-      radial-gradient(ellipse 70% 60% at 90% 15%, rgba(255, 180, 220, 0.30), transparent 50%),
-      radial-gradient(ellipse 80% 70% at 50% 95%, rgba(180, 220, 255, 0.35), transparent 55%),
-      radial-gradient(ellipse 60% 50% at 95% 85%, rgba(180, 190, 255, 0.25), transparent 45%),
-      linear-gradient(135deg, #fffbf0 0%, #fff4f7 35%, #f0f7ff 70%, #eef2ff 100%) !important;
-    position: relative !important;
-    overflow: hidden !important;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: var(--ui-modal-padding, 1.25rem);
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
   }
 
-  /* Título — app-section-title */
   .modal-title {
-    margin: 0 !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.01em !important;
-    line-height: 1.3 !important;
-    color: var(--foreground) !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--app-h2-size, 16px);
+    font-weight: 600;
+    color: var(--foreground);
   }
 
-  /* Icono — solo contorno, sin caja de fondo (estilo "Mover Fecha") */
   .modal-title-icon {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-shrink: 0 !important;
-    color: var(--foreground) !important;
+    color: var(--primary);
   }
 
   .modal-subtitle {
-    margin: 0 !important;
-    color: var(--muted-foreground) !important;
-    font-size: 12px !important;
-    line-height: 1.5 !important;
+    font-size: var(--app-table-size, 13px);
+    color: var(--muted-foreground);
+    line-height: 1.4;
   }
 
   .modal-body {
-    flex: 1 1 auto !important;
-    overflow-y: auto !important;
-    min-height: 0 !important;
-    padding: 24px !important;
-    background: var(--card) !important;
-  }
-
-  /* Modal body sin padding — para modales que contienen tablas/grillas
-     que necesitan ocupar todo el ancho (ej: dashboard KPI detail).
-     El modal-footer provee la separación inferior. */
-  .modal-body-flush {
-    padding: 0 !important;
-  }
-
-  /* Contenedor de grilla dentro de un modal — scroll vertical limitado */
-  .modal-grid-wrap {
-    max-height: 60vh;
-    overflow: auto;
-  }
-
-  /* Mensaje de muestra parcial en footer de modal con grilla */
-  .modal-grid-partial {
-    font-size: 11px !important;
-    color: var(--muted-foreground) !important;
+    flex: 1 1 auto;
+    padding: var(--ui-modal-padding, 1.25rem);
+    overflow-y: auto;
+    min-height: 0;
   }
 
   .modal-footer {
-    flex-shrink: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: 10px !important;
-    padding: 12px 24px !important;
-    border-top: 1px solid var(--border) !important;
-    background: var(--card) !important;
-  }
-}
-
-/* ════════════════════════════════════════════════════════════════
- * MODAL_B — Variante de referencia con header de color primario
- * Estilo de la imagen de referencia: header con gradiente, footer limpio,
- * sombra pronunciada, overlay oscuro.
- * ════════════════════════════════════════════════════════════════ */
-@layer components {
-  .modal-b-sm {
-    @apply flex max-h-[90vh] w-[min(96vw,520px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    background: var(--card) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow:
-      0 24px 48px rgba(0, 0, 0, 0.24),
-      0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: var(--ui-modal-padding, 1.25rem);
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
   }
 
-  .modal-b-md {
-    @apply flex max-h-[90vh] w-[min(96vw,560px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    background: var(--card) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow:
-      0 24px 48px rgba(0, 0, 0, 0.24),
-      0 2px 8px rgba(0, 0, 0, 0.08) !important;
+  .modal-email {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-height: 100vh;
+    width: 90vw;
+    height: 85vh;
+    max-width: 90vw;
+    padding: 0;
+    overflow: hidden;
+    border-radius: var(--ui-modal-radius, 10px);
+    border: 1px solid var(--glass-border);
+    background: color-mix(in srgb, var(--card) 82%, transparent);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    box-shadow: var(--shadow-modal);
+    animation: modal-in 220ms var(--ease-out) forwards;
   }
 
-  .modal-b-lg {
-    @apply flex max-h-[90vh] w-[min(98vw,720px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    background: var(--card) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow:
-      0 24px 48px rgba(0, 0, 0, 0.24),
-      0 2px 8px rgba(0, 0, 0, 0.08) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    max-height: 90vh !important;
-    min-height: 0 !important;
+  @media (min-width: 640px) {
+    .modal-email {
+      width: 90vw;
+      height: 75vh;
+      max-width: 90vw;
+    }
   }
 
-  .modal-b-xl {
-    @apply flex max-h-[92vh] w-[min(98vw,920px)] flex-col gap-0
-           border-0 p-0;
-    overflow: hidden !important;
-    border-radius: 18px !important;
-    background: var(--card) !important;
-    border: 1px solid var(--border) !important;
-    box-shadow:
-      0 24px 48px rgba(0, 0, 0, 0.24),
-      0 2px 8px rgba(0, 0, 0, 0.08) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    max-height: 92vh !important;
-    min-height: 0 !important;
+  @media (min-width: 1024px) {
+    .modal-email {
+      width: 1100px;
+      height: 880px;
+      max-width: 1100px;
+    }
   }
 
-  /* Header con gradiente pastel visible */
-  .modal-b-header {
-    flex-shrink: 0 !important;
-    padding: 18px 20px 13px 20px !important;
-    border-bottom: 1px solid var(--border) !important;
-    background:
-      radial-gradient(ellipse 80% 70% at 10% 15%, rgba(255, 230, 170, 0.35), transparent 55%),
-      radial-gradient(ellipse 70% 60% at 90% 15%, rgba(255, 180, 220, 0.30), transparent 50%),
-      radial-gradient(ellipse 80% 70% at 50% 95%, rgba(180, 220, 255, 0.35), transparent 55%),
-      radial-gradient(ellipse 60% 50% at 95% 85%, rgba(180, 190, 255, 0.25), transparent 45%),
-      linear-gradient(135deg, #fffbf0 0%, #fff4f7 35%, #f0f7ff 70%, #eef2ff 100%) !important;
-    position: relative !important;
-    overflow: hidden !important;
+  @media (min-width: 2560px) {
+    .modal-email {
+      width: 1200px;
+      height: 1100px;
+      max-width: 1200px;
+    }
   }
 
-  .modal-b-title {
-    margin: 0 !important;
-    font-size: 15px !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.01em !important;
-    line-height: 1.3 !important;
-    color: var(--foreground) !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-  }
-
-  .modal-b-subtitle {
-    margin: 0 !important;
-    color: var(--muted-foreground) !important;
-    font-size: 12px !important;
-    line-height: 1.5 !important;
-  }
-
-  .modal-b-body {
-    flex: 1 1 auto !important;
-    overflow-y: auto !important;
-    min-height: 0 !important;
-    padding: 24px !important;
-    background: var(--card) !important;
-  }
-
-  .modal-b-footer {
-    flex-shrink: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-end !important;
-    gap: 10px !important;
-    padding: 12px 24px !important;
-    border-top: 1px solid var(--border) !important;
-    background: var(--card) !important;
-  }
-
-  /* Modo oscuro para Modal_B */
-  .dark .modal-b-sm,
-  .dark .modal-b-md,
-  .dark .modal-b-lg,
-  .dark .modal-b-xl {
-    background: var(--card) !important;
-    border-color: var(--border) !important;
-    box-shadow:
-      0 24px 48px rgba(0, 0, 0, 0.5),
-      0 2px 8px rgba(0, 0, 0, 0.2) !important;
-  }
-
-  .dark .modal-header,
-  .dark .modal-b-header {
-    background:
-      radial-gradient(ellipse 80% 70% at 10% 15%, rgb(139 92 246 / 0.25), transparent 55%),
-      radial-gradient(ellipse 70% 60% at 90% 10%, rgb(14 165 233 / 0.20), transparent 50%),
-      radial-gradient(ellipse 80% 70% at 50% 95%, rgb(236 72 153 / 0.18), transparent 55%),
-      radial-gradient(ellipse 60% 50% at 95% 85%, rgb(59 130 246 / 0.12), transparent 45%),
-      linear-gradient(135deg, #111827 0%, #1e1b4b 50%, #0f172a 100%) !important;
+  [data-state="open"]:has(.modal-sm),
+  [data-state="open"]:has(.modal-md),
+  [data-state="open"]:has(.modal-md-wide),
+  [data-state="open"]:has(.modal-lg),
+  [data-state="open"]:has(.modal-xl),
+  [data-state="open"]:has(.modal-email) {
+    background-color: rgba(2, 8, 20, 0.22);
+    backdrop-filter: blur(4px);
   }
 }
-
-/* ════════════════════════════════════════════════════════════════
- * ICONOS DE HEADER SIN FONDO — solo contorno (estilo "Mover Fecha")
- *
- * Los iconos en headers de modales NO llevan caja/gradiente de fondo.
- * Solo el icono de lucide (contorno) hereda el color del título.
- * Esto aplica a TODOS los wrappers con h-8 w-8 rounded-lg que tengan
- * bg-linear-to-br, bg-cyan-500/10, bg-red-500, bg-primary, etc.
- * ════════════════════════════════════════════════════════════════ */
-.modal-header [class~="h-8"][class~="w-8"][class~="rounded-lg"],
-.modal-b-header [class~="h-8"][class~="w-8"][class~="rounded-lg"] {
-  background: transparent !important;
-  box-shadow: none !important;
-  --tw-ring-shadow: 0 0 #0000 !important;
-  --tw-ring-color: transparent !important;
-  color: var(--foreground) !important;
-}
-
-/* Overlay exclusivo para Modal_B */
-[data-slot="dialog-overlay"].modal-b-overlay,
-.modal-b-overlay [data-slot="dialog-overlay"] {
-  background: rgba(0, 0, 0, 0.5) !important;
-  -webkit-backdrop-filter: blur(3px) !important;
-  backdrop-filter: blur(3px) !important;
-}
-[data-slot="dialog-overlay"] {
-  background: color-mix(in srgb, var(--primary) 10%, rgba(0, 0, 0, 0.22)) !important;
-  -webkit-backdrop-filter: blur(2px) !important;
-  backdrop-filter: blur(2px) !important;
-  transition: opacity 220ms var(--ease-out), backdrop-filter 220ms var(--ease-out) !important;
-}
-
-/* ═══════════════ GRID / FIELD (portal-seguros, inmune) ═══════════════ */
-.modal-grid {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 10px 12px !important;
-  margin-top: 6px !important;
-}
-@media (min-width: 640px) {
-  .modal-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-
-.modal-grid-3 {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 10px 12px !important;
-  margin-top: 6px !important;
-}
-@media (min-width: 640px) {
-  .modal-grid-3 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (min-width: 1024px) {
-  .modal-grid-3 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-
-.modal-grid-4 {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 6px 8px !important;
-  margin-top: 4px !important;
-}
-@media (min-width: 640px) {
-  .modal-grid-4 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (min-width: 1024px) {
-  .modal-grid-4 {
-    grid-template-columns: repeat(4, 1fr) !important;
-  }
-}
-
-.modal-grid-5 {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 10px 12px !important;
-  margin-top: 6px !important;
-}
-@media (min-width: 640px) {
-  .modal-grid-5 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (min-width: 768px) {
-  .modal-grid-5 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-@media (min-width: 1280px) {
-  .modal-grid-5 {
-    grid-template-columns: repeat(5, 1fr) !important;
-  }
-}
-
-.modal-grid-6 {
-  display: grid !important;
-  grid-template-columns: 1fr !important;
-  gap: 10px 12px !important;
-  margin-top: 6px !important;
-}
-@media (min-width: 640px) {
-  .modal-grid-6 {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
-}
-@media (min-width: 768px) {
-  .modal-grid-6 {
-    grid-template-columns: repeat(3, 1fr) !important;
-  }
-}
-@media (min-width: 1280px) {
-  .modal-grid-6 {
-    grid-template-columns: repeat(6, 1fr) !important;
-  }
-}
-
-.modal-field {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 4px !important;
-  min-width: 0 !important;
-}
-
-.modal-field-full {
-  grid-column: 1 / -1 !important;
-}
-
-/* ═══════════════ INFO BANNER (inmune) ═══════════════ */
-.info-box {
-  padding: 10px 14px !important;
-  border-radius: 12px !important;
-  background: #e3f2fb !important;
-  border: 1px solid rgba(6, 182, 212, 0.35) !important;
-  color: #003591 !important;
-  font-size: 13px !important;
-}
-
-/* ════════════════════════════════════════════════════════════════
- *  CLASES REUTILIZABLES PARA MODALES DE EMAIL
- *  (preview y compose comparten estas clases)
- * ════════════════════════════════════════════════════════════════ */
-
-/* Icono con gradiente brand — usado en headers de modal y avatares */
-.email-icon-gradient {
-  background: linear-gradient(135deg, #6366f1, #a855f7) !important;
-}
-
-/* ═══════════════ HEADER DE MODAL DE EMAIL ═══════════════
- *  Clases semánticas para los 3 niveles del header:
- *    .email-header-title    → título principal (gestión o asunto)
- *    .email-header-subtitle → subtítulo (nombre de gestión)
- *    .email-header-meta     → metadata monoespaciada (liquidación, código email)
- *  Compartido entre compose y preview. */
-.email-header-title {
-  font-size: 14px !important;
-  font-weight: 600 !important;
-  color: var(--foreground) !important;
-  line-height: 1.25 !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-
-.email-header-subtitle {
-  font-size: 10px !important;
-  color: var(--muted-foreground) !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-
-.email-header-meta {
-  font-size: 10px !important;
-  color: var(--muted-foreground) !important;
-  font-family: var(--font-dm-sans), system-ui, sans-serif !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-
-/* Espaciador inferior — 20px de aire antes del borde del modal
- * Evita el bug de Chrome donde padding-bottom colapsa en overflow-y: auto */
-.email-bottom-spacer {
-  height: 20px !important;
-  min-height: 20px !important;
-  flex-shrink: 0 !important;
-}
-
-/* Botón Enviar del compose — estilo Outlook Web 365
- * Cuadrado, sólido, fuera del esquema de botones redondeados estándar.
- * Spanea verticalmente las filas Para + CC. */
-.email-send-btn {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  width: 80px !important;
-  align-self: stretch !important;
-  border-radius: 6px !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  background: var(--primary) !important;
-  color: var(--primary-foreground) !important;
-  border: 1px solid var(--primary) !important;
-  transition: opacity 0.15s ease !important;
-  cursor: pointer !important;
-}
-.email-send-btn:hover:not(:disabled) {
-  opacity: 0.88 !important;
-}
-.email-send-btn:disabled {
-  opacity: 0.45 !important;
-  cursor: not-allowed !important;
-}
-
-/* ── Tooltip interactivo de luces de gestión ── */
-.gestion-light-tooltip {
-  min-width: 240px !important;
-  max-width: 320px !important;
-  padding: 10px 12px !important;
-}
-.gestion-light-tooltip-header {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  margin-bottom: 8px !important;
-  padding-bottom: 6px !important;
-  border-bottom: 1px solid var(--border) !important;
-}
-.gestion-light-tooltip-title {
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  color: var(--foreground) !important;
-}
-.gestion-light-tooltip-row {
-  display: flex !important;
-  align-items: flex-start !important;
-  gap: 6px !important;
-  margin-bottom: 4px !important;
-}
-.gestion-light-tooltip-row:last-child {
-  margin-bottom: 0 !important;
-}
-.gestion-light-tooltip-label {
-  font-size: 11px !important;
-  font-weight: 500 !important;
-  color: var(--muted-foreground) !important;
-  min-width: 64px !important;
-  flex-shrink: 0 !important;
-}
-.gestion-light-tooltip-value {
-  font-size: 11px !important;
-  font-weight: 400 !important;
-  color: var(--foreground) !important;
-  flex: 1 !important;
-}
-.gestion-light-tooltip-value-done {
-  color: #10b981 !important;
-  font-weight: 500 !important;
-}
-.gestion-light-tooltip-value-pending {
-  color: var(--muted-foreground) !important;
-}
-.gestion-light-tooltip-value-late {
-  color: #ef4444 !important;
-  font-weight: 500 !important;
-}
-.gestion-light-tooltip-value-alert {
-  color: #f59e0b !important;
-  font-weight: 500 !important;
-}
-.gestion-light-tooltip-value-active {
-  color: #3b82f6 !important;
-  font-weight: 500 !important;
-}
-.gestion-light-tooltip-divider {
-  height: 1px !important;
-  background: var(--border) !important;
-  margin: 6px 0 !important;
-}
-.gestion-light-tooltip-section-label {
-  font-size: 10px !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.04em !important;
-  color: var(--muted-foreground) !important;
-  margin-bottom: 4px !important;
-}
-.gestion-light-tooltip-sub {
-  color: var(--muted-foreground) !important;
-  font-size: 10px !important;
-}
-.gestion-code-tooltip-legend {
-  font-size: 8px !important;
-  font-style: italic !important;
-  color: var(--muted-foreground) !important;
-  line-height: 1.35 !important;
-  margin: 8px 0 0 !important;
-  padding-top: 6px !important;
-  border-top: 1px dotted var(--border) !important;
-  display: flex !important;
-  align-items: flex-start !important;
-  gap: 3px !important;
-}
-.gestion-code-tooltip-legend-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  min-width: 12px !important;
-  height: 12px !important;
-  padding: 0 3px !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 2px !important;
-  font-size: 8px !important;
-  font-weight: 400 !important;
-  font-style: italic !important;
-  text-transform: lowercase !important;
-  color: var(--muted-foreground) !important;
-  flex-shrink: 0 !important;
-  margin-top: 1px !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   USUARIOS — Toggle chips de clientes, filtro tabs, badge principal
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Grid de toggle chips para clientes en el modal de invitación */
-.user-client-toggle-grid {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 8px !important;
-  max-height: 200px !important;
-  overflow-y: auto !important;
-  padding: 8px !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 10px !important;
-}
-
-/* Chip base */
-.user-client-toggle-chip {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  padding: 6px 14px !important;
-  border-radius: 9999px !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  cursor: pointer !important;
-  border: 1px solid var(--border) !important;
-  transition: all 0.15s ease !important;
-  user-select: none !important;
-}
-
-/* Chip OFF (no marcado) */
-.user-client-toggle-chip-off {
-  background: var(--muted) !important;
-  color: var(--muted-foreground) !important;
-  opacity: 0.6 !important;
-}
-.user-client-toggle-chip-off:hover {
-  opacity: 0.85 !important;
-  border-color: var(--primary) !important;
-}
-
-/* Chip ON (marcado) */
-.user-client-toggle-chip-on {
-  background: var(--primary) !important;
-  color: var(--primary-foreground) !important;
-  border-color: var(--primary) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12) !important;
-}
-.user-client-toggle-chip-on:hover {
-  filter: brightness(1.05) !important;
-}
-
-/* ── Filtro tabs (Activos / Desactivados / Eliminados) ── */
-.user-filter-tabs {
-  display: flex !important;
-  gap: 4px !important;
-  padding: 2px !important;
-  background: var(--muted) !important;
-  border-radius: 8px !important;
-}
-.user-filter-tab {
-  padding: 5px 14px !important;
-  font-size: 12px !important;
-  font-weight: 500 !important;
-  border-radius: 6px !important;
-  border: none !important;
-  background: transparent !important;
-  color: var(--muted-foreground) !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-}
-.user-filter-tab:hover {
-  color: var(--foreground) !important;
-}
-.user-filter-tab-active {
-  background: var(--background) !important;
-  color: var(--foreground) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08) !important;
-}
-
-/* ── Badge del cliente principal en la lista ── */
-.user-client-badge-wrap {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 3px !important;
-  margin-right: 6px !important;
-}
-.user-client-primary-icon {
-  width: 12px !important;
-  height: 12px !important;
-  color: #f59e0b !important;
-  fill: #f59e0b !important;
-  flex-shrink: 0 !important;
-}
-
-/* ── Filas de usuarios por estado ── */
-.user-row-inactive {
-  opacity: 0.6 !important;
-}
-.user-row-deleted {
-  opacity: 0.4 !important;
-  text-decoration: line-through !important;
-}
-
-/* ── Botón de peligro (eliminar definitivamente) ── */
-.pg-btn-danger {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-  height: 36px !important;
-  padding: 0 16px !important;
-  border-radius: 10px !important;
-  font-size: 13px !important;
-  font-weight: 600 !important;
-  background: #dc2626 !important;
-  color: #fff !important;
-  border: 1px solid #dc2626 !important;
-  cursor: pointer !important;
-  transition: all 0.15s ease !important;
-}
-.pg-btn-danger:hover:not(:disabled) {
-  background: #b91c1c !important;
-  border-color: #b91c1c !important;
-}
-.pg-btn-danger:disabled {
-  opacity: 0.5 !important;
-  cursor: not-allowed !important;
-}
-
-/* ── Botón del avatar en la topbar (clickeable) ── */
-.topbar-avatar-btn {
-  border: none !important;
-  background: transparent !important;
-  cursor: pointer !important;
-  padding: 0 !important;
-  border-radius: 9999px !important;
-  transition: transform 0.15s ease !important;
-}
-.topbar-avatar-btn:hover {
-  transform: scale(1.08) !important;
-}
-
-/* ── Wrap del avatar grande en Mi Perfil ── */
-.my-profile-avatar-wrap {
-  display: flex !important;
-  justify-content: center !important;
-  padding: 16px 0 8px !important;
-}
-
-/* ── Sección completa del avatar (foto + botones) ── */
-.my-profile-avatar-section {
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  gap: 12px !important;
-  padding-bottom: 8px !important;
-}
-
-/* ── Botones de subir/quitar foto (mismo patrón que logo de empresa) ── */
-.my-profile-avatar-actions {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 8px !important;
-}
-.my-profile-upload-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  border-radius: 8px !important;
-  border: 1px solid var(--border) !important;
-  background: var(--background) !important;
-  padding: 6px 12px !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: var(--foreground) !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
-  transition: background 0.15s ease !important;
-}
-.my-profile-upload-btn:hover {
-  background: var(--muted) !important;
-}
-.my-profile-remove-btn {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  color: #ef4444 !important;
-  border: none !important;
-  background: transparent !important;
-  cursor: pointer !important;
-  transition: color 0.15s ease !important;
-}
-.my-profile-remove-btn:hover {
-  color: #dc2626 !important;
-}
-

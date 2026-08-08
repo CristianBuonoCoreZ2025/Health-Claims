@@ -1,706 +1,133 @@
-/*
- * FORMULARIOS — Health Claims (estilo portal-seguros)
- * INMUNE a skins: todas las propiedades de layout usan !important.
- *
- * ESTA ES LA ÚNICA HOJA DE ESTILOS PARA FORMULARIOS.
- * Los componentes shadcn (input.tsx, select.tsx, textarea.tsx) solo
- * definen layout mínimo. TODO el estilo visual va aquí via [data-slot].
- */
-
 @layer components {
   .app-form-actions {
-    @apply mt-4 flex flex-wrap gap-2;
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 
-  /* Label (inmune) */
   .app-field-label {
-    display: block !important;
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    color: var(--muted-foreground) !important;
-    margin-bottom: 4px !important;
-    line-height: 1.3 !important;
+    display: block;
+    font-size: var(--app-label-size, 12px);
+    font-weight: 600;
+    color: var(--muted-foreground);
+    margin-bottom: 4px;
+    line-height: 1.3;
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-   * ESTILOS BASE DE INPUTS / SELECTS / TEXTAREAS
-   * Se aplican via [data-slot] a TODOS los componentes shadcn.
-   * Esto centraliza el fondo, borde, focus, disabled, etc.
-   * ═══════════════════════════════════════════════════════════════ */
-
-  /* Input — fondo translúcido con glass sutil */
-  [data-slot="input"] {
-    background: color-mix(in srgb, var(--card) 75%, transparent) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: var(--foreground) !important;
-    border-color: var(--input) !important;
-    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out);
-  }
-  [data-slot="input"]::placeholder {
-    color: var(--muted-foreground) !important;
-    opacity: 0.6 !important;
-  }
-  [data-slot="input"]:focus-visible {
-    border-color: #06b6d4 !important;
-    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12) !important;
-  }
-  [data-slot="input"]:disabled {
-    background: color-mix(in srgb, var(--muted) 50%, transparent) !important;
-    opacity: 0.6 !important;
-    cursor: not-allowed !important;
-  }
-
-  /* Select trigger — mismo fondo glass que input */
-  [data-slot="select-trigger"] {
-    background: color-mix(in srgb, var(--card) 75%, transparent) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: var(--foreground) !important;
-    border-color: var(--input) !important;
-    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out);
-  }
-  [data-slot="select-trigger"]:hover:not(:disabled) {
-    border-color: color-mix(in srgb, var(--input) 70%, var(--foreground) 30%) !important;
-  }
-  [data-slot="select-trigger"]:focus-visible {
-    border-color: #06b6d4 !important;
-    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12) !important;
-  }
-  [data-slot="select-trigger"]:disabled {
-    background: color-mix(in srgb, var(--muted) 50%, transparent) !important;
-    opacity: 0.6 !important;
-    cursor: not-allowed !important;
-  }
-
-  /* Textarea — mismo fondo glass que input */
-  [data-slot="textarea"] {
-    background: color-mix(in srgb, var(--card) 75%, transparent) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: var(--foreground) !important;
-    border-color: var(--input) !important;
-    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out);
-  }
-  [data-slot="textarea"]::placeholder {
-    color: var(--muted-foreground) !important;
-    opacity: 0.6 !important;
-  }
-  [data-slot="textarea"]:focus-visible {
-    border-color: #06b6d4 !important;
-    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12) !important;
-  }
-  [data-slot="textarea"]:disabled {
-    background: color-mix(in srgb, var(--muted) 50%, transparent) !important;
-    opacity: 0.6 !important;
-    cursor: not-allowed !important;
-  }
-
-  /* Select items en el dropdown — tipografía */
-  [data-slot="select-item"] {
-    font-size: 12px !important;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-   * CLASE .app-input — override compacto para formularios densos
-   * (alturas 28px, fuente 12px, borde 10px)
-   * ═══════════════════════════════════════════════════════════════ */
-
-  /* Input (inmune a --radius, --border, --input) */
+  [data-slot="input"],
+  [data-slot="select-trigger"],
+  [data-slot="textarea"],
   .app-input {
-    width: 100% !important;
-    font-size: 11px !important;
-    height: 28px !important;
-    padding: 0 10px !important;
-    border: 1px solid var(--input) !important;
-    border-radius: 10px !important;
-    background: color-mix(in srgb, var(--card) 75%, transparent) !important;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    width: 100%;
+    height: 32px;
+    padding: 0 10px;
+    font-size: var(--app-body-size, 14px);
     color: var(--foreground) !important;
-    box-sizing: border-box !important;
-    outline: none !important;
-    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
+    background: var(--input) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: var(--radius-input, 6px);
+    box-sizing: border-box;
+    outline: none;
+    transition:
+      border-color 180ms var(--ease-out),
+      box-shadow 180ms var(--ease-out),
+      background 180ms var(--ease-out);
   }
 
+  [data-slot="input"]::placeholder,
+  [data-slot="textarea"]::placeholder,
   .app-input::placeholder {
     color: var(--muted-foreground) !important;
-    opacity: 0.6 !important;
-    font-size: 11px !important;
+    opacity: 0.7;
   }
 
+  [data-slot="input"]:focus-visible,
+  [data-slot="select-trigger"]:focus-visible,
+  [data-slot="textarea"]:focus-visible,
   .app-input:focus {
-    border-color: #06b6d4 !important;
-    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12) !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 25%, transparent) !important;
   }
 
-  /* Campo que requiere completarse (ej: aclaración en daños).
-     Fondo amarillo muy sutil + borde ámbar para que no parezca desactivado. */
-  .app-input.app-input-required {
-    background: color-mix(in srgb, #FEF9C3 35%, transparent) !important;
-    border-color: color-mix(in srgb, #F59E0B 50%, var(--input)) !important;
-  }
-  .app-input.app-input-required:focus {
-    border-color: #F59E0B !important;
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15) !important;
+  [data-slot="input"]:disabled,
+  [data-slot="select-trigger"]:disabled,
+  [data-slot="textarea"]:disabled,
+  .app-input:disabled {
+    background: color-mix(in srgb, var(--muted) 70%, transparent) !important;
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 
-  /* Input con icono de búsqueda a la izquierda (ProductSearch).
-     Reserva 28px a la izquierda para que el icono Search no se monte
-     sobre el texto. Pisa el padding global de .app-input. */
+  [data-slot="select-trigger"]:hover:not(:disabled) {
+    border-color: color-mix(in srgb, var(--border) 80%, var(--foreground)) !important;
+  }
+
+  [data-slot="select-item"] {
+    font-size: var(--app-table-size, 13px);
+  }
+
+  .app-input {
+    height: 28px;
+    font-size: 12px;
+    padding: 0 10px;
+    border-radius: var(--radius-input, 6px);
+  }
+
   .app-input.ps-input-with-icon {
-    padding-left: 28px !important;
-    padding-right: 8px !important;
+    padding-left: 28px;
+    padding-right: 8px;
   }
 
-  /* Textarea con .app-input — permite crecer en altura (la regla
-     global .app-input fuerza height:28px que aplasta el textarea).
-     El padding vertical deja respirar al texto multilinea. */
-  textarea.app-input {
-    height: auto !important;
-    padding: 6px 10px !important;
-    line-height: 1.35 !important;
-    resize: vertical !important;
+  .app-input.app-input-required {
+    background: color-mix(in srgb, var(--warning) 10%, transparent) !important;
+    border-color: color-mix(in srgb, var(--warning) 60%, var(--border)) !important;
   }
+
+  .app-input.app-input-required:focus {
+    border-color: var(--warning) !important;
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--warning) 25%, transparent) !important;
+  }
+
+  textarea.app-input,
+  textarea[data-slot="textarea"] {
+    height: auto;
+    min-height: 54px;
+    padding: 6px 10px;
+    line-height: 1.35;
+    resize: vertical;
+  }
+
   textarea.app-input.flex-1 {
-    resize: none !important;
+    resize: none;
   }
 
-  .app-input.app-textarea-summary {
-    min-height: 54px !important;
-  }
-
-  /* Selector de moneda en formularios de daños */
   .app-input.app-currency-select {
-    padding: 0 6px !important;
+    padding: 0 6px;
   }
 
-  /* Input de monto estimado en formularios de daños */
   .app-input.app-amount-input {
-    text-align: right !important;
+    text-align: right;
   }
 
   .app-amount-words {
-    font-size: 11px !important;
-    font-style: italic !important;
-    color: var(--muted-foreground) !important;
-    text-align: right !important;
-    margin-top: 0 !important;
-    line-height: 1.1 !important;
-    max-width: 100% !important;
-    word-break: break-word !important;
-    overflow-wrap: break-word !important;
+    font-size: 11px;
+    font-style: italic;
+    color: var(--muted-foreground);
+    text-align: right;
+    margin-top: 0;
+    line-height: 1.1;
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
   }
 
-  /* Select trigger (combobox) — misma altura y fuente que app-input.
-     Esta regla pisaba antes solo .app-input; ahora la regla global
-     completa está FUERA de @layer (al final del archivo) para que
-     aplique a TODOS los selects de la app, tengan o no .app-input. */
-
-  /* ═══════════════════════════════════════════════════════════════
-   * COMBOS DE FILTRO EN TOOLBARS DE GRILLAS
-   * Ancho fijo para mantener consistencia visual entre grillas.
-   *   · Default (compañías, corredores, características, etc.): 200px
-   *   · .app-filter-narrow (estados, líneas de negocio, países): 150px
-   * La regla pisa .app-input (width:100%) y cualquier max-w-[...] de Tailwind.
-   * El texto largo se trunca con ellipsis.
-   * ═══════════════════════════════════════════════════════════════ */
-  .app-grid-toolbar-left [data-slot="select-trigger"],
-  .app-grid-toolbar-left [data-slot="select-trigger"].app-input,
-  .app-toolbar [data-slot="select-trigger"]:not(.app-input-full),
-  .app-toolbar [data-slot="select-trigger"].app-input:not(.app-input-full) {
-    width: 200px !important;
-    min-width: 200px !important;
-    max-width: 200px !important;
-    flex-shrink: 0 !important;
-  }
-
-  /* Combos estrechos: estados, líneas de negocio, países */
-  .app-grid-toolbar-left [data-slot="select-trigger"].app-filter-narrow,
-  .app-toolbar [data-slot="select-trigger"].app-filter-narrow:not(.app-input-full) {
+  .app-filter-narrow {
     width: 150px !important;
-    min-width: 150px !important;
-    max-width: 150px !important;
   }
 
-  .app-grid-toolbar-left [data-slot="select-trigger"] [data-slot="select-value"],
-  .app-toolbar [data-slot="select-trigger"]:not(.app-input-full) [data-slot="select-value"] {
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    display: block !important;
+  .app-filter,
+  .app-filter-default {
+    width: 200px !important;
   }
-
-  /* Select dropdown (popup) — la regla de fuente 11px está FUERA de
-     @layer components (al final del archivo) para que gane sobre
-     text-xs de @layer utilities de Tailwind v4. */
-
-  /* ═══════════════════════════════════════════════════════════════
-   * CLASE .liquid-search — input de búsqueda con Liquid Glass
-   * Pill shape, blur fuerte, sombra suave, highlight interno.
-   * Coherente con el estilo de los Selects desplegables.
-   * ═══════════════════════════════════════════════════════════════ */
-
-  .liquid-search {
-    width: 100% !important;
-    font-size: 11px !important;
-    height: 28px !important;
-    padding: 0 12px 0 32px !important;
-    border-radius: 999px !important;
-    border: 1px solid var(--input) !important;
-    background: color-mix(in srgb, var(--card) 80%, transparent) !important;
-    backdrop-filter: blur(16px) saturate(160%) !important;
-    -webkit-backdrop-filter: blur(16px) saturate(160%) !important;
-    color: var(--foreground) !important;
-    box-shadow:
-      0 2px 12px rgba(0, 0, 0, 0.04),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
-    box-sizing: border-box !important;
-    outline: none !important;
-    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
-  }
-
-  .liquid-search::placeholder {
-    color: var(--muted-foreground) !important;
-    opacity: 0.7 !important;
-    font-size: 11px !important;
-  }
-
-  .dark .liquid-search {
-    background: color-mix(in srgb, var(--card) 70%, transparent) !important;
-    border-color: var(--input) !important;
-    box-shadow:
-      0 2px 12px rgba(0, 0, 0, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-  }
-
-  .liquid-search:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--card) 90%, transparent) !important;
-    border-color: color-mix(in srgb, var(--input) 80%, var(--foreground) 20%) !important;
-  }
-
-  .dark .liquid-search:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--card) 80%, transparent) !important;
-  }
-
-  .liquid-search:focus-visible {
-    border-color: #06b6d4 !important;
-    box-shadow:
-      0 0 0 3px rgba(6, 182, 212, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
-  }
-
-  .dark .liquid-search:focus-visible {
-    box-shadow:
-      0 0 0 3px rgba(6, 182, 212, 0.12),
-      inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-   * CLASE .liquid-date-picker — trigger del date picker con Liquid Glass
-   * Misma altura y estilo que los Select triggers.
-   * ═══════════════════════════════════════════════════════════════ */
-
-  .liquid-date-picker {
-    height: 28px !important;
-    padding: 0 10px !important;
-    border-radius: 10px !important;
-    border: 1px solid var(--input) !important;
-    background: color-mix(in srgb, var(--card) 80%, transparent) !important;
-    backdrop-filter: blur(8px) !important;
-    -webkit-backdrop-filter: blur(8px) !important;
-    color: var(--foreground) !important;
-    font-size: 10px !important;
-    font-weight: 500 !important;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
-    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
-  }
-
-  .liquid-date-picker:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--card) 90%, transparent) !important;
-    border-color: color-mix(in srgb, var(--input) 80%, var(--foreground) 20%) !important;
-  }
-
-  .liquid-date-picker:focus-visible,
-  .liquid-date-picker[data-popup-open] {
-    border-color: #06b6d4 !important;
-    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12) !important;
-  }
-
-  .liquid-date-picker.has-clear {
-    padding-right: 30px !important;
-  }
-
-  .dark .liquid-date-picker {
-    background: color-mix(in srgb, var(--card) 70%, transparent) !important;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18) !important;
-  }
-
-  .dark .liquid-date-picker:hover:not(:disabled) {
-    background: color-mix(in srgb, var(--card) 80%, transparent) !important;
-  }
-
-  /* Calendar popover — Liquid Glass container */
-  [data-slot="popover-content"]:has(.rdp-calendar-glass) {
-    padding: 0 !important;
-    min-width: auto !important;
-    border: none !important;
-    background: transparent !important;
-    backdrop-filter: none !important;
-    box-shadow: none !important;
-  }
-
-  [data-slot="popover-content"] .rdp-calendar-glass {
-    --rdp-accent-color: var(--primary);
-    --rdp-accent-color-foreground: var(--primary-foreground);
-    font-size: 10px !important;
-  }
-
-  /* Todos los textos del calendario (días, meses, años, header) a 10px */
-  [data-slot="popover-content"] .rdp-calendar-glass button,
-  [data-slot="popover-content"] .rdp-calendar-glass span {
-    font-size: 10px !important;
-  }
-
-  /* Weekdays header (text-[10px] hardcoded en calendar.tsx) — alinear a 10px */
-  [data-slot="popover-content"] .rdp-calendar-glass .grid.grid-cols-7 > div {
-    font-size: 10px !important;
-  }
-
-  /* Cuando está dentro de .modal-field, el gap maneja el espaciado */
-  .modal-field .app-field-label {
-    margin-bottom: 0 !important;
-  }
-
-  .modal-field > p {
-    margin-top: 0 !important;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
- * FUERA DE @layer components — CSS global sin capa para que gane
- * sobre @layer utilities de Tailwind v4 (text-xs = 12px, h-7, h-8, etc.).
- *
- * REGLA GLOBAL DE SELECTS / COMBOS:
- * Todos los combos de la app (trigger + dropdown + items) usan:
- *   · Altura del trigger: 28px
- *   · Fuente: 11px
- *   · line-height: 1.4
- * Esto unifica TODOS los SelectTrigger sin importar qué clases Tailwind
- * tengan (h-7, h-8, h-6, h-[40px], text-[13px], text-[11px], etc.).
- * ═══════════════════════════════════════════════════════════════ */
-
-/* Trigger (lo que se ve cerrado) — altura 28px + fuente 11px */
-[data-slot="select-trigger"] {
-  height: 28px !important;
-  font-size: 11px !important;
-  line-height: 1.4 !important;
-}
-
-/* Value (texto dentro del trigger) */
-[data-slot="select-trigger"] [data-slot="select-value"] {
-  font-size: 11px !important;
-  line-height: 1.4 !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
- * SELECTOR_PAGES — Selector de páginas en paginación
- * Independiente de los combobox: más pequeño, sin redondeo excesivo,
- * fuente 9px para coincidir con el texto de la paginación.
- * ═══════════════════════════════════════════════════════════════ */
-.selector_pages[data-slot="select-trigger"] {
-  height: 22px !important;
-  font-size: 10px !important;
-  line-height: 1.3 !important;
-  border-radius: 8px !important;
-  padding: 0 20px 0 6px !important;
-  border: 1px solid var(--input) !important;
-  background: color-mix(in srgb, var(--card) 80%, transparent) !important;
-  color: var(--foreground) !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  position: relative !important;
-  cursor: pointer !important;
-  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
-}
-
-.selector_pages[data-slot="select-trigger"]:hover:not(:disabled) {
-  border-color: color-mix(in srgb, var(--input) 60%, var(--foreground) 40%) !important;
-}
-
-.selector_pages[data-slot="select-trigger"]:focus-visible {
-  border-color: var(--primary) !important;
-  box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.1) !important;
-  outline: none !important;
-}
-
-.selector_pages[data-slot="select-trigger"] [data-slot="select-value"] {
-  font-size: 10px !important;
-  line-height: 1.3 !important;
-  flex: 1 !important;
-  text-align: center !important;
-  display: flex !important;
-  justify-content: center !important;
-}
-
-.selector_pages[data-slot="select-trigger"] svg {
-  position: absolute !important;
-  right: 6px !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 8px !important;
-  height: 8px !important;
-}
-
-/* Dropdown (popup desplegado) — data-slot es "select-content" */
-[data-slot="select-content"],
-[data-slot="select-content"] [data-slot="select-item"],
-[data-slot="select-content"] [data-slot="select-item"] *,
-[data-slot="select-content"] [data-slot="select-label"],
-[data-slot="select-content"] [data-slot="select-label"] * {
-  font-size: 11px !important;
-  line-height: 1.4 !important;
-}
-
-/* Item seleccionado — fondo celeste (regla global de la app) */
-[data-slot="select-content"] [data-slot="select-item"][data-selected] {
-  background-color: #dbeafe !important;
-  color: #1e40af !important;
-}
-.dark [data-slot="select-content"] [data-slot="select-item"][data-selected] {
-  background-color: rgba(59, 130, 246, 0.18) !important;
-  color: #93c5fd !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
- * Bloques de dimensiones Superficie / Daño
- * ═══════════════════════════════════════════════════════════════ */
-
-.damage-dimension-pair {
-  display: grid !important;
-  grid-template-columns: 150px 1fr 1fr !important;
-  gap: 6px !important;
-  align-items: stretch !important;
-  width: 100% !important;
-}
-
-@media (max-width: 1023px) {
-  .damage-dimension-pair {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-.damage-dimension-unit {
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: space-between !important;
-  gap: 4px !important;
-  min-width: 0 !important;
-  width: 150px !important;
-  min-width: 150px !important;
-  max-width: 150px !important;
-  border-radius: 8px !important;
-  padding: 6px !important;
-  border: 1px solid transparent !important;
-  background: color-mix(in srgb, #dbeafe 35%, transparent) !important;
-  border-color: color-mix(in srgb, #93c5fd 45%, transparent) !important;
-}
-
-.dark .damage-dimension-unit {
-  background: color-mix(in srgb, #1e3a8a 18%, transparent) !important;
-  border-color: color-mix(in srgb, #3b82f6 35%, transparent) !important;
-}
-
-.damage-dimension-unit .damage-dimension-title {
-  color: #1e40af !important;
-}
-
-.dark .damage-dimension-unit .damage-dimension-title {
-  color: #93c5fd !important;
-}
-
-.damage-dimension-unit .app-field-label {
-  margin-bottom: 0 !important;
-}
-
-.damage-dimension-block-surface,
-.damage-dimension-block-damage {
-  border-radius: 8px !important;
-  padding: 6px !important;
-  border: 1px solid transparent !important;
-  min-width: 0 !important;
-  overflow: hidden !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-
-.damage-dimension-block-surface {
-  background: color-mix(in srgb, #dcfce7 30%, transparent) !important;
-  border-color: color-mix(in srgb, #86efac 40%, transparent) !important;
-}
-
-.dark .damage-dimension-block-surface {
-  background: color-mix(in srgb, #14532d 16%, transparent) !important;
-  border-color: color-mix(in srgb, #22c55e 30%, transparent) !important;
-}
-
-.damage-dimension-block-damage {
-  background: color-mix(in srgb, #ffedd5 35%, transparent) !important;
-  border-color: color-mix(in srgb, #fdba74 45%, transparent) !important;
-}
-
-.dark .damage-dimension-block-damage {
-  background: color-mix(in srgb, #7c2d12 18%, transparent) !important;
-  border-color: color-mix(in srgb, #f97316 35%, transparent) !important;
-}
-
-.damage-dimension-block-damage .damage-dimension-title {
-  color: #9a3412 !important;
-}
-
-.dark .damage-dimension-block-damage .damage-dimension-title {
-  color: #fdba74 !important;
-}
-
-.damage-dimension-title {
-  display: flex !important;
-  align-items: center !important;
-  flex-wrap: wrap !important;
-  gap: 3px !important;
-  font-size: 9px !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.03em !important;
-  margin-bottom: 4px !important;
-  line-height: 1.2 !important;
-  min-height: 18px !important;
-}
-
-.damage-dimension-title small {
-  font-size: 8px !important;
-  font-weight: 500 !important;
-  opacity: 0.75 !important;
-  text-transform: none !important;
-}
-
-.damage-dimension-title svg {
-  width: 12px !important;
-  height: 12px !important;
-  flex-shrink: 0 !important;
-}
-
-.damage-dimension-block-surface .damage-dimension-title {
-  color: #166534 !important;
-}
-
-.dark .damage-dimension-block-surface .damage-dimension-title {
-  color: #86efac !important;
-}
-
-.damage-dimension-block-damage .damage-dimension-title {
-  color: #9a3412 !important;
-}
-
-.dark .damage-dimension-block-damage .damage-dimension-title {
-  color: #fdba74 !important;
-}
-
-.damage-dimension-row {
-  display: grid !important;
-  gap: 4px !important;
-  align-items: end !important;
-}
-
-.damage-dimension-row.cols-2 {
-  grid-template-columns: 1fr 1fr !important;
-}
-
-.damage-dimension-row.cols-3 {
-  grid-template-columns: 1fr 1fr 0.9fr !important;
-}
-
-.damage-dimension-row.cols-4 {
-  grid-template-columns: 1fr 1fr 1fr 0.9fr !important;
-}
-
-.damage-dimension-field {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 1px !important;
-  min-width: 0 !important;
-}
-
-.damage-dimension-field label {
-  font-size: 8px !important;
-  font-weight: 600 !important;
-  color: var(--muted-foreground) !important;
-  line-height: 1.1 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-
-.damage-dimension-field input {
-  height: 22px !important;
-  padding: 0 14px 0 4px !important;
-  border-radius: 5px !important;
-  border: 1px solid var(--input) !important;
-  background: color-mix(in srgb, var(--card) 80%, transparent) !important;
-  color: var(--foreground) !important;
-  font-size: 10px !important;
-  font-weight: 500 !important;
-  width: 100% !important;
-  min-width: 0 !important;
-}
-
-.damage-dimension-field input:read-only {
-  background: color-mix(in srgb, var(--muted) 40%, transparent) !important;
-  opacity: 0.9 !important;
-}
-
-.damage-dimension-total {
-  position: relative !important;
-}
-
-.damage-dimension-suffix {
-  position: absolute !important;
-  right: 5px !important;
-  bottom: 4px !important;
-  font-size: 8px !important;
-  font-weight: 600 !important;
-  color: var(--muted-foreground) !important;
-  pointer-events: none !important;
-}
-
-/* ═══════════════════════════════════════════════════════════════
- * SELECTOR_PAGES — Dropdown (popup desplegado)
- * Override de las reglas globales del select para que el popup
- * del selector de páginas use 9px (igual que el trigger).
- * Va DESPUÉS de las reglas globales para que !important funcione.
- * ═══════════════════════════════════════════════════════════════ */
-.selector_pages[data-slot="select-content"],
-.selector_pages[data-slot="select-content"] [data-slot="select-item"],
-.selector_pages[data-slot="select-content"] [data-slot="select-item"] * {
-  font-size: 10px !important;
-  line-height: 1.3 !important;
-}
-
-.selector_pages[data-slot="select-content"] [data-slot="select-item"] {
-  padding: 4px 8px !important;
-  border-radius: 4px !important;
-  justify-content: flex-start !important;
-  text-align: left !important;
-}
-
-.selector_pages[data-slot="select-content"] [data-slot="select-item"] [data-slot="select-item-text"] {
-  text-align: left !important;
-  justify-content: flex-start !important;
-  flex: 1 !important;
-}
-
-.selector_pages[data-slot="select-content"] [data-slot="select-item"] svg,
-.selector_pages[data-slot="select-content"] [data-slot="select-item"] [data-slot="select-item-indicator"],
-.selector_pages[data-slot="select-content"] [data-slot="select-item"] [data-slot="select-item-indicator"] span,
-.selector_pages[data-slot="select-content"] [data-slot="select-item"] [data-slot="select-item-indicator"] svg {
-  display: none !important;
 }
