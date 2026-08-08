@@ -12,11 +12,9 @@ import {
 } from "@/lib/ui-style-client-store";
 
 const SKINS: UiStyleSkin[] = [
-  "nordic-air",
-  "pastel-dream",
-  "bubble-play",
-  "kinetic-pop",
-  "neo-playful",
+  "liquid-glass-26",
+  "vibrancy-operations",
+  "sequoia",
 ];
 
 export function TemasPage() {

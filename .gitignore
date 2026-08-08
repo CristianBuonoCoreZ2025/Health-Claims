@@ -50,3 +50,12 @@ next-env.d.ts
 # local supabase
 supabase/.branches
 supabase/.temp
+
+# agent skills and editor hooks
+/.agents/
+/.claude/settings.local.json
+/.claude/skills/
+/.codex/hooks.json
+/.cursor/hooks.json
+/.github/hooks/
+/skills-lock.json

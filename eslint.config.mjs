@@ -20,6 +20,7 @@ const eslintConfig = tseslint.config(
       "src/types/database.generated.ts",
       "supabase/**",
       "node_modules/**",
+      ".agents/**",
     ],
   },
   ...compat.extends("next/core-web-vitals", "next/typescript"),

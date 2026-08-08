@@ -3,41 +3,35 @@
 const UI_STYLE_KEY = "healthclaims-ui-style";
 
 export type UiStyleSkin =
-  | "nordic-air"
-  | "pastel-dream"
-  | "bubble-play"
-  | "kinetic-pop"
-  | "neo-playful";
+  | "liquid-glass-26"
+  | "vibrancy-operations"
+  | "sequoia";
 
 export const UI_STYLE_LABELS: Record<UiStyleSkin, string> = {
-  "nordic-air": "Mint Calido",
-  "pastel-dream": "Salvia Suave",
-  "bubble-play": "Lima Vivo",
-  "kinetic-pop": "Esmeralda",
-  "neo-playful": "Oliva Organico",
+  "liquid-glass-26": "Liquid Glass 26",
+  "vibrancy-operations": "Vibrancy Operations",
+  sequoia: "Sequoia",
 };
 
 export const UI_STYLE_SWATCHES: Record<UiStyleSkin, string> = {
-  "nordic-air": "#5eead4",
-  "pastel-dream": "#86efac",
-  "bubble-play": "#a3e635",
-  "kinetic-pop": "#10b981",
-  "neo-playful": "#65a30d",
+  "liquid-glass-26": "#06b6d4",
+  "vibrancy-operations": "#0ea5e9",
+  sequoia: "#0a84ff",
 };
 
 export function getUiStyleSnapshot(): UiStyleSkin {
-  if (typeof window === "undefined") return "nordic-air";
+  if (typeof window === "undefined") return "liquid-glass-26";
   try {
     const stored = localStorage.getItem(UI_STYLE_KEY) as UiStyleSkin | null;
     if (stored && UI_STYLE_LABELS[stored]) return stored;
   } catch {
-    return "nordic-air";
+    return "liquid-glass-26";
   }
-  return "nordic-air";
+  return "liquid-glass-26";
 }
 
 export function getUiStyleServerSnapshot(): UiStyleSkin {
-  return "nordic-air";
+  return "liquid-glass-26";
 }
 
 export function subscribeUiStyle(callback: () => void): () => void {

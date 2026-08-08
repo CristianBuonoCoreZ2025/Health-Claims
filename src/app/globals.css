@@ -55,9 +55,9 @@
 
 :root {
   color-scheme: light;
-  --font-app-sans: "Geist", var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-app-mono: "Geist Mono", var(--font-dm-sans), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --font-app-heading: "Geist", var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-app-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-app-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-app-heading: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --success: #10b981;
   --warning: #f59e0b;
   --error: #ef4444;
