@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, ShieldCheck } from "lucide-react";
@@ -34,12 +34,34 @@ function SubFlyout({
     timerRef.current = setTimeout(() => setOpen(false), 100);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setOpen((prev) => !prev);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [open]);
+
   return (
     <div className="relative" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
       <div
         ref={itemRef}
+        tabIndex={0}
+        role="button"
+        aria-expanded={open}
+        onKeyDown={handleKeyDown}
         className={cn(
-          "group/sub flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs transition-all duration-150 cursor-pointer",
+          "group/sub flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs transition-all duration-150 cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary",
           isGroupActive
             ? "bg-primary/10 text-primary font-medium"
             : "text-muted-foreground hover:bg-muted/70 hover:text-foreground font-normal",
@@ -119,12 +141,34 @@ function GroupFlyout({
     timerRef.current = setTimeout(() => setOpen(false), 150);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setOpen((prev) => !prev);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!open) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [open]);
+
   return (
     <div className="relative" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
       <div
         ref={itemRef}
+        tabIndex={0}
+        role="button"
+        aria-expanded={open}
+        onKeyDown={handleKeyDown}
         className={cn(
-          "sidebar-item cursor-pointer",
+          "sidebar-item cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary",
           isGroupActive && !open && "sidebar-item-active",
           open && "rounded-r-none !bg-card text-primary",
         )}

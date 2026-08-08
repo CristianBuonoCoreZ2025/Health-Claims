@@ -39,10 +39,10 @@ const CARDS: readonly OpCard[] = [
 
 export default function OperacionesPage() {
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Operaciones</h1>
-        <p className="text-muted-foreground text-sm">
+    <div className="app-page">
+      <div className="app-page-header">
+        <h1 className="app-page-title">Operaciones</h1>
+        <p className="app-page-lead">
           Herramientas para supervisores y control de liquidadores
         </p>
       </div>

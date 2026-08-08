@@ -85,11 +85,11 @@ export function PesosPage() {
     liquidadores.find((l) => l.id === id)?.full_name ?? "N/A";
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="app-page">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Matriz de Peso</h1>
-          <p className="text-muted-foreground text-sm">
+        <div className="app-page-header">
+          <h1 className="app-page-title">Matriz de Peso</h1>
+          <p className="app-page-lead">
             Configuracion de pesos para asignacion de siniestros
           </p>
         </div>

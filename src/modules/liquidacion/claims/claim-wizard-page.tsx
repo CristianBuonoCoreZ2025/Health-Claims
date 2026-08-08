@@ -109,7 +109,7 @@ export function ClaimWizardPage() {
           <ArrowLeft className="size-4" />
         </Button>
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Nuevo siniestro</h1>
+          <h1 className="app-page-title">Nuevo siniestro</h1>
           <p className="text-muted-foreground text-sm">
             Paso {step + 1} de {STEPS.length}: {STEPS[step]}
           </p>

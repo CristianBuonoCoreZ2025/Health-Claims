@@ -74,11 +74,11 @@ export function ClaimsPage() {
     mode === "search" ? searchQuery.isLoading : mode === "status" ? statusQuery.isLoading : isLoading;
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="app-page">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Siniestros</h1>
-          <p className="text-muted-foreground text-sm">
+        <div className="app-page-header">
+          <h1 className="app-page-title">Siniestros</h1>
+          <p className="app-page-lead">
             Liquidacion de siniestros y reembolsos
           </p>
         </div>
@@ -95,12 +95,13 @@ export function ClaimsPage() {
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             placeholder="Buscar por numero de siniestro..."
+            aria-label="Buscar por numero de siniestro"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
               if (e.target.value) setStatusFilter("all");
             }}
-            className="pl-9"
+            className="app-input h-7 ps-input-with-icon"
           />
         </div>
         <Select
@@ -110,7 +111,7 @@ export function ClaimsPage() {
             if (v !== "all") setSearch("");
           }}
         >
-          <SelectTrigger className="w-48">
+          <SelectTrigger className="app-input h-7 w-48">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>

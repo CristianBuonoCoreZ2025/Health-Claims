@@ -158,7 +158,10 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                     key={link.href}
                     href={link.href}
                     onClick={onClose}
-                    className={cn("mobile-nav-link mobile-nav-link-lg", isActive && "mobile-nav-link-active")}
+                    className={cn(
+                      "mobile-nav-link mobile-nav-link-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                      isActive && "mobile-nav-link-active"
+                    )}
                   >
                     <Icon className="size-5 shrink-0" />
                     <span className="text-[15px] font-medium flex-1">{link.label}</span>
@@ -183,7 +186,10 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                           key={link.href}
                           href={link.href}
                           onClick={onClose}
-                          className={cn("mobile-nav-link", isActive && "mobile-nav-link-active")}
+                          className={cn(
+                            "mobile-nav-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                            isActive && "mobile-nav-link-active"
+                          )}
                         >
                           <Icon className="size-4 shrink-0" />
                           <span className="text-[13px] flex-1">{link.label}</span>

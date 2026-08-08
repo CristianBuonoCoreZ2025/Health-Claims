@@ -232,7 +232,7 @@ const CARDS: readonly ConfigCard[] = [
 
 export default function ConfiguracionPage() {
   return (
-    <div className="app-page p-6">
+    <div className="app-page">
       <div className="app-page-header">
         <h1 className="app-page-title">Configuracion</h1>
         <p className="app-page-lead">Maestros y parametrizacion del sistema</p>

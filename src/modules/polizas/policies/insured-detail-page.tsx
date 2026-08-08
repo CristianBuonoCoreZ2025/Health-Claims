@@ -82,7 +82,7 @@ export function InsuredDetailPage({
           </Link>
         </Button>
         <div className="flex-1">
-          <h1 className="text-2xl font-semibold tracking-tight">
+          <h1 className="app-page-title">
             {insured.first_name} {insured.last_name}
           </h1>
           <p className="text-muted-foreground text-sm">{formatRut(insured.rut)}</p>

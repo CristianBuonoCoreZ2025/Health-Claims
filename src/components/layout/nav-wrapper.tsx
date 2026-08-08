@@ -9,7 +9,7 @@ export function NavWrapper({ children }: { children: React.ReactNode }) {
       <HybridNav />
       <div className="relative z-10 flex min-w-0 flex-1 flex-col overflow-hidden">
         <TopBar />
-        <main className="flex-1 overflow-y-auto p-2 lg:p-3">
+        <main className="relative flex min-w-0 flex-1 flex-col overflow-hidden p-4 lg:p-6">
           {children}
         </main>
       </div>

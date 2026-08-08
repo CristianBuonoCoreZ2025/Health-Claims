@@ -135,7 +135,7 @@ export function ClaimDetailPage({ claimId }: { claimId: string }) {
         </Button>
         <div className="flex-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-semibold tracking-tight">
+            <h1 className="app-page-title">
               {claim.claim_number}
             </h1>
             <Badge variant={STATUS_VARIANT[claim.status]}>

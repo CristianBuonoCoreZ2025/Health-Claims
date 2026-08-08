@@ -46,11 +46,11 @@ export function CoverageTypesPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="app-page">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Tipos de cobertura</h1>
-          <p className="text-muted-foreground text-sm">
+        <div className="app-page-header">
+          <h1 className="app-page-title">Tipos de cobertura</h1>
+          <p className="app-page-lead">
             Coberturas disponibles para asociar a prestadores
           </p>
         </div>

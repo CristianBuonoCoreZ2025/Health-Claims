@@ -72,9 +72,10 @@ export function InsuredsPanel({ policyId }: { policyId: string }) {
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             placeholder={mode === "rut" ? "Buscar por RUT..." : "Buscar por nombre..."}
+            aria-label={mode === "rut" ? "Buscar por RUT" : "Buscar por nombre"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="app-input h-7 ps-input-with-icon"
           />
         </div>
         <div className="flex rounded-lg border">

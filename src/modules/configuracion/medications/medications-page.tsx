@@ -72,11 +72,11 @@ export function MedicationsPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="app-page">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Medicamentos</h1>
-          <p className="text-muted-foreground text-sm">
+        <div className="app-page-header">
+          <h1 className="app-page-title">Medicamentos</h1>
+          <p className="app-page-lead">
             Catalogo de medicamentos y farmacias
           </p>
         </div>
@@ -91,9 +91,10 @@ export function MedicationsPage() {
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             placeholder={mode === "name" ? "Buscar por nombre..." : "Buscar por principio activo..."}
+            aria-label={mode === "name" ? "Buscar por nombre" : "Buscar por principio activo"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="app-input h-7 ps-input-with-icon"
           />
         </div>
         <div className="flex rounded-lg border">

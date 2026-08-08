@@ -18,10 +18,10 @@ export function LiquidadoresDashboardPage() {
   const { data: workload, isLoading } = useLiquidatorWorkload();
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Dashboard de Liquidadores</h1>
-        <p className="text-muted-foreground text-sm">
+    <div className="app-page">
+      <div className="app-page-header">
+        <h1 className="app-page-title">Dashboard de Liquidadores</h1>
+        <p className="app-page-lead">
           Carga de trabajo actual por liquidador
         </p>
       </div>

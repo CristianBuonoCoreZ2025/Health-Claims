@@ -22,10 +22,10 @@ export default function ServiciosPage() {
   const active = TABS.find((t) => t.value === tab) ?? TABS[0];
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Jerarquia de servicios</h1>
-        <p className="text-muted-foreground text-sm">
+    <div className="app-page">
+      <div className="app-page-header">
+        <h1 className="app-page-title">Jerarquia de servicios</h1>
+        <p className="app-page-lead">
           Grupos, subgrupos y prestaciones del catalogo de servicios
         </p>
       </div>

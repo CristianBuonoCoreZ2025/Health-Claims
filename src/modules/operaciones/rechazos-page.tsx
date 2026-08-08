@@ -71,10 +71,10 @@ export function RechazosPage() {
   const isPending = reingresarMutation.isPending || anularMutation.isPending;
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Rechazos</h1>
-        <p className="text-muted-foreground text-sm">
+    <div className="app-page">
+      <div className="app-page-header">
+        <h1 className="app-page-title">Rechazos</h1>
+        <p className="app-page-lead">
           Siniestros rechazados con acciones de reingreso y anulacion
         </p>
       </div>

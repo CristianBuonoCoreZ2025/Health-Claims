@@ -59,11 +59,11 @@ export function CompaniesPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="app-page">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight">Companias</h1>
-          <p className="text-muted-foreground text-sm">
+        <div className="app-page-header">
+          <h1 className="app-page-title">Companias</h1>
+          <p className="app-page-lead">
             Gestion de companias aseguradoras
           </p>
         </div>
@@ -78,9 +78,10 @@ export function CompaniesPage() {
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             placeholder="Buscar por nombre..."
+            aria-label="Buscar por nombre"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="app-input h-7 ps-input-with-icon"
           />
         </div>
       </div>

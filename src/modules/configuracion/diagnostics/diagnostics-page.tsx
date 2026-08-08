@@ -41,10 +41,10 @@ export function DiagnosticsPage() {
       : isLoading;
 
   return (
-    <div className="flex flex-col gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">Diagnosticos</h1>
-        <p className="text-muted-foreground text-sm">
+    <div className="app-page">
+      <div className="app-page-header">
+        <h1 className="app-page-title">Diagnosticos</h1>
+        <p className="app-page-lead">
           Catalogo CIE-10 con busqueda por codigo y palabra clave
         </p>
       </div>
@@ -54,9 +54,10 @@ export function DiagnosticsPage() {
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             placeholder={mode === "code" ? "Buscar por codigo CIE-10..." : "Buscar por nombre..."}
+            aria-label={mode === "code" ? "Buscar por codigo CIE-10" : "Buscar por nombre"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+            className="app-input h-7 ps-input-with-icon"
           />
         </div>
         <div className="flex rounded-lg border">

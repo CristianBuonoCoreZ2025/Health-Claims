@@ -97,9 +97,9 @@ export function PoliciesPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6 p-6">
+    <div className="app-page">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="app-page-header">
           <h1 className="app-page-title">Polizas</h1>
           <p className="app-page-lead">Contratos de seguro y condiciones</p>
         </div>
@@ -114,12 +114,13 @@ export function PoliciesPage() {
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             placeholder="Buscar por numero de poliza..."
+            aria-label="Buscar por numero de poliza"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
               if (e.target.value) setStatusFilter("all");
             }}
-            className="pl-9"
+            className="app-input h-7 ps-input-with-icon"
           />
         </div>
         <Select
@@ -129,7 +130,7 @@ export function PoliciesPage() {
             if (v !== "all") setSearch("");
           }}
         >
-          <SelectTrigger className="w-40">
+          <SelectTrigger className="app-input h-7 w-40">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
