@@ -51,7 +51,7 @@ export function TreeConditionList({ policyId, nodeId, nodeName }: TreeConditionL
           <h4 className="app-card-title">Condiciones del nodo</h4>
           <p className="text-muted-foreground text-sm">{nodeName}</p>
         </div>
-        <Button type="button" variant="outline" className="pg-btn-platinum" onClick={handleAdd}>
+        <Button type="button" variant="outline" onClick={handleAdd}>
           <Plus className="mr-1 size-4" />
           Agregar
         </Button>

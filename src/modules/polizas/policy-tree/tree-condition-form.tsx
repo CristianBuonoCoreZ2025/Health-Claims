@@ -277,10 +277,10 @@ export function TreeConditionForm({ policyId, nodeId, condition, onClose }: Tree
               />
 
               <div className="modal-footer">
-                <Button type="button" variant="outline" className="pg-btn-platinum" onClick={onClose}>
+                <Button type="button" variant="outline" onClick={onClose}>
                   Cerrar
                 </Button>
-                <Button type="submit" disabled={isPending} className="pg-btn-platinum">
+                <Button type="submit" disabled={isPending}>
                   {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
                   Guardar
                 </Button>

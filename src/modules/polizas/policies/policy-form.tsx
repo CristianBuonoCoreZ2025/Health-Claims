@@ -128,15 +128,10 @@ export function PolicyFormDialog({ open, onOpenChange, policy }: PolicyFormDialo
                 branches={branches ?? []}
               />
               <div className="modal-footer">
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="pg-btn-platinum"
-                  onClick={() => onOpenChange(false)}
-                >
+                <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
                   Cerrar
                 </Button>
-                <Button type="submit" disabled={isPending} className="pg-btn-platinum">
+                <Button type="submit" disabled={isPending}>
                   {isPending && <Loader2 className="mr-2 size-4 animate-spin" />}
                   Guardar
                 </Button>

@@ -3,31 +3,7 @@
   .btn-primary,
   .btn-secondary,
   .btn-ghost,
-  .btn-danger,
-  .btn-solid,
-  .btn-save,
-  .btn-confirm,
-  .btn-accept,
-  .btn-create,
-  .btn-new,
-  .btn-run,
-  .btn-execute,
-  .btn-cyan,
-  .btn-review,
-  .btn-ai,
-  .btn-homolog,
-  .pg-btn-common,
-  .pg-btn-common-icon,
-  .liquid-button,
-  .liquid-button-outline,
-  .pg-btn-platinum,
-  .pg-btn-danger,
-  .btn-danger,
-  .btn-delete,
-  .btn-destructive-grad,
-  .btn-warn,
-  .btn-alert,
-  .btn-amber {
+  .btn-danger {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -51,110 +27,39 @@
   .btn-primary:disabled,
   .btn-secondary:disabled,
   .btn-ghost:disabled,
-  .btn-danger:disabled,
-  .btn-solid:disabled,
-  .btn-save:disabled,
-  .btn-confirm:disabled,
-  .btn-accept:disabled,
-  .btn-create:disabled,
-  .btn-new:disabled,
-  .btn-run:disabled,
-  .btn-execute:disabled,
-  .btn-cyan:disabled,
-  .btn-review:disabled,
-  .btn-ai:disabled,
-  .btn-homolog:disabled,
-  .pg-btn-common:disabled,
-  .pg-btn-common-icon:disabled,
-  .liquid-button:disabled,
-  .liquid-button-outline:disabled,
-  .pg-btn-platinum:disabled,
-  .pg-btn-danger:disabled,
-  .btn-delete:disabled,
-  .btn-destructive-grad:disabled,
-  .btn-warn:disabled,
-  .btn-alert:disabled,
-  .btn-amber:disabled {
+  .btn-danger:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
 
-  .btn-primary,
-  .btn-solid,
-  .btn-save,
-  .btn-confirm,
-  .btn-accept,
-  .btn-create,
-  .btn-new,
-  .btn-run,
-  .btn-execute,
-  .btn-cyan,
-  .btn-review,
-  .btn-ai,
-  .btn-homolog,
-  .pg-btn-common,
-  .pg-btn-common-icon,
-  .liquid-button {
+  .btn-primary {
     background: var(--primary);
     color: var(--primary-foreground);
   }
 
-  .btn-primary:hover:not(:disabled),
-  .btn-solid:hover:not(:disabled),
-  .btn-save:hover:not(:disabled),
-  .btn-confirm:hover:not(:disabled),
-  .btn-accept:hover:not(:disabled),
-  .btn-create:hover:not(:disabled),
-  .btn-new:hover:not(:disabled),
-  .btn-run:hover:not(:disabled),
-  .btn-execute:hover:not(:disabled),
-  .btn-cyan:hover:not(:disabled),
-  .btn-review:hover:not(:disabled),
-  .btn-ai:hover:not(:disabled),
-  .btn-homolog:hover:not(:disabled),
-  .pg-btn-common:hover:not(:disabled),
-  .pg-btn-common-icon:hover:not(:disabled),
-  .liquid-button:hover:not(:disabled) {
+  .btn-primary:hover:not(:disabled) {
     transform: translateY(-1px);
     filter: brightness(1.05);
   }
 
-  .btn-primary:active:not(:disabled),
-  .btn-solid:active:not(:disabled),
-  .btn-save:active:not(:disabled),
-  .btn-confirm:active:not(:disabled),
-  .btn-accept:active:not(:disabled),
-  .btn-create:active:not(:disabled),
-  .btn-new:active:not(:disabled),
-  .btn-run:active:not(:disabled),
-  .btn-execute:active:not(:disabled),
-  .btn-cyan:active:not(:disabled),
-  .btn-review:active:not(:disabled),
-  .btn-ai:active:not(:disabled),
-  .btn-homolog:active:not(:disabled),
-  .pg-btn-common:active:not(:disabled),
-  .pg-btn-common-icon:active:not(:disabled),
-  .liquid-button:active:not(:disabled) {
+  .btn-primary:active:not(:disabled) {
     transform: scale(0.97);
   }
 
   .btn-secondary,
-  .pg-btn-platinum,
-  .liquid-button-outline {
+  .btn-base {
     background: var(--muted);
     color: var(--foreground);
     border-color: var(--border);
   }
 
   .btn-secondary:hover:not(:disabled),
-  .pg-btn-platinum:hover:not(:disabled),
-  .liquid-button-outline:hover:not(:disabled) {
+  .btn-base:hover:not(:disabled) {
     background: color-mix(in srgb, var(--muted) 92%, var(--foreground));
   }
 
   .btn-secondary:active:not(:disabled),
-  .pg-btn-platinum:active:not(:disabled),
-  .liquid-button-outline:active:not(:disabled) {
+  .btn-base:active:not(:disabled) {
     transform: scale(0.97);
   }
 
@@ -173,34 +78,16 @@
     transform: scale(0.97);
   }
 
-  .btn-danger,
-  .pg-btn-danger,
-  .btn-delete,
-  .btn-destructive-grad,
-  .btn-warn,
-  .btn-alert,
-  .btn-amber {
+  .btn-danger {
     background: var(--destructive);
     color: var(--destructive-foreground);
   }
 
-  .btn-danger:hover:not(:disabled),
-  .pg-btn-danger:hover:not(:disabled),
-  .btn-delete:hover:not(:disabled),
-  .btn-destructive-grad:hover:not(:disabled),
-  .btn-warn:hover:not(:disabled),
-  .btn-alert:hover:not(:disabled),
-  .btn-amber:hover:not(:disabled) {
+  .btn-danger:hover:not(:disabled) {
     filter: brightness(1.05);
   }
 
-  .btn-danger:active:not(:disabled),
-  .pg-btn-danger:active:not(:disabled),
-  .btn-delete:active:not(:disabled),
-  .btn-destructive-grad:active:not(:disabled),
-  .btn-warn:active:not(:disabled),
-  .btn-alert:active:not(:disabled),
-  .btn-amber:active:not(:disabled) {
+  .btn-danger:active:not(:disabled) {
     transform: scale(0.97);
   }
 }
