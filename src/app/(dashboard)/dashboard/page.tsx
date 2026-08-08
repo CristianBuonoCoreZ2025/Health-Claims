@@ -91,7 +91,7 @@ export default function DashboardPage() {
           <Card key={kpi.label}>
             <CardHeader>
               <CardDescription>{kpi.label}</CardDescription>
-              <CardTitle className="!text-2xl font-mono tabular-nums">
+              <CardTitle className="text-2xl! font-mono tabular-nums">
                 {kpi.value}
               </CardTitle>
               <CardAction>

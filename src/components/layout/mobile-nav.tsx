@@ -146,7 +146,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
     <>
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-foreground/20 backdrop-blur-[4px] transition-opacity duration-200",
+          "fixed inset-0 z-40 bg-foreground/20 backdrop-blur-sm transition-opacity duration-200",
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
         )}
         onClick={onClose}
@@ -159,7 +159,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
         aria-modal="true"
         aria-label="Menu de navegacion"
         className={cn(
-          "fixed left-0 top-0 z-50 h-full w-72 sidebar-glass p-4 shadow-[var(--shadow-modal)] transition-transform duration-300 ease-[var(--ease-out)]",
+          "fixed left-0 top-0 z-50 h-full w-72 sidebar-glass p-4 shadow-(--shadow-modal) transition-transform duration-300 ease-out",
           open ? "translate-x-0" : "-translate-x-full",
         )}
         aria-hidden={!open}
@@ -170,9 +170,9 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
             <Link
               href="/dashboard"
               onClick={onClose}
-              className="flex items-center gap-3 rounded-[var(--radius)] bg-primary/10 px-3 py-2 text-primary"
+              className="flex items-center gap-3 rounded-(--radius) bg-primary/10 px-3 py-2 text-primary"
             >
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius)] text-primary">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-(--radius) text-primary">
                 <ShieldCheck className="size-5" />
               </div>
               <div className="flex min-w-0 flex-col">
@@ -244,7 +244,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
             </div>
           )}
 
-          <div className="mt-auto flex w-full flex-col gap-1 border-t border-[var(--glass-border)] pt-3">
+          <div className="mt-auto flex w-full flex-col gap-1 border-t border-(--glass-border) pt-3">
             <MobileSkinToggle />
             <MobileThemeToggle />
             <button

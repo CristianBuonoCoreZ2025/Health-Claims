@@ -11,7 +11,7 @@ import { useFlyoutPosition } from "@/hooks/use-flyout-position";
 import type { NavLink, VisibleNavGroup, NavSubgroup } from "@/components/layout/nav-data";
 
 const flyoutBase =
-  "absolute left-full z-50 w-64 rounded-[var(--radius)] border border-[var(--glass-border)] bg-popover p-2 shadow-[var(--shadow-dropdown)] backdrop-blur-lg animate-in fade-in slide-in-from-left-2 duration-150";
+  "absolute left-full z-50 w-64 rounded-(--radius) border border-(--glass-border) bg-popover p-2 shadow-(--shadow-dropdown) backdrop-blur-lg animate-in fade-in slide-in-from-left-2 duration-150";
 
 function SubFlyout({
   subgroup,
@@ -250,9 +250,9 @@ export function HybridNav({ onNavigate }: { onNavigate?: () => void }) {
         <div className="relative z-10 flex h-full w-full flex-col gap-3">
           <Link
             href="/dashboard"
-            className="flex items-center gap-3 rounded-[var(--radius)] bg-primary/10 px-3 py-2 text-primary transition-all duration-200 hover:bg-primary/15"
+            className="flex items-center gap-3 rounded-(--radius) bg-primary/10 px-3 py-2 text-primary transition-all duration-200 hover:bg-primary/15"
           >
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-[var(--radius)] text-primary">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-(--radius) text-primary">
               <ShieldCheck className="size-6" />
             </div>
             <div className="flex min-w-0 flex-col">
