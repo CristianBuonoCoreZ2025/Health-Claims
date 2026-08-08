@@ -46,7 +46,7 @@
       radial-gradient(circle 240px at 65% 80%, rgb(20 184 166 / 0.16) 0%, transparent 70%),
       radial-gradient(circle 180px at 35% 75%, rgb(45 212 191 / 0.14) 0%, transparent 70%);
     filter: blur(60px);
-    animation: orbs-drift 25s ease-in-out infinite alternate;
+    animation: orbs-drift 40s ease-in-out infinite alternate;
   }
 
   .dark .premium-orbs::before {
@@ -1226,8 +1226,9 @@
 
   /* Tab individual */
   .app-tab {
-    @apply relative flex items-center gap-2 px-3.5 py-1.5 text-[11px] font-medium transition-all duration-200 whitespace-nowrap rounded-lg text-muted-foreground;
+    @apply relative flex items-center gap-2 px-3.5 py-1.5 text-[11px] font-medium whitespace-nowrap rounded-lg text-muted-foreground;
     border: 0 !important;
+    transition: color 180ms var(--ease-out), background 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
   }
 
   .app-tab:hover {
@@ -1259,6 +1260,7 @@
     background: color-mix(in srgb, var(--primary) 50%, transparent);
     opacity: 0.7;
     pointer-events: none;
+    transition: left 200ms var(--ease-out), width 200ms var(--ease-out), opacity 200ms var(--ease-out);
   }
 
   /* Sub-tabs pequeños (dentro de paneles) */
@@ -1348,7 +1350,8 @@
   }
 
   .app-sub-tab {
-    @apply px-2.5 py-1 rounded-lg text-[11px] font-medium transition-all duration-200 text-muted-foreground;
+    @apply px-2.5 py-1 rounded-lg text-[11px] font-medium text-muted-foreground;
+    transition: color 180ms var(--ease-out), background 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
   }
 
   .app-sub-tab:hover {
@@ -1423,9 +1426,10 @@
 
   /* Sidebar item — Liquid Glass */
   .sidebar-item {
-    @apply relative flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-all duration-200;
+    @apply relative flex items-center gap-3 rounded-2xl px-3 py-2.5;
     color: var(--muted-foreground);
     border: 1px solid transparent;
+    transition: color 180ms var(--ease-out), background 180ms var(--ease-out), box-shadow 180ms var(--ease-out), border-color 180ms var(--ease-out), transform 160ms var(--ease-out);
   }
 
   .sidebar-item:hover {
@@ -1437,6 +1441,10 @@
     color: var(--foreground);
   }
 
+  .sidebar-item:active {
+    transform: scale(0.98);
+  }
+
   .sidebar-item-active {
     color: var(--primary) !important;
     background: linear-gradient(
@@ -1446,6 +1454,7 @@
     ) !important;
     border-color: color-mix(in srgb, rgb(6 182 212) 22%, transparent) !important;
     box-shadow: 0 0 24px color-mix(in srgb, rgb(6 182 212) 18%, transparent) !important;
+    transition: background 220ms var(--ease-out), box-shadow 220ms var(--ease-out), border-color 220ms var(--ease-out), color 220ms var(--ease-out);
   }
 
   .sidebar-item-active::before {
@@ -1492,7 +1501,7 @@
     border: 1px solid transparent !important;
     background: transparent !important;
     backdrop-filter: blur(8px);
-    transition: all 0.15s ease !important;
+    transition: color 150ms var(--ease-out), background 150ms var(--ease-out), border-color 150ms var(--ease-out), transform 150ms var(--ease-out) !important;
   }
 
   .app-row-actions button:hover,
@@ -1686,7 +1695,8 @@
    * El color se setea via --gestion-color (hex) en style inline
    * ═══════════════════════════════════════════════════════════════ */
   .app-gestion-code {
-    @apply relative inline-flex items-center justify-center gap-1 rounded-md px-2 backdrop-blur-sm border transition-all font-bold;
+    @apply relative inline-flex items-center justify-center gap-1 rounded-md px-2 backdrop-blur-sm border font-bold;
+    transition: color 150ms var(--ease-out), background 150ms var(--ease-out), border-color 150ms var(--ease-out);
     font-family: var(--font-dm-sans), system-ui, sans-serif;
     font-size: 9px;
     line-height: 18px;
@@ -1724,7 +1734,8 @@
 
   /* Variante nodo de workflow — card más grande con padding */
   .app-gestion-node {
-    @apply relative flex items-center gap-1.5 rounded-lg px-2 py-1 backdrop-blur-sm border transition-all duration-150;
+    @apply relative flex items-center gap-1.5 rounded-lg px-2 py-1 backdrop-blur-sm border;
+    transition: color 150ms var(--ease-out), background 150ms var(--ease-out), border-color 150ms var(--ease-out);
     background-color: color-mix(in srgb, var(--gestion-color, transparent) 6%, transparent);
     border-color: color-mix(in srgb, var(--gestion-color, transparent) 18%, transparent);
   }
@@ -1864,7 +1875,8 @@
 
   /* Botones de acción rápida del header (liquid glass) */
   .app-email-action-btn {
-    @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-all hover:text-foreground;
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:text-foreground;
+    transition: color 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
     background: color-mix(in srgb, var(--card) 60%, transparent);
     border: 1px solid color-mix(in srgb, var(--border) 40%, transparent);
     backdrop-filter: blur(8px);
@@ -2629,7 +2641,7 @@
     background: rgba(239, 68, 68, 0.2) !important;
     color: #fca5a5 !important;
     cursor: pointer !important;
-    transition: all 0.15s !important;
+    transition: color 150ms var(--ease-out), background 150ms var(--ease-out), border-color 150ms var(--ease-out) !important;
   }
   .ai-progress-panel-cancel:hover {
     background: rgba(239, 68, 68, 0.5) !important;
@@ -2784,7 +2796,7 @@
     font-size: 9px !important;
     font-weight: 600 !important;
     cursor: pointer !important;
-    transition: all 0.15s !important;
+    transition: color 150ms var(--ease-out), background 150ms var(--ease-out), border-color 150ms var(--ease-out) !important;
     white-space: nowrap !important;
   }
 
@@ -2813,7 +2825,7 @@
     background: transparent !important;
     color: #94a3b8 !important;
     cursor: pointer !important;
-    transition: all 0.15s !important;
+    transition: color 150ms var(--ease-out), background 150ms var(--ease-out), border-color 150ms var(--ease-out) !important;
     flex-shrink: 0 !important;
   }
   .ai-copy-btn:hover {

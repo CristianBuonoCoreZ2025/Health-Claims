@@ -27,8 +27,9 @@
   .btn-danger,
   .btn-delete,
   .btn-destructive-grad {
-    @apply inline-flex items-center justify-center text-white cursor-pointer transition-all;
+    @apply inline-flex items-center justify-center text-white cursor-pointer;
     height: 29px !important;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
     padding: 0 14px !important;
     border-radius: 10px !important;
     border: 1px solid transparent !important;
@@ -61,6 +62,30 @@
     transform: translateY(-1px) !important;
   }
 
+  .btn-solid:active:not(:disabled),
+  .btn-save:active:not(:disabled),
+  .btn-confirm:active:not(:disabled),
+  .btn-accept:active:not(:disabled),
+  .btn-create:active:not(:disabled),
+  .btn-new:active:not(:disabled),
+  .btn-emerald:active:not(:disabled),
+  .btn-run:active:not(:disabled),
+  .btn-execute:active:not(:disabled),
+  .btn-sky:active:not(:disabled),
+  .btn-homolog:active:not(:disabled),
+  .btn-ai:active:not(:disabled),
+  .btn-cyan:active:not(:disabled),
+  .btn-review:active:not(:disabled),
+  .btn-cyan-alt:active:not(:disabled),
+  .btn-warn:active:not(:disabled),
+  .btn-alert:active:not(:disabled),
+  .btn-amber:active:not(:disabled),
+  .btn-danger:active:not(:disabled),
+  .btn-delete:active:not(:disabled),
+  .btn-destructive-grad:active:not(:disabled) {
+    transform: translateY(0) scale(0.97) !important;
+  }
+
   /* FONDO SUTIL — acción primaria sin gradiente llamativo */
   .btn-solid {
     background: linear-gradient(180deg, #0e7490 0%, #0891b2 100%) !important;
@@ -82,8 +107,9 @@
    * Altura 28px para alinearse con buscadores y combos.
    * ═══════════════════════════════════════════════════════════════ */
   .liquid-button {
-    @apply inline-flex items-center justify-center cursor-pointer transition-all;
+    @apply inline-flex items-center justify-center cursor-pointer;
     height: 28px !important;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
     padding: 0 12px !important;
     border-radius: 10px !important;
     font-size: 12px !important;
@@ -109,7 +135,7 @@
   }
 
   .liquid-button:active:not(:disabled) {
-    transform: translateY(0) !important;
+    transform: translateY(0) scale(0.97) !important;
   }
 
   .dark .liquid-button {
@@ -132,8 +158,9 @@
    * al lado de un .liquid-button primario.
    * ═══════════════════════════════════════════════════════════════ */
   .liquid-button-outline {
-    @apply inline-flex items-center justify-center cursor-pointer transition-all;
+    @apply inline-flex items-center justify-center cursor-pointer;
     height: 28px !important;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
     padding: 0 12px !important;
     border-radius: 10px !important;
     font-size: 12px !important;
@@ -156,7 +183,7 @@
   }
 
   .liquid-button-outline:active:not(:disabled) {
-    transform: translateY(0) !important;
+    transform: translateY(0) scale(0.97) !important;
   }
 
   .dark .liquid-button-outline {
@@ -326,8 +353,9 @@
 
   /* CANCELAR — zinc con borde sutil */
   .btn-cancel {
-    @apply inline-flex items-center justify-center text-white cursor-pointer transition-all;
+    @apply inline-flex items-center justify-center text-white cursor-pointer;
     height: 29px !important;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
     padding: 0 14px !important;
     border-radius: 10px !important;
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
@@ -441,7 +469,8 @@
    * Usar .btn-icon-sm .btn-danger-hover para eliminar (rojo glass al hover).
    * ═══════════════════════════════════════════════════════════════ */
   .btn-icon-sm {
-    @apply inline-flex shrink-0 items-center justify-center cursor-pointer transition-all p-0 outline-none select-none whitespace-nowrap;
+    @apply inline-flex shrink-0 items-center justify-center cursor-pointer p-0 outline-none select-none whitespace-nowrap;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
     width: 28px !important;
     height: 28px !important;
     border-radius: 8px !important;
@@ -513,7 +542,7 @@
     --tw-enter-translate-y: initial !important;
   }
   .dropdown-emerge[data-closed] {
-    animation: dropdown-emerge-close 140ms ease-in !important;
+    animation: dropdown-emerge-close 140ms ease-out !important;
     animation-fill-mode: both !important;
     --tw-exit-opacity: initial !important;
     --tw-exit-scale: initial !important;
@@ -598,7 +627,8 @@
    * Mismo estilo glass que btn-icon-sm pero más compacto.
    * ═══════════════════════════════════════════════════════════════ */
   .btn-icon-xs {
-    @apply inline-flex items-center justify-center cursor-pointer transition-all p-0;
+    @apply inline-flex items-center justify-center cursor-pointer p-0;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
     width: 22px !important;
     height: 22px !important;
     border-radius: 6px !important;
@@ -678,7 +708,7 @@
     backdrop-filter: blur(20px) saturate(160%) brightness(1.08) !important;
     -webkit-backdrop-filter: blur(20px) saturate(160%) brightness(1.08) !important;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out) !important;
   }
 
   /* ── Platinum — botón plano del sistema ── */
@@ -697,7 +727,7 @@
     font-size: 11px !important;
     font-weight: 500 !important;
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: transform 160ms var(--ease-out), opacity 150ms var(--ease-out), background 150ms var(--ease-out), box-shadow 150ms var(--ease-out);
   }
 
   .pg-btn-platinum:hover:not(:disabled) {
@@ -717,7 +747,7 @@
 
   .pg-btn-common:active,
   .pg-btn-common-icon:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.97);
   }
 
   .pg-btn-common-icon {
@@ -749,7 +779,7 @@
 
   .pg-btn-common:active,
   .pg-btn-common-icon:active {
-    transform: translateY(0);
+    transform: translateY(0) scale(0.97);
   }
 
   /* ── Teal (común) ── */

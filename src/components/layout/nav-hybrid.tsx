@@ -78,7 +78,7 @@ function SubFlyout({
       {open && (
         <div
           ref={flyoutRef}
-          className="absolute left-full z-[60] w-56 rounded-[16px] bg-card shadow-xl border border-border/50"
+          className="absolute left-full z-[60] w-56 rounded-[16px] bg-card shadow-xl border border-border/50 animate-in fade-in slide-in-from-left-2 duration-150"
           style={{ top: position.top, bottom: position.bottom }}
         >
           <div className="relative p-1">
@@ -184,7 +184,7 @@ function GroupFlyout({
       {open && (
         <div
           ref={flyoutRef}
-          className="absolute left-full z-50 w-64 rounded-[20px] bg-card"
+          className="absolute left-full z-50 w-64 rounded-[20px] bg-card animate-in fade-in slide-in-from-left-2 duration-150"
           style={{ top: position.top, bottom: position.bottom }}
         >
           <div className="relative p-1">

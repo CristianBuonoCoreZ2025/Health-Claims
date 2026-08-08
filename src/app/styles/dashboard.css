@@ -33,14 +33,14 @@
       rgba(255, 255, 255, 0.15) 0%,
       rgba(255, 255, 255, 0.04) 100%
     ) padding-box !important;
-    backdrop-filter: blur(32px) saturate(200%) brightness(1.06) !important;
-    -webkit-backdrop-filter: blur(32px) saturate(200%) brightness(1.06) !important;
+    backdrop-filter: blur(24px) saturate(180%) brightness(1.04) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.04) !important;
     box-shadow:
       0 6px 20px rgba(0, 0, 0, 0.08),
       0 1px 0 0.5px rgba(255, 255, 255, 0.6) inset,
       0 -1px 0 0.5px rgba(0, 0, 0, 0.05) inset !important;
     overflow: visible;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: background 300ms var(--ease-out), box-shadow 300ms var(--ease-out), border-color 300ms var(--ease-out) !important;
   }
 
   .dark .topbar-inner {

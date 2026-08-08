@@ -635,6 +635,7 @@
   background: color-mix(in srgb, var(--primary) 10%, rgba(0, 0, 0, 0.22)) !important;
   -webkit-backdrop-filter: blur(2px) !important;
   backdrop-filter: blur(2px) !important;
+  transition: opacity 220ms var(--ease-out), backdrop-filter 220ms var(--ease-out) !important;
 }
 
 /* ═══════════════ GRID / FIELD (portal-seguros, inmune) ═══════════════ */

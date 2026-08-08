@@ -35,6 +35,7 @@
     -webkit-backdrop-filter: blur(8px);
     color: var(--foreground) !important;
     border-color: var(--input) !important;
+    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out);
   }
   [data-slot="input"]::placeholder {
     color: var(--muted-foreground) !important;
@@ -57,6 +58,7 @@
     -webkit-backdrop-filter: blur(8px);
     color: var(--foreground) !important;
     border-color: var(--input) !important;
+    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out);
   }
   [data-slot="select-trigger"]:hover:not(:disabled) {
     border-color: color-mix(in srgb, var(--input) 70%, var(--foreground) 30%) !important;
@@ -78,6 +80,7 @@
     -webkit-backdrop-filter: blur(8px);
     color: var(--foreground) !important;
     border-color: var(--input) !important;
+    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out);
   }
   [data-slot="textarea"]::placeholder {
     color: var(--muted-foreground) !important;
@@ -117,7 +120,7 @@
     color: var(--foreground) !important;
     box-sizing: border-box !important;
     outline: none !important;
-    transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
   }
 
   .app-input::placeholder {
@@ -254,7 +257,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
     box-sizing: border-box !important;
     outline: none !important;
-    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important;
+    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
   }
 
   .liquid-search::placeholder {
@@ -310,7 +313,7 @@
     font-size: 10px !important;
     font-weight: 500 !important;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04) !important;
-    transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease !important;
+    transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
   }
 
   .liquid-date-picker:hover:not(:disabled) {
@@ -418,7 +421,7 @@
   align-items: center !important;
   position: relative !important;
   cursor: pointer !important;
-  transition: border-color 0.15s ease !important;
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out), background 180ms var(--ease-out) !important;
 }
 
 .selector_pages[data-slot="select-trigger"]:hover:not(:disabled) {
