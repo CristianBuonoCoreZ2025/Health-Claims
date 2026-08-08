@@ -86,7 +86,7 @@ export default function DashboardPage() {
         <p className="app-page-lead">Resumen de operaciones de siniestros</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {KPI_DATA.map((kpi) => (
           <Card key={kpi.label}>
             <CardHeader>

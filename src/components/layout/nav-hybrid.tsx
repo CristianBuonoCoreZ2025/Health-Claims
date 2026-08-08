@@ -245,7 +245,7 @@ export function HybridNav({ onNavigate }: { onNavigate?: () => void }) {
   const { visibleMainLinks, visibleGroups } = useNavLinks();
 
   return (
-    <div className="hidden lg:flex lg:h-screen lg:w-60 lg:shrink-0">
+    <div className="hidden md:flex md:h-screen md:w-60 md:shrink-0">
       <aside className="sidebar-glass flex h-full w-60 flex-col gap-3 p-3">
         <div className="relative z-10 flex h-full w-full flex-col gap-3">
           <Link

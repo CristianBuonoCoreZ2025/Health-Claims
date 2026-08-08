@@ -236,7 +236,7 @@ export default function ConfiguracionPage() {
     <div className="app-page">
       <PageHeader title="Configuracion" lead="Maestros y parametrizacion del sistema" />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {CARDS.map((card) => {
           const Icon = card.icon;
           return (

@@ -42,7 +42,7 @@ function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button type="button" className="btn-ghost h-9 w-9 p-0" title="Tema">
+        <button type="button" className="btn-ghost h-9 w-9 p-0" title="Tema" aria-label="Cambiar tema">
           {icon}
         </button>
       </DropdownMenuTrigger>
@@ -77,7 +77,7 @@ function SkinToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button type="button" className="btn-ghost h-9 w-9 p-0" title="Skin">
+        <button type="button" className="btn-ghost h-9 w-9 p-0" title="Skin" aria-label="Cambiar skin">
           <Palette className="size-4" />
         </button>
       </DropdownMenuTrigger>
@@ -116,12 +116,12 @@ export function TopBar() {
             <button
               type="button"
               onClick={() => setMobileNavOpen(true)}
-              className="btn-ghost h-9 w-9 p-0 lg:hidden"
+              className="btn-ghost h-9 w-9 p-0 md:hidden"
               aria-label="Abrir menu"
             >
               <Menu className="size-4" />
             </button>
-            <div className="hidden lg:block">
+            <div className="hidden md:block">
               <Breadcrumb />
             </div>
           </div>
@@ -140,6 +140,7 @@ export function TopBar() {
               onClick={() => void signOutClient()}
               className="btn-ghost h-9 w-9 p-0"
               title="Salir"
+              aria-label="Cerrar sesion"
             >
               <LogOut className="size-4" />
             </button>

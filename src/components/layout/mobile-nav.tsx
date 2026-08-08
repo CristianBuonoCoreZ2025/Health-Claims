@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -108,6 +108,37 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open || !drawerRef.current) return;
+    const root = drawerRef.current;
+    const focusable = Array.from(
+      root.querySelectorAll<HTMLElement>(
+        'a[href], button, [tabindex]:not([tabindex="-1"])',
+      ),
+    );
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    first?.focus();
+
+    const trap = (e: KeyboardEvent) => {
+      if (e.key !== "Tab" || focusable.length === 0) return;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last?.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first?.focus();
+      }
+    };
+
+    root.addEventListener("keydown", trap);
+    return () => {
+      root.removeEventListener("keydown", trap);
+    };
+  }, [open]);
+
   const displayName = fullName || profile?.full_name || "Usuario";
   const initials = getInitials(displayName);
 
@@ -122,6 +153,11 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
         aria-hidden="true"
       />
       <div
+        ref={drawerRef}
+        tabIndex={-1}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu de navegacion"
         className={cn(
           "fixed left-0 top-0 z-50 h-full w-72 sidebar-glass p-4 shadow-[var(--shadow-modal)] transition-transform duration-300 ease-[var(--ease-out)]",
           open ? "translate-x-0" : "-translate-x-full",

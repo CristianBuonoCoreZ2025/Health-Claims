@@ -123,7 +123,7 @@ export function PoliciesPage() {
       </div>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-        <div className="relative max-w-sm flex-1">
+        <div className="relative w-full sm:max-w-sm flex-1">
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             placeholder="Buscar por numero de poliza..."
@@ -143,7 +143,7 @@ export function PoliciesPage() {
             if (v !== "all") setSearch("");
           }}
         >
-          <SelectTrigger className="app-input h-7 w-44">
+          <SelectTrigger aria-label="Filtrar por estado" className="app-input h-7 w-full sm:w-44">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
@@ -196,15 +196,16 @@ export function PoliciesPage() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="icon" asChild>
+                      <Button aria-label="Ver poliza" variant="ghost" size="icon" asChild>
                         <Link href={`/polizas/${policy.id}`}>
                           <Eye className="size-4" />
                         </Link>
                       </Button>
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(policy)}>
+                      <Button aria-label="Editar poliza" variant="ghost" size="icon" onClick={() => handleEdit(policy)}>
                         <Pencil className="size-4" />
                       </Button>
                       <Button
+                        aria-label="Desactivar poliza"
                         variant="ghost"
                         size="icon"
                         onClick={() => handleDelete(policy)}

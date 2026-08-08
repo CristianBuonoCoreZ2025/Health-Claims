@@ -112,8 +112,8 @@ export function ClaimsPage() {
     <div className="app-page">
       <PageHeader title="Liquidacion" lead="Gestion de siniestros" />
 
-      <div className="flex items-center gap-2">
-        <div className="relative max-w-sm flex-1">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="relative w-full sm:max-w-sm flex-1">
           <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
           <Input
             aria-label="Buscar por numero de siniestro"
@@ -133,7 +133,7 @@ export function ClaimsPage() {
             if (v !== "all") setSearch("");
           }}
         >
-          <SelectTrigger className="app-input h-7 w-48">
+          <SelectTrigger aria-label="Filtrar por estado" className="app-input h-7 w-full sm:w-48">
             <SelectValue placeholder="Estado" />
           </SelectTrigger>
           <SelectContent>
@@ -202,7 +202,7 @@ export function ClaimsPage() {
                     {formatCurrency(claim.amount_requested)}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button asChild variant="ghost" size="icon">
+                    <Button asChild aria-label="Ver siniestro" variant="ghost" size="icon">
                       <Link href={`/liquidacion/${claim.id}`}>
                         <Eye className="size-4" />
                       </Link>
