@@ -39,7 +39,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
       className={cn(
-        "fixed inset-0 isolate z-50 bg-black/15 backdrop-blur-sm data-[state=open]:animate-[fade_220ms_var(--ease-out)_forwards] data-[state=closed]:animate-[fade_220ms_var(--ease-out)_forwards]",
+        "fixed inset-0 isolate z-[90] bg-black/30 backdrop-blur-md data-[state=open]:animate-[fade_220ms_var(--ease-out)_forwards] data-[state=closed]:animate-[fade_220ms_var(--ease-out)_forwards]",
         className
       )}
       {...props}
@@ -61,7 +61,7 @@ function DialogContent({
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-(--radius-modal) border border-(--glass-border) bg-card/[0.82] p-5 text-sm text-card-foreground shadow-(--shadow-modal) backdrop-blur-[28px] outline-none sm:max-w-sm data-[state=open]:animate-[modal-in_220ms_var(--ease-out)_forwards] data-[state=closed]:animate-[modal-out_220ms_var(--ease-out)_forwards]",
+          "fixed top-1/2 left-1/2 z-[95] grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-4 rounded-(--radius-modal) border border-(--glass-border) bg-card/90 p-6 text-sm text-card-foreground shadow-(--shadow-modal) backdrop-blur-2xl outline-none sm:max-w-sm data-[state=open]:animate-[modal-in_220ms_var(--ease-out)_forwards] data-[state=closed]:animate-[modal-out_220ms_var(--ease-out)_forwards]",
           className
         )}
         {...props}
@@ -106,7 +106,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "-mx-5 -mb-5 flex flex-col-reverse gap-2 rounded-b-(--radius-modal) border-t bg-muted/50 p-5 sm:flex-row sm:justify-end",
+        "-mx-6 -mb-6 flex flex-col-reverse gap-2 rounded-b-(--radius-modal) border-t border-(--glass-border) bg-muted/40 p-6 sm:flex-row sm:justify-end",
         className
       )}
       {...props}

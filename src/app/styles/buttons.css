@@ -8,10 +8,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    height: 32px;
-    padding: 0 14px;
-    border-radius: var(--radius-button, 8px);
-    font-size: 12px;
+    height: 36px;
+    padding: 0 16px;
+    border-radius: var(--radius-button, 10px);
+    font-size: 13px;
     font-weight: 600;
     letter-spacing: -0.01em;
     gap: 6px;
@@ -20,7 +20,8 @@
       transform 160ms var(--ease-out),
       opacity 150ms var(--ease-out),
       background 150ms var(--ease-out),
-      box-shadow 150ms var(--ease-out);
+      box-shadow 150ms var(--ease-out),
+      border-color 150ms var(--ease-out);
   }
 
   .btn-base:disabled,

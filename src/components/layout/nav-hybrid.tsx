@@ -11,7 +11,7 @@ import { useFlyoutPosition } from "@/hooks/use-flyout-position";
 import type { NavLink, VisibleNavGroup, NavSubgroup } from "@/components/layout/nav-data";
 
 const flyoutBase =
-  "absolute left-full z-50 w-64 rounded-(--radius) border border-(--glass-border) bg-popover p-2 shadow-(--shadow-dropdown) backdrop-blur-lg animate-in fade-in slide-in-from-left-2 duration-150";
+  "absolute left-full z-[100] w-64 rounded-(--radius) border border-(--glass-border) bg-popover/95 p-2 shadow-(--shadow-dropdown) backdrop-blur-xl animate-in fade-in slide-in-from-left-2 duration-150";
 
 function SubFlyout({
   subgroup,
@@ -245,8 +245,8 @@ export function HybridNav({ onNavigate }: { onNavigate?: () => void }) {
   const { visibleMainLinks, visibleGroups } = useNavLinks();
 
   return (
-    <div className="hidden md:flex md:h-screen md:w-60 md:shrink-0">
-      <aside className="sidebar-glass flex h-full w-60 flex-col gap-3 p-3">
+    <div className="hidden md:flex md:h-screen md:w-60 md:shrink-0 md:z-50">
+      <aside className="sidebar-glass relative z-50 flex h-full w-60 flex-col gap-3 p-3">
         <div className="relative z-10 flex h-full w-full flex-col gap-3">
           <Link
             href="/dashboard"

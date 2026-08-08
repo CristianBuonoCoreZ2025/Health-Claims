@@ -70,7 +70,7 @@ function SelectContent({
         data-slot="select-content"
         data-align-trigger={position === "item-aligned"}
         className={cn(
-          "relative z-50 max-h-(--radix-select-content-available-height) min-w-36 origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-lg border border-(--glass-border) bg-popover/85 text-popover-foreground shadow-(--shadow-dropdown) backdrop-blur-[16px] outline-none duration-180 ease-out data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1 data-[state=open]:animate-[slide_180ms_var(--ease-out)_forwards] data-[state=closed]:animate-[fade_150ms_var(--ease-out)_forwards]",
+          "relative z-[100] max-h-(--radix-select-content-available-height) min-w-36 origin-(--radix-select-content-transform-origin) overflow-x-hidden overflow-y-auto rounded-xl border border-(--glass-border) bg-popover/95 text-popover-foreground shadow-(--shadow-dropdown) backdrop-blur-xl outline-none duration-180 ease-out data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1 data-[state=open]:animate-[slide_180ms_var(--ease-out)_forwards] data-[state=closed]:animate-[fade_150ms_var(--ease-out)_forwards]",
           position === "popper" && "",
           className
         )}

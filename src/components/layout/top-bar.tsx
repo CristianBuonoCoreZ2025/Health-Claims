@@ -110,7 +110,7 @@ export function TopBar() {
   return (
     <>
       <MobileNav open={mobileNavOpen} onClose={closeMobileNav} />
-      <header className="sticky top-0 z-50 h-14 w-full border-b border-(--glass-border) bg-[color-mix(in_srgb,var(--card)_72%,transparent)] backdrop-blur-[18px] shadow-(--shadow-float)">
+      <header className="sticky top-0 z-40 h-14 w-full border-b border-(--glass-border) bg-[color-mix(in_srgb,var(--card)_85%,transparent)] backdrop-blur-xl shadow-(--shadow-float)">
         <div className="flex h-full w-full items-center justify-between gap-4 px-4">
           <div className="flex min-w-0 items-center gap-3">
             <button
