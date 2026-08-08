@@ -168,7 +168,7 @@ export function PolicyConditionsPanel({ policyId }: { policyId: string }) {
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[400px]">
+        <DialogContent className="sm:max-w-100">
           <DialogHeader>
             <DialogTitle>Nueva condicion</DialogTitle>
             <DialogDescription>

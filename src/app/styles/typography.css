@@ -289,5 +289,5 @@
 .kpi-value,
 .gauge-value,
 .recent-claim-number {
-  /* Sin override — documentado en DESIGN_SYSTEM.md */
+  font-variant-numeric: tabular-nums;
 }

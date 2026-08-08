@@ -402,7 +402,7 @@
 
   /* TAMAÑOS ESTÁNDAR */
   .btn-lg {
-    @apply h-10 w-[225px] px-4 gap-2 text-xs font-medium;
+    @apply h-10 w-56.25 px-4 gap-2 text-xs font-medium;
     & svg {
       @apply h-4 w-4;
     }
@@ -416,7 +416,7 @@
   }
 
   .btn-sm {
-    @apply h-10 w-[175px] px-3 gap-1 text-xs font-medium;
+    @apply h-10 w-43.75 px-3 gap-1 text-xs font-medium;
     & svg {
       @apply h-4 w-4;
     }

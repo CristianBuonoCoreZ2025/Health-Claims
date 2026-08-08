@@ -74,7 +74,7 @@ export function CoverageTypeFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[400px]">
+      <DialogContent className="sm:max-w-100">
         <DialogHeader>
           <DialogTitle>
             {isEdit ? "Editar tipo de cobertura" : "Nuevo tipo de cobertura"}

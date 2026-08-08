@@ -250,7 +250,7 @@ function PreExistingTab({
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[400px]">
+        <DialogContent className="sm:max-w-100">
           <DialogHeader>
             <DialogTitle>Nueva pre-existencia</DialogTitle>
           </DialogHeader>
@@ -368,7 +368,7 @@ function AddressesTab({
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[400px]">
+        <DialogContent className="sm:max-w-100">
           <DialogHeader>
             <DialogTitle>Nueva direccion</DialogTitle>
           </DialogHeader>
@@ -486,7 +486,7 @@ function BankAccountsTab({
       </div>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-[400px]">
+        <DialogContent className="sm:max-w-100">
           <DialogHeader>
             <DialogTitle>Nueva cuenta bancaria</DialogTitle>
           </DialogHeader>

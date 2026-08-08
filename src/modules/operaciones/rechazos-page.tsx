@@ -173,7 +173,7 @@ export function RechazosPage() {
       </div>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="sm:max-w-[400px]">
+        <DialogContent className="sm:max-w-100">
           <DialogHeader>
             <DialogTitle>
               {action === "reingresar" ? "Reingresar siniestro" : "Anular siniestro"}

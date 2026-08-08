@@ -305,7 +305,7 @@ export function ClaimDetailPage({ claimId }: { claimId: string }) {
 
       {/* Action dialog */}
       <Dialog open={actionDialog !== null} onOpenChange={(v) => !v && setActionDialog(null)}>
-        <DialogContent className="sm:max-w-[400px]">
+        <DialogContent className="sm:max-w-100">
           <DialogHeader>
             <DialogTitle>
               {actionDialog === "approve" && "Aprobar siniestro"}

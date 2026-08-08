@@ -78,7 +78,7 @@ function SubFlyout({
       {open && (
         <div
           ref={flyoutRef}
-          className="absolute left-full z-[60] w-56 rounded-[16px] bg-card shadow-xl border border-border/50 animate-in fade-in slide-in-from-left-2 duration-150"
+          className="absolute left-full z-60 w-56 rounded-[16px] bg-card shadow-xl border border-border/50 animate-in fade-in slide-in-from-left-2 duration-150"
           style={{ top: position.top, bottom: position.bottom }}
         >
           <div className="relative p-1">
@@ -170,10 +170,10 @@ function GroupFlyout({
         className={cn(
           "sidebar-item cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary",
           isGroupActive && !open && "sidebar-item-active",
-          open && "rounded-r-none !bg-card text-primary",
+          open && "rounded-r-none bg-card! text-primary",
         )}
       >
-        <Icon className="size-[18px] shrink-0" />
+        <Icon className="size-4.5 shrink-0" />
         <span className="text-[11px] font-medium truncate flex-1">{group.title}</span>
         <span className={cn(
           "size-1.5 rounded-full shrink-0 transition-colors",
@@ -248,7 +248,7 @@ function MainLinkIcon({
       onClick={onNavigate}
       className={cn("sidebar-item", isActive && "sidebar-item-active")}
     >
-      <Icon className="size-[18px] shrink-0" />
+      <Icon className="size-4.5 shrink-0" />
       <span className="text-[11px] font-medium truncate">{link.label}</span>
     </Link>
   );

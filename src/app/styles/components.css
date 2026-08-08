@@ -163,7 +163,7 @@
   }
 
   .auth-card {
-    @apply w-full max-w-[400px] rounded-2xl border border-border p-8 shadow-[var(--shadow-card)];
+    @apply w-full max-w-100 rounded-2xl border border-border p-8 shadow-(--shadow-card);
     background: linear-gradient(
       135deg,
       color-mix(in srgb, var(--card) 60%, transparent) 0%,
@@ -1600,7 +1600,7 @@
 
   /* Contenedor flexible para búsqueda + filtros (crece para llenar) */
   .app-grid-filters {
-    @apply flex items-center gap-2 flex-1 min-w-[280px];
+    @apply flex items-center gap-2 flex-1 min-w-70;
   }
 
   /* ═══════════════════════════════════════════════════════════════

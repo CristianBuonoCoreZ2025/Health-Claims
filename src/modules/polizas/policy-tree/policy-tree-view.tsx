@@ -173,7 +173,7 @@ export function PolicyTreeView({ policyId, nodes }: PolicyTreeViewProps) {
         </Button>
       </div>
 
-      <div className="app-card min-h-[200px]">
+      <div className="app-card min-h-50">
         {nodes.length === 0 ? (
           <p className="text-muted-foreground p-6 text-center text-sm">
             No hay nodos configurados para esta poliza.
