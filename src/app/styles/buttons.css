@@ -37,6 +37,19 @@
     color: var(--primary-foreground);
   }
 
+  html[data-ui-style="liquid-glass-26"] .btn-primary,
+  html[data-ui-skin="liquid-glass-26"] .btn-primary {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--primary) 115%, white) 0%,
+      var(--primary) 100%
+    );
+    border-color: color-mix(in srgb, var(--primary) 40%, transparent);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.18) inset,
+      0 4px 12px color-mix(in srgb, var(--primary) 22%, transparent);
+  }
+
   .btn-primary:hover:not(:disabled) {
     transform: translateY(-1px);
     filter: brightness(1.05);

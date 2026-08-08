@@ -114,6 +114,20 @@
     border: 1px solid var(--glass-border);
     border-radius: var(--radius);
     color: var(--card-foreground);
+    transition: transform 180ms var(--ease-out), border-color 180ms var(--ease-out);
+  }
+
+  html[data-ui-style="liquid-glass-26"] .app-card,
+  html[data-ui-skin="liquid-glass-26"] .app-card {
+    background: color-mix(in srgb, var(--card) 72%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: var(--shadow-float);
+  }
+
+  html[data-ui-style="liquid-glass-26"] .app-card:hover,
+  html[data-ui-skin="liquid-glass-26"] .app-card:hover {
+    border-color: color-mix(in srgb, var(--primary) 25%, var(--glass-border));
   }
 
   .app-card-icon {
@@ -144,6 +158,15 @@
     border: 1px solid var(--border);
     border-radius: var(--radius);
     color: var(--card-foreground);
+  }
+
+  html[data-ui-style="liquid-glass-26"] .app-panel,
+  html[data-ui-skin="liquid-glass-26"] .app-panel {
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    border-color: var(--glass-border);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-float);
   }
 
   .app-data-table {
