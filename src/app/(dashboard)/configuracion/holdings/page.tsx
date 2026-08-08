@@ -1,5 +1,9 @@
 import { CatalogManager } from "@/modules/configuracion/catalogos/catalogs-page";
 
 export default function HoldingsPage() {
-  return <CatalogManager table="holdings" label="Holdings" />;
+  return (
+    <div className="app-page">
+      <CatalogManager table="holdings" label="Holdings" />
+    </div>
+  );
 }

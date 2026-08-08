@@ -1,10 +1,14 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Search, Loader2, FileCode } from "lucide-react";
+import { Search, FileCode } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
 import {
   Table,
   TableBody,
@@ -23,7 +27,7 @@ export function DiagnosticsPage() {
   const [search, setSearch] = useState("");
   const [mode, setMode] = useState<SearchMode>("code");
 
-  const { data: allDiagnostics, isLoading } = useDiagnostics();
+  const { data: allDiagnostics, isLoading, isError, error, refetch } = useDiagnostics();
   const codeQuery = useSearchDiagnosticsByCode(mode === "code" ? search : "");
   const nameQuery = useSearchDiagnosticsByName(mode === "name" ? search : "");
 
@@ -40,14 +44,22 @@ export function DiagnosticsPage() {
         : nameQuery.isLoading
       : isLoading;
 
+  if (isError) {
+    return (
+      <div className="app-page">
+        <PageHeader title="Diagnosticos" lead="Catalogo CIE-10 con busqueda por codigo y palabra clave" />
+        <ErrorState
+          title="Error al cargar diagnosticos"
+          description={error instanceof Error ? error.message : undefined}
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="app-page">
-      <div className="app-page-header">
-        <h1 className="app-page-title">Diagnosticos</h1>
-        <p className="app-page-lead">
-          Catalogo CIE-10 con busqueda por codigo y palabra clave
-        </p>
-      </div>
+      <PageHeader title="Diagnosticos" lead="Catalogo CIE-10 con busqueda por codigo y palabra clave" />
 
       <div className="flex items-center gap-2">
         <div className="relative max-w-md flex-1">
@@ -57,7 +69,7 @@ export function DiagnosticsPage() {
             aria-label={mode === "code" ? "Buscar por codigo CIE-10" : "Buscar por nombre"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="app-input h-7 ps-input-with-icon"
+            className="app-input h-8 ps-input-with-icon"
           />
         </div>
         <div className="flex rounded-lg border">
@@ -86,50 +98,47 @@ export function DiagnosticsPage() {
         </div>
       </div>
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-32">Codigo CIE-10</TableHead>
-              <TableHead>Nombre</TableHead>
-              <TableHead className="w-24">Estado</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {showLoading && (
+      {showLoading && <LoadingState context="table" className="app-card" />}
+
+      {!showLoading && (
+        <div className="app-card overflow-hidden">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={3} className="text-muted-foreground text-center">
-                  <Loader2 className="mx-auto size-5 animate-spin" />
-                </TableCell>
+                <TableHead className="w-32">Codigo CIE-10</TableHead>
+                <TableHead>Nombre</TableHead>
+                <TableHead className="w-24">Estado</TableHead>
               </TableRow>
-            )}
-            {!showLoading && diagnostics.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={3} className="text-muted-foreground text-center">
-                  <div className="flex flex-col items-center gap-2 py-8">
-                    <FileCode className="size-8 opacity-40" />
-                    <p>No se encontraron diagnosticos</p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-            {!showLoading &&
-              diagnostics.map((diag) => (
-                <TableRow key={diag.id}>
-                  <TableCell className="font-mono font-medium">
-                    {diag.code_cie10}
-                  </TableCell>
-                  <TableCell>{diag.name}</TableCell>
-                  <TableCell>
-                    <Badge variant={diag.is_active ? "default" : "secondary"}>
-                      {diag.is_active ? "Activo" : "Inactivo"}
-                    </Badge>
+            </TableHeader>
+            <TableBody>
+              {diagnostics.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={3}>
+                    <EmptyState
+                      icon={<FileCode className="size-8 opacity-40" />}
+                      title="No se encontraron diagnosticos"
+                    />
                   </TableCell>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
+              ) : (
+                diagnostics.map((diag) => (
+                  <TableRow key={diag.id}>
+                    <TableCell className="font-mono font-medium">
+                      {diag.code_cie10}
+                    </TableCell>
+                    <TableCell>{diag.name}</TableCell>
+                    <TableCell>
+                      <Badge variant={diag.is_active ? "default" : "secondary"}>
+                        {diag.is_active ? "Activo" : "Inactivo"}
+                      </Badge>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 }

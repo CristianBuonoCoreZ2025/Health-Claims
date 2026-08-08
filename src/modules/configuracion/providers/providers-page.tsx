@@ -1,12 +1,16 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Plus, Search, Pencil, Trash2, Stethoscope, Loader2 } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Stethoscope } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
 import {
   Table,
   TableBody,
@@ -29,7 +33,7 @@ export function ProvidersPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Provider | null>(null);
 
-  const { data: allProviders, isLoading } = useProviders();
+  const { data: allProviders, isLoading, isError, error, refetch } = useProviders();
   const searchQuery = useSearchProvidersByName(search);
   const deleteMutation = useDeleteProvider();
 
@@ -39,6 +43,19 @@ export function ProvidersPage() {
   }, [search, searchQuery.data, allProviders]);
 
   const showLoading = search.length > 0 ? searchQuery.isLoading : isLoading;
+
+  if (isError) {
+    return (
+      <div className="app-page">
+        <PageHeader title="Prestadores" lead="Prestadores de salud y datos bancarios" />
+        <ErrorState
+          title="Error al cargar prestadores"
+          description={error instanceof Error ? error.message : undefined}
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
 
   const handleNew = () => {
     setEditing(null);
@@ -63,15 +80,10 @@ export function ProvidersPage() {
 
   return (
     <div className="app-page">
-      <div className="flex items-center justify-between">
-        <div className="app-page-header">
-          <h1 className="app-page-title">Prestadores</h1>
-          <p className="app-page-lead">
-            Prestadores de salud y datos bancarios
-          </p>
-        </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader title="Prestadores" lead="Prestadores de salud y datos bancarios" />
         <Button onClick={handleNew}>
-          <Plus className="mr-2 size-4" />
+          <Plus className="size-4" />
           Nuevo prestador
         </Button>
       </div>
@@ -84,77 +96,74 @@ export function ProvidersPage() {
             aria-label="Buscar por nombre"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="app-input h-7 ps-input-with-icon"
+            className="app-input h-8 ps-input-with-icon"
           />
         </div>
       </div>
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Nombre</TableHead>
-              <TableHead>RUT</TableHead>
-              <TableHead>Especialidad</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead className="w-24">Estado</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {showLoading && (
+      {showLoading && <LoadingState context="table" className="app-card" />}
+
+      {!showLoading && (
+        <div className="app-card overflow-hidden">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={6} className="text-muted-foreground text-center">
-                  <Loader2 className="mx-auto size-5 animate-spin" />
-                </TableCell>
+                <TableHead>Nombre</TableHead>
+                <TableHead>RUT</TableHead>
+                <TableHead>Especialidad</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead className="w-24">Estado</TableHead>
+                <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
-            )}
-            {!showLoading && providers.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={6} className="text-muted-foreground text-center">
-                  <div className="flex flex-col items-center gap-2 py-8">
-                    <Stethoscope className="size-8 opacity-40" />
-                    <p>No hay prestadores registrados</p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-            {!showLoading &&
-              providers.map((provider) => (
-                <TableRow key={provider.id}>
-                  <TableCell className="font-medium">{provider.name}</TableCell>
-                  <TableCell>{formatRut(provider.rut)}</TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {provider.specialty ?? "-"}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {provider.email ?? "-"}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={provider.is_active ? "default" : "secondary"}>
-                      {provider.is_active ? "Activo" : "Inactivo"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(provider)}>
-                        <Pencil className="size-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDelete(provider)}
-                        disabled={deleteMutation.isPending}
-                      >
-                        <Trash2 className="size-4" />
-                      </Button>
-                    </div>
+            </TableHeader>
+            <TableBody>
+              {providers.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6}>
+                    <EmptyState
+                      icon={<Stethoscope className="size-8 opacity-40" />}
+                      title="No hay prestadores registrados"
+                    />
                   </TableCell>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
+              ) : (
+                providers.map((provider) => (
+                  <TableRow key={provider.id}>
+                    <TableCell className="font-medium">{provider.name}</TableCell>
+                    <TableCell>{formatRut(provider.rut)}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {provider.specialty ?? "-"}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {provider.email ?? "-"}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={provider.is_active ? "default" : "secondary"}>
+                        {provider.is_active ? "Activo" : "Inactivo"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(provider)}>
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDelete(provider)}
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       <ProviderFormDialog
         open={dialogOpen}

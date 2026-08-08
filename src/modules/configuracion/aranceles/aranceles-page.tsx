@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Plus, ChevronRight, ChevronDown, Loader2, Layers, Pencil } from "lucide-react";
+import { Plus, ChevronRight, ChevronDown, Layers, Pencil } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
 import { cn } from "@/lib/utils";
 import { useArancelesTree } from "@/hooks/use-aranceles";
 import { formatCurrency } from "@/utils/format";
@@ -98,20 +101,15 @@ export function ArancelesPage() {
 
   return (
     <div className="app-page">
-      <div className="flex items-center justify-between">
-        <div className="app-page-header">
-          <h1 className="app-page-title">Aranceles</h1>
-          <p className="app-page-lead">
-            Arancel de prestaciones de salud (jerarquia 3 niveles)
-          </p>
-        </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader title="Aranceles" lead="Arancel de prestaciones de salud (jerarquia 3 niveles)" />
         <Button>
-          <Plus className="mr-2 size-4" />
+          <Plus className="size-4" />
           Nuevo arancel
         </Button>
       </div>
 
-      <div className="rounded-lg border">
+      <div className="app-card overflow-hidden">
         <div className="bg-muted/50 flex items-center gap-2 border-b px-3 py-2 text-xs font-medium text-muted-foreground">
           <span className="w-4" />
           <span className="w-20">Codigo</span>
@@ -121,19 +119,13 @@ export function ArancelesPage() {
           <span className="w-9" />
         </div>
 
-        {isLoading && (
-          <div className="text-muted-foreground py-12 text-center">
-            <Loader2 className="mx-auto size-5 animate-spin" />
-          </div>
-        )}
+        {isLoading && <LoadingState context="table" />}
 
         {!isLoading && tree.length === 0 && (
-          <div className="text-muted-foreground py-12 text-center">
-            <div className="flex flex-col items-center gap-2">
-              <Layers className="size-8 opacity-40" />
-              <p>No hay aranceles registrados</p>
-            </div>
-          </div>
+          <EmptyState
+            icon={<Layers className="size-8 opacity-40" />}
+            title="No hay aranceles registrados"
+          />
         )}
 
         {!isLoading && tree.map((node) => <TreeRow key={node.id} node={node} depth={0} />)}

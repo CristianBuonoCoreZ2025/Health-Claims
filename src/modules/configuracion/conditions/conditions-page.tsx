@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PageHeader } from "@/components/ui/page-header";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
 import {
   Table,
   TableBody,
@@ -133,18 +136,18 @@ export function ConditionsPage() {
 
   return (
     <div className="app-page p-6">
-      <div className="flex items-center justify-between">
-        <div className="app-page-header">
-          <h1 className="app-page-title">Condiciones de polizas</h1>
-          <p className="app-page-lead">Motor de condiciones particulares N2/N5</p>
-        </div>
-        <Button className="pg-btn-platinum" onClick={openNew}>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader title="Condiciones de polizas" lead="Motor de condiciones particulares N2/N5" />
+        <Button onClick={openNew}>
           <Plus className="size-4" />
           Nuevo
         </Button>
       </div>
 
-      <div className="app-panel overflow-x-auto">
+      {isLoading && <LoadingState context="table" className="app-card" />}
+
+      {!isLoading && (
+        <div className="app-card overflow-x-auto">
         <Table className="app-data-table">
           <TableHeader>
             <TableRow>
@@ -157,21 +160,13 @@ export function ConditionsPage() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading && (
+            {(headers ?? []).length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="app-grid-text text-center">
-                  <Loader2 className="mx-auto size-5 animate-spin" />
+                <TableCell colSpan={6}>
+                  <EmptyState title="No hay condiciones registradas" />
                 </TableCell>
               </TableRow>
-            )}
-            {!isLoading && (headers ?? []).length === 0 && (
-              <TableRow>
-                <TableCell colSpan={6} className="app-empty-state">
-                  No hay condiciones registradas
-                </TableCell>
-              </TableRow>
-            )}
-            {!isLoading &&
+            ) : (
               (headers ?? []).map((header) => (
                 <TableRow
                   key={header.id}
@@ -185,32 +180,32 @@ export function ConditionsPage() {
                   <TableCell className="app-grid-text">{header.is_active ? "Si" : "No"}</TableCell>
                   <TableCell className="app-grid-text text-right">
                     <div className="flex justify-end gap-1">
-                      <Button className="btn-icon-sm" onClick={() => openEdit(header)}>
+                      <Button variant="ghost" size="icon" onClick={() => openEdit(header)}>
                         <Pencil className="size-4" />
                       </Button>
-                      <Button className="btn-icon-sm btn-danger-hover" onClick={() => onDelete(header.id)}>
+                      <Button variant="ghost" size="icon" onClick={() => onDelete(header.id)}>
                         <Trash2 className="size-4" />
                       </Button>
                     </div>
                   </TableCell>
                 </TableRow>
-              ))}
+              ))
+            )}
           </TableBody>
         </Table>
       </div>
+      )}
 
       {selectedHeaderId && <ConditionLinesPanel headerId={selectedHeaderId} />}
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="modal-md" showCloseButton={false}>
-          <div className="modal-header">
-            <DialogTitle className="modal-title">{editing ? "Editar cabecera" : "Nueva cabecera"}</DialogTitle>
-          </div>
-          <div className="modal-body grid gap-4">
+        <DialogContent className="sm:max-w-[520px]">
+          <DialogTitle>{editing ? "Editar cabecera" : "Nueva cabecera"}</DialogTitle>
+          <div className="grid gap-4 py-4">
             <div className="grid gap-2">
               <Label className="app-field-label">ID de poliza</Label>
               <Input
-                className="app-input h-7"
+                className="h-8"
                 value={form.policy_id}
                 onChange={(e) => setForm((prev) => ({ ...prev, policy_id: e.target.value }))}
                 placeholder="uuid de poliza"
@@ -219,7 +214,7 @@ export function ConditionsPage() {
             <div className="grid gap-2">
               <Label className="app-field-label">ID de endoso (opcional)</Label>
               <Input
-                className="app-input h-7"
+                className="h-8"
                 value={form.endorsement_id}
                 onChange={(e) => setForm((prev) => ({ ...prev, endorsement_id: e.target.value }))}
                 placeholder="uuid de endoso"
@@ -228,7 +223,7 @@ export function ConditionsPage() {
             <div className="grid gap-2">
               <Label className="app-field-label">Nombre</Label>
               <Input
-                className="app-input h-7"
+                className="h-8"
                 value={form.name}
                 onChange={(e) => setForm((prev) => ({ ...prev, name: e.target.value }))}
               />
@@ -236,7 +231,7 @@ export function ConditionsPage() {
             <div className="grid gap-2">
               <Label className="app-field-label">Tipo de condicion</Label>
               <Input
-                className="app-input h-7"
+                className="h-8"
                 value={form.condition_type}
                 onChange={(e) => setForm((prev) => ({ ...prev, condition_type: e.target.value }))}
               />
@@ -244,7 +239,7 @@ export function ConditionsPage() {
             <div className="grid gap-2">
               <Label className="app-field-label">Fecha de vigencia</Label>
               <Input
-                className="app-input h-7"
+                className="h-8"
                 type="date"
                 value={form.effective_date}
                 onChange={(e) => setForm((prev) => ({ ...prev, effective_date: e.target.value }))}
@@ -253,7 +248,7 @@ export function ConditionsPage() {
             <div className="grid gap-2">
               <Label className="app-field-label">Fecha de expiracion (opcional)</Label>
               <Input
-                className="app-input h-7"
+                className="h-8"
                 type="date"
                 value={form.expiration_date}
                 onChange={(e) => setForm((prev) => ({ ...prev, expiration_date: e.target.value }))}
@@ -262,7 +257,7 @@ export function ConditionsPage() {
             <div className="grid gap-2">
               <Label className="app-field-label">Activo</Label>
               <Select value={form.is_active} onValueChange={(v) => setForm((prev) => ({ ...prev, is_active: v }))}>
-                <SelectTrigger className="app-input h-7"><SelectValue /></SelectTrigger>
+                <SelectTrigger className="h-8"><SelectValue /></SelectTrigger>
                 <SelectContent side="bottom" sideOffset={0} position="popper" className="z-9999">
                   <SelectItem value="true">Si</SelectItem>
                   <SelectItem value="false">No</SelectItem>
@@ -270,10 +265,9 @@ export function ConditionsPage() {
               </Select>
             </div>
           </div>
-          <DialogFooter className="modal-footer">
-            <Button className="pg-btn-platinum" variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
-            <Button className="pg-btn-platinum" onClick={onSave} disabled={createHeader.isPending || updateHeader.isPending}>
-              {(createHeader.isPending || updateHeader.isPending) && <Loader2 className="size-4 animate-spin" />}
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpen(false)}>Cancelar</Button>
+            <Button onClick={onSave} disabled={createHeader.isPending || updateHeader.isPending}>
               Guardar
             </Button>
           </DialogFooter>

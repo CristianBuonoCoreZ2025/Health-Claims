@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { PageHeader } from "@/components/ui/page-header";
 import { CatalogManager } from "@/modules/configuracion/catalogos/catalogs-page";
 import type { CatalogTable } from "@/hooks/use-catalogs";
 
@@ -23,12 +24,7 @@ export default function ServiciosPage() {
 
   return (
     <div className="app-page">
-      <div className="app-page-header">
-        <h1 className="app-page-title">Jerarquia de servicios</h1>
-        <p className="app-page-lead">
-          Grupos, subgrupos y prestaciones del catalogo de servicios
-        </p>
-      </div>
+      <PageHeader title="Jerarquia de servicios" lead="Grupos, subgrupos y prestaciones del catalogo de servicios" />
 
       <div className="flex gap-2">
         {TABS.map((t) => (

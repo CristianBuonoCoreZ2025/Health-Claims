@@ -1,12 +1,16 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Plus, Search, Pencil, Trash2, Pill, Loader2 } from "lucide-react";
+import { Plus, Search, Pencil, Trash2, Pill } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { PageHeader } from "@/components/ui/page-header";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
+import { ErrorState } from "@/components/ui/error-state";
 import {
   Table,
   TableBody,
@@ -32,7 +36,7 @@ export function MedicationsPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Medication | null>(null);
 
-  const { data: allMedications, isLoading } = useMedications();
+  const { data: allMedications, isLoading, isError, error, refetch } = useMedications();
   const nameQuery = useSearchMedicationsByName(mode === "name" ? search : "");
   const ingredientQuery = useSearchMedicationsByActiveIngredient(mode === "ingredient" ? search : "");
   const deleteMutation = useDeleteMedication();
@@ -49,6 +53,19 @@ export function MedicationsPage() {
         ? nameQuery.isLoading
         : ingredientQuery.isLoading
       : isLoading;
+
+  if (isError) {
+    return (
+      <div className="app-page">
+        <PageHeader title="Medicamentos" lead="Catalogo de medicamentos y farmacias" />
+        <ErrorState
+          title="Error al cargar medicamentos"
+          description={error instanceof Error ? error.message : undefined}
+          onRetry={() => refetch()}
+        />
+      </div>
+    );
+  }
 
   const handleNew = () => {
     setEditing(null);
@@ -73,15 +90,10 @@ export function MedicationsPage() {
 
   return (
     <div className="app-page">
-      <div className="flex items-center justify-between">
-        <div className="app-page-header">
-          <h1 className="app-page-title">Medicamentos</h1>
-          <p className="app-page-lead">
-            Catalogo de medicamentos y farmacias
-          </p>
-        </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        <PageHeader title="Medicamentos" lead="Catalogo de medicamentos y farmacias" />
         <Button onClick={handleNew}>
-          <Plus className="mr-2 size-4" />
+          <Plus className="size-4" />
           Nuevo medicamento
         </Button>
       </div>
@@ -94,7 +106,7 @@ export function MedicationsPage() {
             aria-label={mode === "name" ? "Buscar por nombre" : "Buscar por principio activo"}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="app-input h-7 ps-input-with-icon"
+            className="app-input h-8 ps-input-with-icon"
           />
         </div>
         <div className="flex rounded-lg border">
@@ -123,74 +135,71 @@ export function MedicationsPage() {
         </div>
       </div>
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Nombre</TableHead>
-              <TableHead>Principio activo</TableHead>
-              <TableHead>Dosis</TableHead>
-              <TableHead>Laboratorio</TableHead>
-              <TableHead className="w-24">Estado</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {showLoading && (
+      {showLoading && <LoadingState context="table" className="app-card" />}
+
+      {!showLoading && (
+        <div className="app-card overflow-hidden">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={6} className="text-muted-foreground text-center">
-                  <Loader2 className="mx-auto size-5 animate-spin" />
-                </TableCell>
+                <TableHead>Nombre</TableHead>
+                <TableHead>Principio activo</TableHead>
+                <TableHead>Dosis</TableHead>
+                <TableHead>Laboratorio</TableHead>
+                <TableHead className="w-24">Estado</TableHead>
+                <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
-            )}
-            {!showLoading && medications.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={6} className="text-muted-foreground text-center">
-                  <div className="flex flex-col items-center gap-2 py-8">
-                    <Pill className="size-8 opacity-40" />
-                    <p>No se encontraron medicamentos</p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-            {!showLoading &&
-              medications.map((med) => (
-                <TableRow key={med.id}>
-                  <TableCell className="font-medium">{med.name}</TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {med.active_ingredient ?? "-"}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {med.dosage ?? "-"}
-                  </TableCell>
-                  <TableCell className="text-muted-foreground">
-                    {med.laboratory ?? "-"}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={med.is_active ? "default" : "secondary"}>
-                      {med.is_active ? "Activo" : "Inactivo"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(med)}>
-                        <Pencil className="size-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDelete(med)}
-                        disabled={deleteMutation.isPending}
-                      >
-                        <Trash2 className="size-4" />
-                      </Button>
-                    </div>
+            </TableHeader>
+            <TableBody>
+              {medications.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6}>
+                    <EmptyState
+                      icon={<Pill className="size-8 opacity-40" />}
+                      title="No se encontraron medicamentos"
+                    />
                   </TableCell>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
+              ) : (
+                medications.map((med) => (
+                  <TableRow key={med.id}>
+                    <TableCell className="font-medium">{med.name}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {med.active_ingredient ?? "-"}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {med.dosage ?? "-"}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {med.laboratory ?? "-"}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={med.is_active ? "default" : "secondary"}>
+                        {med.is_active ? "Activo" : "Inactivo"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button variant="ghost" size="icon" onClick={() => handleEdit(med)}>
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDelete(med)}
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
 
       <MedicationFormDialog
         open={dialogOpen}

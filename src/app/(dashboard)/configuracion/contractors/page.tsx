@@ -1,5 +1,9 @@
 import { CatalogManager } from "@/modules/configuracion/catalogos/catalogs-page";
 
 export default function ContractorsPage() {
-  return <CatalogManager table="contractors" label="Contratantes" />;
+  return (
+    <div className="app-page">
+      <CatalogManager table="contractors" label="Contratantes" />
+    </div>
+  );
 }

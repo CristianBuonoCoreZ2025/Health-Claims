@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { PageHeader } from "@/components/ui/page-header";
 import {
   type LucideIcon,
   Building2,
@@ -233,10 +234,7 @@ const CARDS: readonly ConfigCard[] = [
 export default function ConfiguracionPage() {
   return (
     <div className="app-page">
-      <div className="app-page-header">
-        <h1 className="app-page-title">Configuracion</h1>
-        <p className="app-page-lead">Maestros y parametrizacion del sistema</p>
-      </div>
+      <PageHeader title="Configuracion" lead="Maestros y parametrizacion del sistema" />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {CARDS.map((card) => {

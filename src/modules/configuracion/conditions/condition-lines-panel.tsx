@@ -7,6 +7,16 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Card, CardHeader, CardTitle, CardAction, CardContent } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -131,65 +141,60 @@ export function ConditionLinesPanel({ headerId }: ConditionLinesPanelProps) {
   };
 
   return (
-    <div className="flex flex-col gap-4 rounded-lg border p-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold tracking-tight">Lineas de condicion</h2>
-        <Button onClick={openNew}>
-          <Plus className="mr-2 size-4" />
-          Nueva linea
-        </Button>
-      </div>
-
-      <div className="rounded-lg border overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Clasificacion</TableHead>
-              <TableHead>Estado</TableHead>
-              <TableHead>Ramo</TableHead>
-              <TableHead>Prima</TableHead>
-              <TableHead>Activo</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {isLoading && (
-              <TableRow>
-                <TableCell colSpan={6} className="text-center">
-                  <Loader2 className="mx-auto size-5 animate-spin" />
-                </TableCell>
-              </TableRow>
-            )}
-            {!isLoading && (lines ?? []).length === 0 && (
-              <TableRow>
-                <TableCell colSpan={6} className="text-center text-muted-foreground">
-                  No hay lineas registradas
-                </TableCell>
-              </TableRow>
-            )}
-            {!isLoading &&
-              (lines ?? []).map((line) => (
-                <TableRow key={line.id}>
-                  <TableCell className="font-medium">{line.classification ?? "-"}</TableCell>
-                  <TableCell>{line.status ?? "-"}</TableCell>
-                  <TableCell>{line.branch ?? "-"}</TableCell>
-                  <TableCell>{line.premium != null ? String(line.premium) : "-"}</TableCell>
-                  <TableCell>{line.is_active ? "Si" : "No"}</TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => openEdit(line)}>
-                        <Pencil className="size-4" />
-                      </Button>
-                      <Button variant="ghost" size="icon" onClick={() => onDelete(line.id)}>
-                        <Trash2 className="size-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+    <Card>
+      <CardHeader className="flex-row items-center justify-between">
+        <CardTitle>Lineas de condicion</CardTitle>
+        <CardAction>
+          <Button onClick={openNew}>
+            <Plus className="size-4" />
+            Nueva linea
+          </Button>
+        </CardAction>
+      </CardHeader>
+      <CardContent className="p-0">
+        {isLoading && <LoadingState context="table" />}
+        {!isLoading && (lines ?? []).length === 0 && (
+          <EmptyState title="No hay lineas registradas" />
+        )}
+        {!isLoading && (lines ?? []).length > 0 && (
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Clasificacion</TableHead>
+                  <TableHead>Estado</TableHead>
+                  <TableHead>Ramo</TableHead>
+                  <TableHead>Prima</TableHead>
+                  <TableHead>Activo</TableHead>
+                  <TableHead className="text-right">Acciones</TableHead>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
+              </TableHeader>
+              <TableBody>
+                {(lines ?? []).map((line) => (
+                  <TableRow key={line.id}>
+                    <TableCell className="font-medium">{line.classification ?? "-"}</TableCell>
+                    <TableCell>{line.status ?? "-"}</TableCell>
+                    <TableCell>{line.branch ?? "-"}</TableCell>
+                    <TableCell>{line.premium != null ? String(line.premium) : "-"}</TableCell>
+                    <TableCell>{line.is_active ? "Si" : "No"}</TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button variant="ghost" size="icon" onClick={() => openEdit(line)}>
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button variant="ghost" size="icon" onClick={() => onDelete(line.id)}>
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+
+      </CardContent>
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-lg">
@@ -225,29 +230,37 @@ export function ConditionLinesPanel({ headerId }: ConditionLinesPanelProps) {
             </div>
             <div className="grid gap-2">
               <Label>Proveedor preferencial</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
+              <Select
                 value={form.preferential_provider}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, preferential_provider: e.target.value }))
+                onValueChange={(v) =>
+                  setForm((prev) => ({ ...prev, preferential_provider: v }))
                 }
               >
-                <option value="true">Si</option>
-                <option value="false">No</option>
-              </select>
+                <SelectTrigger className="h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="true">Si</SelectItem>
+                  <SelectItem value="false">No</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div className="grid gap-2">
               <Label>Activo</Label>
-              <select
-                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm"
+              <Select
                 value={form.is_active}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, is_active: e.target.value }))
+                onValueChange={(v) =>
+                  setForm((prev) => ({ ...prev, is_active: v }))
                 }
               >
-                <option value="true">Si</option>
-                <option value="false">No</option>
-              </select>
+                <SelectTrigger className="h-8">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="true">Si</SelectItem>
+                  <SelectItem value="false">No</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
           <DialogFooter>
@@ -263,6 +276,6 @@ export function ConditionLinesPanel({ headerId }: ConditionLinesPanelProps) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </Card>
   );
 }
