@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useSyncExternalStore } from "react";
-import { LogOut, Menu, Moon, Palette, Sun, Monitor } from "lucide-react";
+import { LogOut, Menu, Monitor, Moon, Palette, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import { useAuth } from "@/hooks/use-auth";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useMounted } from "@/hooks/use-mounted";
-import { roleLabel } from "@/utils/format";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,7 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "next-themes";
+import { Breadcrumb } from "@/components/ui/breadcrumb";
 import {
   getUiStyleSnapshot,
   subscribeUiStyle,
@@ -34,21 +34,20 @@ function getInitials(name: string): string {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
-function ThemeToggleCompact() {
+function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const mounted = useMounted();
-  const currentIcon = mounted && theme === "dark" ? <Moon size={18} /> : <Sun size={18} />;
-  const currentValue = mounted ? theme ?? "system" : "system";
+  const icon = mounted && theme === "dark" ? <Moon className="size-4" /> : <Sun className="size-4" />;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button type="button" className="topbar-action dock-item" title="Tema">
-          {currentIcon}
+        <button type="button" className="btn-ghost h-9 w-9 p-0" title="Tema">
+          {icon}
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
-        <DropdownMenuRadioGroup value={currentValue} onValueChange={setTheme}>
+        <DropdownMenuRadioGroup value={mounted ? theme ?? "system" : "system"} onValueChange={setTheme}>
           <DropdownMenuRadioItem value="light" className="text-xs">
             <Sun className="mr-2 size-3" />
             <span>Claro</span>
@@ -67,7 +66,7 @@ function ThemeToggleCompact() {
   );
 }
 
-function SkinToggleCompact() {
+function SkinToggle() {
   const skin = useSyncExternalStore(subscribeUiStyle, getUiStyleSnapshot, getUiStyleServerSnapshot);
 
   const handleSelect = (value: UiStyleSkin) => {
@@ -78,8 +77,8 @@ function SkinToggleCompact() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button type="button" className="topbar-action dock-item" title="Color">
-          <Palette size={18} />
+        <button type="button" className="btn-ghost h-9 w-9 p-0" title="Skin">
+          <Palette className="size-4" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-40">
@@ -109,48 +108,44 @@ export function TopBar() {
   const initials = getInitials(displayName);
 
   return (
-    <div className="topbar">
+    <>
       <MobileNav open={mobileNavOpen} onClose={closeMobileNav} />
-
-      <div className="topbar-inner">
-        <div className="topbar-lens" aria-hidden="true" />
-
-        <div className="topbar-left">
-          <button
-            type="button"
-            onClick={() => setMobileNavOpen(true)}
-            className="topbar-hamburger"
-            aria-label="Abrir menu"
-          >
-            <Menu />
-          </button>
-          <div className="topbar-avatar-btn" title={displayName}>
-            <span className="flex size-7 items-center justify-center rounded-full bg-primary/20 text-primary text-[10px] font-semibold border border-primary/20">
-              {initials}
-            </span>
+      <header className="sticky top-0 z-50 h-14 w-full border-b border-[var(--glass-border)] bg-[color-mix(in_srgb,var(--card)_72%,transparent)] backdrop-blur-[18px] shadow-[var(--shadow-float)]">
+        <div className="flex h-full w-full items-center justify-between gap-4 px-4">
+          <div className="flex min-w-0 items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setMobileNavOpen(true)}
+              className="btn-ghost h-9 w-9 p-0 lg:hidden"
+              aria-label="Abrir menu"
+            >
+              <Menu className="size-4" />
+            </button>
+            <div className="hidden lg:block">
+              <Breadcrumb />
+            </div>
           </div>
-          <div className="topbar-user-info">
-            <span className="topbar-user-name">{displayName}</span>
-            <span className="topbar-user-role">
-              {profile?.role ? roleLabel(profile.role) : ""}
-            </span>
+
+          <div className="flex shrink-0 items-center gap-1.5">
+            <ThemeToggle />
+            <SkinToggle />
+            <div className="btn-ghost hidden h-9 items-center gap-2 px-2 sm:flex">
+              <span className="flex size-7 items-center justify-center rounded-full border border-primary/20 bg-primary/15 text-[10px] font-semibold text-primary">
+                {initials}
+              </span>
+              <span className="max-w-[120px] truncate text-sm font-medium">{displayName}</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => void signOutClient()}
+              className="btn-ghost h-9 w-9 p-0"
+              title="Salir"
+            >
+              <LogOut className="size-4" />
+            </button>
           </div>
         </div>
-
-        <div className="topbar-right">
-          <ThemeToggleCompact />
-          <SkinToggleCompact />
-          <button
-            type="button"
-            onClick={() => void signOutClient()}
-            className="topbar-action topbar-action-logout dock-item"
-            title="Salir"
-          >
-            <LogOut size={18} />
-          </button>
-        </div>
-      </div>
-    </div>
+      </header>
+    </>
   );
 }
-

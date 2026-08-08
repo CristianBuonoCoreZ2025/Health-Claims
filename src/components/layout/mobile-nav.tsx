@@ -4,13 +4,13 @@ import { useEffect } from "react";
 import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShieldCheck, LogOut, Palette, X, Moon, Sun } from "lucide-react";
+import { LogOut, Moon, Palette, ShieldCheck, Sun, X } from "lucide-react";
+import { useTheme } from "next-themes";
 
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { useNavLinks } from "@/hooks/use-nav-links";
-import { roleLabel } from "@/utils/format";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +18,6 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "next-themes";
 import {
   getUiStyleSnapshot,
   subscribeUiStyle,
@@ -37,10 +36,10 @@ function MobileThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="mobile-nav-action"
+      className="btn-ghost h-10 w-full justify-start gap-3 px-3"
     >
       {isDark ? <Moon className="size-4 shrink-0" /> : <Sun className="size-4 shrink-0" />}
-      <span className="text-[13px] font-medium flex-1 text-left">Tema</span>
+      <span className="text-sm font-medium">Tema</span>
     </button>
   );
 }
@@ -56,9 +55,9 @@ function MobileSkinToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button type="button" className="mobile-nav-action">
+        <button type="button" className="btn-ghost h-10 w-full justify-start gap-3 px-3">
           <Palette className="size-4 shrink-0" />
-          <span className="text-[13px] font-medium flex-1 text-left">Color</span>
+          <span className="text-sm font-medium">Skin</span>
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
@@ -76,6 +75,13 @@ function MobileSkinToggle() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
+}
+
+function getInitials(name: string): string {
+  if (!name) return "U";
+  const parts = name.split(" ").filter(Boolean);
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
 export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -97,121 +103,121 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
   }, [open, onClose]);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
   const displayName = fullName || profile?.full_name || "Usuario";
-  const initials = displayName.split(" ").filter(Boolean).slice(0, 2).map((p) => p[0]).join("").toUpperCase() || "U";
+  const initials = getInitials(displayName);
 
   return (
     <>
-      {open && <div className="mobile-nav-overlay" onClick={onClose} aria-hidden="true" />}
-
       <div
-        className={cn("mobile-nav-drawer", open && "mobile-nav-drawer-open")}
+        className={cn(
+          "fixed inset-0 z-40 bg-foreground/20 backdrop-blur-[4px] transition-opacity duration-200",
+          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0",
+        )}
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        className={cn(
+          "fixed left-0 top-0 z-50 h-full w-72 sidebar-glass p-4 shadow-[var(--shadow-modal)] transition-transform duration-300 ease-[var(--ease-out)]",
+          open ? "translate-x-0" : "-translate-x-full",
+        )}
         aria-hidden={!open}
+        inert={!open}
       >
-        <div className="mobile-nav-drawer-inner">
-          <div className="mobile-nav-header">
+        <div className="flex h-full w-full flex-col gap-4">
+          <div className="flex items-center justify-between">
             <Link
               href="/dashboard"
               onClick={onClose}
-              className="flex items-center gap-3 px-3 py-2 rounded-[14px] bg-primary/10 text-primary shrink-0"
+              className="flex items-center gap-3 rounded-[var(--radius)] bg-primary/10 px-3 py-2 text-primary"
             >
-              <div className="flex size-9 items-center justify-center rounded-[12px] bg-primary text-primary-foreground shrink-0">
-                <ShieldCheck className="size-4" />
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-[var(--radius)] text-primary">
+                <ShieldCheck className="size-5" />
               </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-[13px] font-semibold leading-tight">Health Claims</span>
-                <span className="text-[10px] text-primary/70 leading-tight">Dashboard</span>
+              <div className="flex min-w-0 flex-col">
+                <span className="text-sm font-semibold leading-tight">Health Claims</span>
+                <span className="text-xs text-primary/80 leading-tight">Dashboard</span>
               </div>
             </Link>
-            <button type="button" onClick={onClose} className="mobile-nav-close" aria-label="Cerrar menu">
+            <button type="button" onClick={onClose} className="btn-ghost h-9 w-9 p-0" aria-label="Cerrar menu">
               <X className="size-4" />
             </button>
           </div>
 
-          <div className="mobile-nav-user">
-            <span className="flex size-8 items-center justify-center rounded-full bg-primary/20 text-primary text-xs font-semibold border border-primary/20">
+          <div className="flex items-center gap-3">
+            <span className="flex size-9 items-center justify-center rounded-full border border-primary/20 bg-primary/15 text-xs font-semibold text-primary">
               {initials}
             </span>
-            <div className="flex flex-col min-w-0 flex-1">
-              <span className="text-[13px] font-medium truncate">{displayName}</span>
-              <span className="text-[10px] text-muted-foreground">
-                {profile?.role ? roleLabel(profile.role) : "Mi cuenta"}
-              </span>
+            <div className="flex min-w-0 flex-1 flex-col">
+              <span className="text-sm font-medium truncate">{displayName}</span>
+              <span className="text-xs text-muted-foreground">Mi cuenta</span>
             </div>
           </div>
 
-          <div className="mobile-nav-section mobile-nav-section-main">
-            <div className="flex flex-col gap-1.5">
-              {visibleMainLinks.map((link) => {
-                const isActive = link.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(link.href);
-                const Icon = link.icon;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={onClose}
-                    className={cn(
-                      "mobile-nav-link mobile-nav-link-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                      isActive && "mobile-nav-link-active"
-                    )}
-                  >
-                    <Icon className="size-5 shrink-0" />
-                    <span className="text-[15px] font-medium flex-1">{link.label}</span>
-                    {isActive && <span className="h-4 w-1 rounded-full bg-primary" />}
-                  </Link>
-                );
-              })}
-            </div>
+          <div className="flex w-full flex-col gap-1">
+            {visibleMainLinks.map((link) => {
+              const isActive = link.href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(link.href);
+              const Icon = link.icon;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={onClose}
+                  className={cn(
+                    "sidebar-item min-h-11 outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                    isActive && "sidebar-item-active",
+                  )}
+                >
+                  <Icon className="size-5 shrink-0" />
+                  <span className="flex-1 truncate">{link.label}</span>
+                </Link>
+              );
+            })}
           </div>
 
           {visibleGroups.length > 0 && (
-            <div className="mobile-nav-section">
-              <div className="flex flex-col gap-1">
-                {visibleGroups.map((group) =>
-                  group.children.map((child) => {
-                    if (child.kind !== "subgroup") return null;
-                    return child.subgroup.links.map((link) => {
-                      const isActive = pathname.startsWith(link.href);
-                      const Icon = link.icon;
-                      return (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          onClick={onClose}
-                          className={cn(
-                            "mobile-nav-link focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                            isActive && "mobile-nav-link-active"
-                          )}
-                        >
-                          <Icon className="size-4 shrink-0" />
-                          <span className="text-[13px] flex-1">{link.label}</span>
-                        </Link>
-                      );
-                    });
-                  }),
-                )}
-              </div>
+            <div className="flex w-full flex-1 flex-col gap-1 overflow-auto">
+              {visibleGroups.map((group) =>
+                group.children.map((child) => {
+                  if (child.kind !== "subgroup") return null;
+                  return child.subgroup.links.map((link) => {
+                    const isActive = pathname.startsWith(link.href);
+                    const Icon = link.icon;
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={onClose}
+                        className={cn(
+                          "sidebar-item min-h-11 outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                          isActive && "sidebar-item-active",
+                        )}
+                      >
+                        <Icon className="size-4.5 shrink-0" />
+                        <span className="flex-1 truncate">{link.label}</span>
+                      </Link>
+                    );
+                  });
+                }),
+              )}
             </div>
           )}
 
-          <div className="mobile-nav-footer">
+          <div className="mt-auto flex w-full flex-col gap-1 border-t border-[var(--glass-border)] pt-3">
             <MobileSkinToggle />
             <MobileThemeToggle />
             <button
               type="button"
               onClick={() => void signOutClient()}
-              className="mobile-nav-action mobile-nav-action-logout"
+              className="btn-ghost h-10 w-full justify-start gap-3 px-3 text-destructive hover:bg-destructive/10 hover:text-destructive"
             >
               <LogOut className="size-4 shrink-0" />
-              <span className="text-[13px] font-medium flex-1 text-left">Salir</span>
+              <span className="text-sm font-medium">Salir</span>
             </button>
           </div>
         </div>
