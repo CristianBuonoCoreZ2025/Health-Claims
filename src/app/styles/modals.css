@@ -25,8 +25,8 @@
       color-mix(in srgb, var(--card) 94%, transparent) 0%,
       color-mix(in srgb, var(--card) 82%, transparent) 100%
     ) !important;
-    backdrop-filter: blur(30px) saturate(165%);
-    -webkit-backdrop-filter: blur(30px) saturate(165%);
+    backdrop-filter: blur(20px) saturate(165%);
+    -webkit-backdrop-filter: blur(20px) saturate(165%);
     box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
   }
 
@@ -41,8 +41,8 @@
       color-mix(in srgb, var(--card) 94%, transparent) 0%,
       color-mix(in srgb, var(--card) 82%, transparent) 100%
     ) !important;
-    backdrop-filter: blur(30px) saturate(165%);
-    -webkit-backdrop-filter: blur(30px) saturate(165%);
+    backdrop-filter: blur(20px) saturate(165%);
+    -webkit-backdrop-filter: blur(20px) saturate(165%);
     box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
   }
 
@@ -63,8 +63,8 @@
       color-mix(in srgb, var(--card) 94%, transparent) 0%,
       color-mix(in srgb, var(--card) 82%, transparent) 100%
     ) !important;
-    backdrop-filter: blur(30px) saturate(165%);
-    -webkit-backdrop-filter: blur(30px) saturate(165%);
+    backdrop-filter: blur(20px) saturate(165%);
+    -webkit-backdrop-filter: blur(20px) saturate(165%);
     box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
   }
 
@@ -79,8 +79,8 @@
       color-mix(in srgb, var(--card) 94%, transparent) 0%,
       color-mix(in srgb, var(--card) 82%, transparent) 100%
     ) !important;
-    backdrop-filter: blur(30px) saturate(165%);
-    -webkit-backdrop-filter: blur(30px) saturate(165%);
+    backdrop-filter: blur(20px) saturate(165%);
+    -webkit-backdrop-filter: blur(20px) saturate(165%);
     box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
     display: flex !important;
     flex-direction: column !important;
@@ -100,8 +100,8 @@
       color-mix(in srgb, var(--card) 94%, transparent) 0%,
       color-mix(in srgb, var(--card) 82%, transparent) 100%
     ) !important;
-    backdrop-filter: blur(30px) saturate(165%);
-    -webkit-backdrop-filter: blur(30px) saturate(165%);
+    backdrop-filter: blur(20px) saturate(165%);
+    -webkit-backdrop-filter: blur(20px) saturate(165%);
     box-shadow: 0 24px 48px -8px rgba(2, 12, 27, 0.2), 0 2px 8px rgba(2, 12, 27, 0.05) !important;
     display: flex !important;
     flex-direction: column !important;
@@ -613,7 +613,7 @@
  * Los iconos en headers de modales NO llevan caja/gradiente de fondo.
  * Solo el icono de lucide (contorno) hereda el color del título.
  * Esto aplica a TODOS los wrappers con h-8 w-8 rounded-lg que tengan
- * bg-linear-to-br, bg-violet-500/10, bg-red-500, bg-primary, etc.
+ * bg-linear-to-br, bg-cyan-500/10, bg-red-500, bg-primary, etc.
  * ════════════════════════════════════════════════════════════════ */
 .modal-header [class~="h-8"][class~="w-8"][class~="rounded-lg"],
 .modal-b-header [class~="h-8"][class~="w-8"][class~="rounded-lg"] {
@@ -744,7 +744,7 @@
   padding: 10px 14px !important;
   border-radius: 12px !important;
   background: #e3f2fb !important;
-  border: 1px solid rgba(0, 149, 218, 0.35) !important;
+  border: 1px solid rgba(6, 182, 212, 0.35) !important;
   color: #003591 !important;
   font-size: 13px !important;
 }

@@ -12,25 +12,25 @@
   .premium-bg-mesh {
     background-color: var(--background);
     background-image:
-      radial-gradient(ellipse 80% 70% at 10% 15%, rgb(59 130 246 / 0.11) 0%, transparent 55%),
-      radial-gradient(ellipse 70% 60% at 90% 10%, rgb(14 165 233 / 0.09) 0%, transparent 50%),
-      radial-gradient(ellipse 80% 70% at 50% 95%, rgb(20 184 166 / 0.07) 0%, transparent 55%),
-      radial-gradient(ellipse 60% 50% at 95% 85%, rgb(34 197 94 / 0.05) 0%, transparent 45%),
-      radial-gradient(ellipse 60% 50% at 25% 65%, rgb(96 165 250 / 0.05) 0%, transparent 45%),
-      radial-gradient(ellipse 50% 40% at 70% 40%, rgb(6 182 212 / 0.04) 0%, transparent 40%);
+      radial-gradient(ellipse 80% 70% at 10% 15%, rgb(6 182 212 / 0.22) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 90% 10%, rgb(14 165 233 / 0.18) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 70% at 50% 95%, rgb(20 184 166 / 0.16) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 95% 85%, rgb(8 145 178 / 0.13) 0%, transparent 45%),
+      radial-gradient(ellipse 60% 50% at 25% 65%, rgb(59 130 246 / 0.12) 0%, transparent 45%),
+      radial-gradient(ellipse 50% 40% at 70% 40%, rgb(34 197 94 / 0.10) 0%, transparent 40%);
   }
 
   .dark .premium-bg-mesh {
     background-image:
-      radial-gradient(ellipse 80% 70% at 10% 15%, rgb(59 130 246 / 0.06) 0%, transparent 55%),
-      radial-gradient(ellipse 70% 60% at 90% 10%, rgb(14 165 233 / 0.05) 0%, transparent 50%),
-      radial-gradient(ellipse 80% 70% at 50% 95%, rgb(20 184 166 / 0.04) 0%, transparent 55%),
-      radial-gradient(ellipse 60% 50% at 95% 85%, rgb(34 197 94 / 0.03) 0%, transparent 45%),
-      radial-gradient(ellipse 60% 50% at 25% 65%, rgb(96 165 250 / 0.03) 0%, transparent 45%),
-      radial-gradient(ellipse 50% 40% at 70% 40%, rgb(6 182 212 / 0.02) 0%, transparent 40%);
+      radial-gradient(ellipse 80% 70% at 10% 15%, rgb(6 182 212 / 0.11) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 60% at 90% 10%, rgb(14 165 233 / 0.09) 0%, transparent 50%),
+      radial-gradient(ellipse 80% 70% at 50% 95%, rgb(20 184 166 / 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 50% at 95% 85%, rgb(8 145 178 / 0.06) 0%, transparent 45%),
+      radial-gradient(ellipse 60% 50% at 25% 65%, rgb(59 130 246 / 0.05) 0%, transparent 45%),
+      radial-gradient(ellipse 50% 40% at 70% 40%, rgb(34 197 94 / 0.04) 0%, transparent 40%);
   }
 
-  /* Orbes flotantes suaves — predominante azul con destellos teal/verde */
+  /* Orbes flotantes suaves — predominante cian con destellos teal/verde */
   .premium-orbs {
     position: relative;
   }
@@ -41,20 +41,20 @@
     pointer-events: none;
     z-index: 0;
     background-image:
-      radial-gradient(circle 180px at 15% 25%, rgb(59 130 246 / 0.14) 0%, transparent 70%),
-      radial-gradient(circle 220px at 80% 20%, rgb(14 165 233 / 0.11) 0%, transparent 70%),
-      radial-gradient(circle 200px at 60% 80%, rgb(20 184 166 / 0.09) 0%, transparent 70%),
-      radial-gradient(circle 160px at 30% 70%, rgb(34 197 94 / 0.07) 0%, transparent 70%);
-    filter: blur(72px);
+      radial-gradient(circle 180px at 15% 25%, rgb(6 182 212 / 0.22) 0%, transparent 70%),
+      radial-gradient(circle 220px at 80% 20%, rgb(14 165 233 / 0.18) 0%, transparent 70%),
+      radial-gradient(circle 240px at 65% 80%, rgb(20 184 166 / 0.16) 0%, transparent 70%),
+      radial-gradient(circle 180px at 35% 75%, rgb(45 212 191 / 0.14) 0%, transparent 70%);
+    filter: blur(60px);
     animation: orbs-drift 25s ease-in-out infinite alternate;
   }
 
   .dark .premium-orbs::before {
     background-image:
-      radial-gradient(circle 180px at 15% 25%, rgb(59 130 246 / 0.08) 0%, transparent 70%),
-      radial-gradient(circle 220px at 80% 20%, rgb(14 165 233 / 0.06) 0%, transparent 70%),
-      radial-gradient(circle 200px at 60% 80%, rgb(20 184 166 / 0.05) 0%, transparent 70%),
-      radial-gradient(circle 160px at 30% 70%, rgb(34 197 94 / 0.04) 0%, transparent 70%);
+      radial-gradient(circle 180px at 15% 25%, rgb(6 182 212 / 0.12) 0%, transparent 70%),
+      radial-gradient(circle 220px at 80% 20%, rgb(14 165 233 / 0.10) 0%, transparent 70%),
+      radial-gradient(circle 240px at 65% 80%, rgb(20 184 166 / 0.09) 0%, transparent 70%),
+      radial-gradient(circle 180px at 35% 75%, rgb(45 212 191 / 0.07) 0%, transparent 70%);
   }
 
   @keyframes orbs-drift {
@@ -94,18 +94,18 @@
   /* Glass panel — tarjetas premium translucidas con borde sutil */
   .glass-panel {
     border-radius: 18px !important;
-    border: 1px solid rgba(255, 255, 255, 0.34) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
     background: linear-gradient(
       135deg,
       color-mix(in srgb, var(--surface-elevated) 50%, transparent) 0%,
       color-mix(in srgb, var(--surface-elevated) 28%, transparent) 100%
     ) !important;
-    backdrop-filter: blur(34px) saturate(185%);
-    -webkit-backdrop-filter: blur(34px) saturate(185%);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     box-shadow:
-      0 12px 44px -12px rgba(2, 12, 27, 0.09),
-      0 1px 0 rgba(255, 255, 255, 0.18) inset,
-      0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
+      0 12px 44px -12px rgba(2, 16, 45, 0.09),
+      0 1px 0 rgba(255, 255, 255, 0.16) inset,
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset !important;
     position: relative;
     overflow: hidden;
   }
@@ -209,7 +209,7 @@
   }
 
   .app-page {
-    @apply mx-auto flex w-full max-w-[min(120rem,calc(100%-1rem))] flex-col gap-2 px-1;
+    @apply mx-auto flex w-full max-w-[min(120rem,calc(100%-2rem))] flex-col px-4 py-4 gap-4;
   }
 
   .app-page-stock-wide {
@@ -221,7 +221,7 @@
   }
 
   .app-page-title {
-    @apply text-lg font-semibold tracking-tight text-foreground sm:text-xl;
+    @apply text-[18px] font-semibold tracking-tight text-foreground;
   }
 
   .app-page-lead {
@@ -391,7 +391,7 @@
   .grid-observation {
     font-size: 9px !important;
     font-style: italic !important;
-    color: #6d28d9 !important;
+    color: #0e7490 !important;
     line-height: 1.3 !important;
   }
 
@@ -1064,7 +1064,7 @@
   }
 
   .bulk-error-summary-chip-invalid_value {
-    border-color: color-mix(in srgb, #8b5cf6 30%, transparent) !important;
+    border-color: color-mix(in srgb, #06b6d4 30%, transparent) !important;
   }
 
   /* Observaciones dentro del informe/PDF */
@@ -1368,18 +1368,18 @@
       0 0 0 1px rgba(255, 255, 255, 0.06) inset !important;
   }
 
-  /* Sidebar — Liquid Glass blanco-azulado */
+  /* Sidebar — Liquid Glass blanco-cian */
   .sidebar-glass {
     border-radius: 28px !important;
-    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
     background: linear-gradient(
       180deg,
       rgba(255, 255, 255, 0.18) 0%,
       rgba(255, 255, 255, 0.05) 100%
     ) !important;
     background-color: color-mix(in srgb, var(--background) 88%, transparent) !important;
-    backdrop-filter: blur(44px) saturate(195%);
-    -webkit-backdrop-filter: blur(44px) saturate(195%);
+    backdrop-filter: blur(28px) saturate(170%);
+    -webkit-backdrop-filter: blur(28px) saturate(170%);
     box-shadow:
       0 12px 48px rgb(0 0 0 / 0.05),
       0 0 0 1px rgba(255, 255, 255, 0.2) inset !important;
@@ -1441,11 +1441,11 @@
     color: var(--primary) !important;
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, rgb(14 165 233) 9%, transparent) 0%,
-      color-mix(in srgb, var(--primary) 4%, transparent) 100%
+      color-mix(in srgb, rgb(6 182 212) 10%, transparent) 0%,
+      color-mix(in srgb, var(--primary) 5%, transparent) 100%
     ) !important;
-    border-color: color-mix(in srgb, rgb(14 165 233) 20%, transparent) !important;
-    box-shadow: 0 0 24px color-mix(in srgb, rgb(14 165 233) 16%, transparent) !important;
+    border-color: color-mix(in srgb, rgb(6 182 212) 22%, transparent) !important;
+    box-shadow: 0 0 24px color-mix(in srgb, rgb(6 182 212) 18%, transparent) !important;
   }
 
   .sidebar-item-active::before {

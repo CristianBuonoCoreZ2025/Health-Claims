@@ -1187,7 +1187,7 @@
     pointer-events: none;
     background: radial-gradient(
       100% 50% at 50% 100%,
-      var(--glass-glow, rgba(0, 149, 218, 0.08)) 0%,
+      var(--glass-glow, rgba(6, 182, 212, 0.08)) 0%,
       transparent 70%
     );
     border-radius: 999px;
@@ -1329,7 +1329,7 @@
     pointer-events: none;
     background: radial-gradient(
       100% 50% at 50% 100%,
-      var(--kpi-glow, rgba(0, 149, 218, 0.1)) 0%,
+      var(--kpi-glow, rgba(6, 182, 212, 0.1)) 0%,
       transparent 70%
     );
     border-radius: 999px;
@@ -2129,7 +2129,7 @@
     pointer-events: none;
     background: radial-gradient(
       80% 60% at 50% 100%,
-      var(--tab-glow, rgba(0, 149, 218, 0.08)) 0%,
+      var(--tab-glow, rgba(6, 182, 212, 0.08)) 0%,
       transparent 70%
     );
   }
@@ -2554,8 +2554,8 @@
   .glass-glow-blue-soft   { --glass-glow: rgba(59, 130, 246, 0.04) !important; }
   .glass-glow-amber       { --glass-glow: rgba(245, 158, 11, 0.06) !important; }
   .glass-glow-emerald     { --glass-glow: rgba(16, 185, 129, 0.06) !important; }
-  .glass-glow-violet      { --glass-glow: rgba(139, 92, 246, 0.06) !important; }
-  .glass-glow-sky         { --glass-glow: rgba(0, 149, 218, 0.06) !important; }
+  .glass-glow-cyan      { --glass-glow: rgba(6, 182, 212, 0.06) !important; }
+  .glass-glow-sky         { --glass-glow: rgba(6, 182, 212, 0.06) !important; }
   .glass-glow-pink        { --glass-glow: rgba(236, 72, 153, 0.06) !important; }
   .glass-glow-indigo      { --glass-glow: rgba(99, 102, 241, 0.06) !important; }
   .glass-glow-rose        { --glass-glow: rgba(244, 63, 94, 0.06) !important; }
@@ -2564,8 +2564,8 @@
   .kpi-glow-blue          { --kpi-glow: rgba(59, 130, 246, 0.1) !important; }
   .kpi-glow-amber         { --kpi-glow: rgba(245, 158, 11, 0.1) !important; }
   .kpi-glow-emerald       { --kpi-glow: rgba(16, 185, 129, 0.1) !important; }
-  .kpi-glow-violet        { --kpi-glow: rgba(139, 92, 246, 0.1) !important; }
-  .kpi-glow-sky           { --kpi-glow: rgba(0, 149, 218, 0.1) !important; }
+  .kpi-glow-cyan        { --kpi-glow: rgba(6, 182, 212, 0.1) !important; }
+  .kpi-glow-sky           { --kpi-glow: rgba(6, 182, 212, 0.1) !important; }
   .kpi-glow-pink          { --kpi-glow: rgba(236, 72, 153, 0.1) !important; }
   .kpi-glow-slate         { --kpi-glow: rgba(100, 116, 139, 0.08) !important; }
 
@@ -2573,8 +2573,8 @@
   .kpi-icon-blue    { background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important; }
   .kpi-icon-amber   { background: linear-gradient(135deg, #f59e0b, #d97706) !important; }
   .kpi-icon-emerald { background: linear-gradient(135deg, #10b981, #059669) !important; }
-  .kpi-icon-violet  { background: linear-gradient(135deg, #8b5cf6, #7c3aed) !important; }
-  .kpi-icon-sky     { background: linear-gradient(135deg, #0095DA, #005BBB) !important; }
+  .kpi-icon-cyan  { background: linear-gradient(135deg, #06b6d4, #0891b2) !important; }
+  .kpi-icon-sky     { background: linear-gradient(135deg, #0ea5e9, #0891b2) !important; }
   .kpi-icon-pink    { background: linear-gradient(135deg, #ec4899, #be185d) !important; }
   .kpi-icon-slate   { background: linear-gradient(135deg, rgba(100, 116, 139, 0.9), rgba(71, 85, 105, 1)) !important; }
 
@@ -2627,8 +2627,8 @@
   .tab-glow-blue    { --tab-glow: rgba(59, 130, 246, 0.08) !important; }
   .tab-glow-amber   { --tab-glow: rgba(245, 158, 11, 0.08) !important; }
   .tab-glow-emerald { --tab-glow: rgba(16, 185, 129, 0.08) !important; }
-  .tab-glow-violet  { --tab-glow: rgba(139, 92, 246, 0.08) !important; }
-  .tab-glow-sky     { --tab-glow: rgba(0, 149, 218, 0.08) !important; }
+  .tab-glow-cyan  { --tab-glow: rgba(6, 182, 212, 0.08) !important; }
+  .tab-glow-sky     { --tab-glow: rgba(6, 182, 212, 0.08) !important; }
   .tab-glow-pink    { --tab-glow: rgba(236, 72, 153, 0.08) !important; }
   .tab-glow-slate   { --tab-glow: rgba(100, 116, 139, 0.08) !important; }
 }
