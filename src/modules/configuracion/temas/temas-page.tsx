@@ -1,6 +1,11 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { Check } from "lucide-react";
+
+import { PageHeader } from "@/components/ui/page-header";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
   UI_STYLE_LABELS,
   UI_STYLE_SWATCHES,
@@ -30,10 +35,10 @@ export function TemasPage() {
 
   return (
     <div className="app-page p-6">
-      <div className="app-page-header">
-        <h1 className="app-page-title">Temas</h1>
-        <p className="app-page-lead">Selecciona la piel visual de la interfaz</p>
-      </div>
+      <PageHeader
+        title="Temas"
+        lead="Selecciona la piel visual de la interfaz"
+      />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-6">
         {SKINS.map((skin) => {
@@ -45,31 +50,50 @@ export function TemasPage() {
               key={skin}
               type="button"
               onClick={() => handleSelect(skin)}
-              className={`app-card text-left transition-all ${isActive ? "ring-2 ring-primary" : "hover:scale-[1.02]"}`}
+              className="text-left"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <div
-                  className="h-10 w-10 rounded-full border-2 border-border"
-                  style={{ backgroundColor: swatch }}
-                />
-                <span className="app-card-title">{label}</span>
-                {isActive && (
-                  <span className="ml-auto text-xs font-medium text-primary">
-                    Activo
-                  </span>
-                )}
-              </div>
-              <div
-                className="h-20 rounded-lg border border-border overflow-hidden"
-                style={{ background: `linear-gradient(135deg, ${swatch}40, ${swatch}10)` }}
+              <Card
+                className={`h-full transition-all ${
+                  isActive
+                    ? "ring-2 ring-primary"
+                    : "hover:scale-[1.02]"
+                }`}
               >
-                <div className="flex items-center justify-center h-full">
+                <CardHeader className="pb-2">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="h-10 w-10 rounded-full border-2 border-border"
+                      style={{ backgroundColor: swatch }}
+                    />
+                    <CardTitle className="text-base">{label}</CardTitle>
+                    {isActive && (
+                      <Badge className="ml-auto" variant="default">
+                        <Check className="mr-1 size-3" />
+                        Activo
+                      </Badge>
+                    )}
+                  </div>
+                </CardHeader>
+                <CardContent>
                   <div
-                    className="h-8 w-8 rounded-md"
-                    style={{ backgroundColor: swatch }}
-                  />
-                </div>
-              </div>
+                    className="h-24 rounded-lg border border-border overflow-hidden"
+                    style={{
+                      background: `linear-gradient(135deg, ${swatch}40, ${swatch}10)`,
+                    }}
+                  >
+                    <div className="flex h-full items-center justify-center gap-2">
+                      <div
+                        className="h-8 w-12 rounded-md"
+                        style={{ backgroundColor: swatch }}
+                      />
+                      <div
+                        className="h-6 w-16 rounded-md opacity-60"
+                        style={{ backgroundColor: swatch }}
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </button>
           );
         })}

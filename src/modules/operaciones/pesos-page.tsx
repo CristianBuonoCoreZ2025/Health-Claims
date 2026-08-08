@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, Pencil, Trash2, Scale, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, Scale } from "lucide-react";
 import { toast } from "sonner";
 
+import { PageHeader } from "@/components/ui/page-header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -14,6 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
 import { useQuery } from "@tanstack/react-query";
 
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
@@ -25,7 +29,6 @@ import {
 import { WeightFormDialog } from "./weight-form";
 import type { LiquidatorWeight } from "@/types";
 
-// Hook temporal para listar perfiles liquidadores.
 function useLiquidadorProfiles() {
   return useQuery({
     queryKey: ["profiles", "liquidator"],
@@ -51,7 +54,6 @@ export function PesosPage() {
   const [editing, setEditing] = useState<LiquidatorWeight | null>(null);
   const [selectedUser, setSelectedUser] = useState<string>("");
 
-  // Cargar pesos del usuario seleccionado (o todos si no hay seleccion).
   const weightsQuery = useLiquidatorWeightsByUser(selectedUser);
 
   const liquidadores = profiles ?? [];
@@ -86,117 +88,109 @@ export function PesosPage() {
 
   return (
     <div className="app-page">
-      <div className="flex items-center justify-between">
-        <div className="app-page-header">
-          <h1 className="app-page-title">Matriz de Peso</h1>
-          <p className="app-page-lead">
-            Configuracion de pesos para asignacion de siniestros
-          </p>
-        </div>
+      <div className="flex items-start justify-between">
+        <PageHeader
+          title="Matriz de Peso"
+          lead="Configuracion de pesos para asignacion de siniestros"
+        />
         <Button onClick={handleNew}>
           <Plus className="mr-2 size-4" />
           Nuevo peso
         </Button>
       </div>
 
-      {/* Selector de liquidador */}
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <span className="text-sm font-medium">Liquidador:</span>
-        <div className="flex flex-wrap gap-1">
-          <button
+        <Button
+          type="button"
+          size="sm"
+          variant={selectedUser === "" ? "default" : "outline"}
+          onClick={() => setSelectedUser("")}
+        >
+          Todos
+        </Button>
+        {liquidadores.map((l) => (
+          <Button
+            key={l.id}
             type="button"
-            onClick={() => setSelectedUser("")}
-            className={
-              selectedUser === ""
-                ? "bg-primary text-primary-foreground rounded-lg px-3 py-1.5 text-sm"
-                : "text-muted-foreground rounded-lg border px-3 py-1.5 text-sm"
-            }
+            size="sm"
+            variant={selectedUser === l.id ? "default" : "outline"}
+            onClick={() => setSelectedUser(l.id)}
           >
-            Todos
-          </button>
-          {liquidadores.map((l) => (
-            <button
-              key={l.id}
-              type="button"
-              onClick={() => setSelectedUser(l.id)}
-              className={
-                selectedUser === l.id
-                  ? "bg-primary text-primary-foreground rounded-lg px-3 py-1.5 text-sm"
-                  : "text-muted-foreground rounded-lg border px-3 py-1.5 text-sm"
-              }
-            >
-              {l.full_name || "Sin nombre"}
-            </button>
-          ))}
-        </div>
+            {l.full_name || "Sin nombre"}
+          </Button>
+        ))}
       </div>
 
-      <div className="rounded-lg border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Liquidador</TableHead>
-              <TableHead>Cobertura</TableHead>
-              <TableHead>Nivel</TableHead>
-              <TableHead className="text-right">Peso</TableHead>
-              <TableHead className="w-24">Estado</TableHead>
-              <TableHead className="text-right">Acciones</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {weightsQuery.isLoading && (
-              <TableRow>
-                <TableCell colSpan={6} className="text-muted-foreground text-center">
-                  <Loader2 className="mx-auto size-5 animate-spin" />
-                </TableCell>
-              </TableRow>
-            )}
-            {!weightsQuery.isLoading && weights.length === 0 && (
-              <TableRow>
-                <TableCell colSpan={6} className="text-muted-foreground text-center">
-                  <div className="flex flex-col items-center gap-2 py-8">
-                    <Scale className="size-8 opacity-40" />
-                    <p>No hay pesos configurados</p>
-                  </div>
-                </TableCell>
-              </TableRow>
-            )}
-            {!weightsQuery.isLoading &&
-              weights.map((w) => (
-                <TableRow key={w.id}>
-                  <TableCell className="font-medium">
-                    {liquidadorName(w.user_id)}
-                  </TableCell>
-                  <TableCell>{coverageName(w.coverage_type_id)}</TableCell>
-                  <TableCell className="text-muted-foreground">{w.level}</TableCell>
-                  <TableCell className="text-right font-mono">
-                    {w.weight_value.toFixed(2)}
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={w.is_active ? "default" : "secondary"}>
-                      {w.is_active ? "Activo" : "Inactivo"}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button variant="ghost" size="icon" onClick={() => handleEdit(w)}>
-                        <Pencil className="size-4" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => handleDelete(w)}
-                        disabled={deleteMutation.isPending}
-                      >
-                        <Trash2 className="size-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+      <Card>
+        <CardHeader>
+          <CardTitle>Pesos configurados</CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          {weightsQuery.isLoading && <LoadingState context="table" />}
+          {!weightsQuery.isLoading && weights.length === 0 && (
+            <EmptyState
+              icon={<Scale className="size-6" />}
+              title="No hay pesos configurados"
+              description="Agrega un nuevo peso con el boton superior."
+            />
+          )}
+          {!weightsQuery.isLoading && weights.length > 0 && (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Liquidador</TableHead>
+                  <TableHead>Cobertura</TableHead>
+                  <TableHead>Nivel</TableHead>
+                  <TableHead className="text-right">Peso</TableHead>
+                  <TableHead className="w-24">Estado</TableHead>
+                  <TableHead className="text-right">Acciones</TableHead>
                 </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </div>
+              </TableHeader>
+              <TableBody>
+                {weights.map((w) => (
+                  <TableRow key={w.id}>
+                    <TableCell className="font-medium">
+                      {liquidadorName(w.user_id)}
+                    </TableCell>
+                    <TableCell>{coverageName(w.coverage_type_id)}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {w.level}
+                    </TableCell>
+                    <TableCell className="text-right font-mono">
+                      {w.weight_value.toFixed(2)}
+                    </TableCell>
+                    <TableCell>
+                      <Badge variant={w.is_active ? "default" : "secondary"}>
+                        {w.is_active ? "Activo" : "Inactivo"}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleEdit(w)}
+                        >
+                          <Pencil className="size-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => handleDelete(w)}
+                          disabled={deleteMutation.isPending}
+                        >
+                          <Trash2 className="size-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
 
       <WeightFormDialog
         open={dialogOpen}

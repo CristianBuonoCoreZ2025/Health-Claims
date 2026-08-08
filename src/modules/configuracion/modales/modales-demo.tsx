@@ -9,6 +9,9 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/ui/page-header";
 import { FileText, AlertTriangle, Save, Trash2 } from "lucide-react";
 
 export function ModalesDemo() {
@@ -17,137 +20,114 @@ export function ModalesDemo() {
 
   return (
     <div className="app-page p-6">
-      <div className="app-page-header">
-        <h1 className="app-page-title">Modales</h1>
-        <p className="app-page-lead">Ejemplos de los componentes de modal del design system</p>
-      </div>
+      <PageHeader
+        title="Modales"
+        lead="Ejemplos de los componentes de modal del design system"
+      />
 
       <div className="grid gap-6 mt-6 lg:grid-cols-2">
         <div className="app-card p-5">
-          <h2 className="text-base font-semibold mb-3">Modal mediano (modal-md)</h2>
+          <h2 className="text-base font-semibold mb-3">Modal mediano</h2>
           <p className="text-sm text-muted-foreground mb-4">
             560px de ancho. Ideal para formularios estandar de 4-8 campos.
           </p>
-          <button
-            type="button"
-            className="liquid-button"
-            onClick={() => setOpenMd(true)}
-          >
-            Abrir modal-md
-          </button>
+          <Button onClick={() => setOpenMd(true)}>Abrir modal mediano</Button>
         </div>
 
         <div className="app-card p-5">
-          <h2 className="text-base font-semibold mb-3">Modal grande (modal-lg)</h2>
+          <h2 className="text-base font-semibold mb-3">Modal grande</h2>
           <p className="text-sm text-muted-foreground mb-4">
             910px de ancho. Ideal para formularios complejos con mas de 8 campos.
           </p>
-          <button
-            type="button"
-            className="liquid-button"
-            onClick={() => setOpenLg(true)}
-          >
-            Abrir modal-lg
-          </button>
+          <Button onClick={() => setOpenLg(true)}>Abrir modal grande</Button>
         </div>
 
         <div className="app-card p-5">
           <h2 className="text-base font-semibold mb-3">Botones</h2>
           <div className="flex flex-wrap gap-3">
-            <button type="button" className="btn-save">
-              <Save className="h-4 w-4 mr-1.5" />
+            <Button>
+              <Save className="mr-2 size-4" />
               Guardar
-            </button>
-            <button type="button" className="btn-danger">
-              <Trash2 className="h-4 w-4 mr-1.5" />
+            </Button>
+            <Button variant="destructive">
+              <Trash2 className="mr-2 size-4" />
               Eliminar
-            </button>
-            <button type="button" className="liquid-button">
-              Liquid Button
-            </button>
-            <button type="button" className="liquid-button-outline">
-              Outline
-            </button>
+            </Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
           </div>
         </div>
       </div>
 
       <Dialog open={openMd} onOpenChange={setOpenMd}>
-        <DialogContent className="modal-md">
-          <DialogHeader className="modal-header">
-            <DialogTitle className="modal-title">
-              <FileText className="h-5 w-5 modal-title-icon" />
+        <DialogContent className="sm:max-w-[560px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <FileText className="size-5" />
               Ejemplo de modal mediano
             </DialogTitle>
-            <DialogDescription className="modal-subtitle">
-              Este modal usa la clase modal-md (560px)
+            <DialogDescription>
+              Este modal usa 560px de ancho.
             </DialogDescription>
           </DialogHeader>
-          <div className="modal-body">
-            <p className="text-sm mb-4">
-              Este es el cuerpo del modal (modal-body). Aqui van los campos
-              del formulario, tablas, o cualquier contenido que necesite scroll.
+          <div className="grid gap-3 py-2">
+            <p className="text-sm text-muted-foreground">
+              Este es el cuerpo del modal. Aqui van los campos del formulario,
+              tablas o cualquier contenido que necesite scroll.
             </p>
-            <div className="flex flex-col gap-3">
-              <input className="app-input" placeholder="Campo de ejemplo 1" />
-              <input className="app-input" placeholder="Campo de ejemplo 2" />
-              <input className="app-input" placeholder="Campo de ejemplo 3" />
-            </div>
+            <Input placeholder="Campo de ejemplo 1" />
+            <Input placeholder="Campo de ejemplo 2" />
+            <Input placeholder="Campo de ejemplo 3" />
           </div>
-          <DialogFooter className="modal-footer">
-            <button
-              type="button"
-              className="liquid-button-outline"
-              onClick={() => setOpenMd(false)}
-            >
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setOpenMd(false)}>
               Cancelar
-            </button>
-            <button type="button" className="btn-save" onClick={() => setOpenMd(false)}>
-              <Save className="h-4 w-4 mr-1.5" />
+            </Button>
+            <Button onClick={() => setOpenMd(false)}>
+              <Save className="mr-2 size-4" />
               Confirmar
-            </button>
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       <Dialog open={openLg} onOpenChange={setOpenLg}>
-        <DialogContent className="modal-lg">
-          <DialogHeader className="modal-header">
-            <DialogTitle className="modal-title">
-              <AlertTriangle className="h-5 w-5 modal-title-icon" />
+        <DialogContent className="sm:max-w-[920px]">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <AlertTriangle className="size-5" />
               Ejemplo de modal grande
             </DialogTitle>
-            <DialogDescription className="modal-subtitle">
-              Este modal usa la clase modal-lg (910px)
+            <DialogDescription>
+              Este modal usa 910px de ancho.
             </DialogDescription>
           </DialogHeader>
-          <div className="modal-body">
-            <p className="text-sm mb-4">
+          <div className="grid gap-3 py-2">
+            <p className="text-sm text-muted-foreground">
               Este modal es mas ancho y permite contenido complejo como tablas,
-              arboles, o formularios con muchas secciones.
+              arboles o formularios con muchas secciones.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
-              <input className="app-input" placeholder="Campo 1" />
-              <input className="app-input" placeholder="Campo 2" />
-              <input className="app-input" placeholder="Campo 3" />
-              <input className="app-input" placeholder="Campo 4" />
-              <input className="app-input" placeholder="Campo 5" />
-              <input className="app-input" placeholder="Campo 6" />
+              <Input placeholder="Campo 1" />
+              <Input placeholder="Campo 2" />
+              <Input placeholder="Campo 3" />
+              <Input placeholder="Campo 4" />
+              <Input placeholder="Campo 5" />
+              <Input placeholder="Campo 6" />
             </div>
           </div>
-          <DialogFooter className="modal-footer">
-            <button
-              type="button"
-              className="btn-danger"
+          <DialogFooter>
+            <Button
+              variant="destructive"
               onClick={() => setOpenLg(false)}
             >
-              <Trash2 className="h-4 w-4 mr-1.5" />
+              <Trash2 className="mr-2 size-4" />
               Descartar
-            </button>
-            <button type="button" className="btn-save" onClick={() => setOpenLg(false)}>
-              <Save className="h-4 w-4 mr-1.5" />
+            </Button>
+            <Button onClick={() => setOpenLg(false)}>
+              <Save className="mr-2 size-4" />
               Guardar cambios
-            </button>
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

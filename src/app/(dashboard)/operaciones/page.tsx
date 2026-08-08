@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Users, Scale, Ban, FileSpreadsheet } from "lucide-react";
 
+import { PageHeader } from "@/components/ui/page-header";
 import { cn } from "@/lib/utils";
 
 interface OpCard {
@@ -40,12 +41,10 @@ const CARDS: readonly OpCard[] = [
 export default function OperacionesPage() {
   return (
     <div className="app-page">
-      <div className="app-page-header">
-        <h1 className="app-page-title">Operaciones</h1>
-        <p className="app-page-lead">
-          Herramientas para supervisores y control de liquidadores
-        </p>
-      </div>
+      <PageHeader
+        title="Operaciones"
+        lead="Herramientas para supervisores y control de liquidadores"
+      />
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {CARDS.map((card) => {
@@ -55,8 +54,8 @@ export default function OperacionesPage() {
               key={card.href}
               href={card.href}
               className={cn(
-                "group flex flex-col gap-3 rounded-lg border p-5 transition-colors",
-                "hover:border-primary/50 hover:bg-accent/50"
+                "app-card group flex flex-col gap-3 p-5 transition-colors",
+                "hover:border-primary/50 hover:bg-accent/50",
               )}
             >
               <div className="flex items-center gap-3">
@@ -67,7 +66,9 @@ export default function OperacionesPage() {
                   {card.label}
                 </span>
               </div>
-              <p className="text-muted-foreground text-sm">{card.description}</p>
+              <p className="text-muted-foreground text-sm">
+                {card.description}
+              </p>
             </Link>
           );
         })}

@@ -1,8 +1,20 @@
 "use client";
 
-import { Loader2, FileSpreadsheet, Download, TrendingUp } from "lucide-react";
+import { FileSpreadsheet, Download, TrendingUp } from "lucide-react";
 
+import { PageHeader } from "@/components/ui/page-header";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { LoadingState } from "@/components/ui/loading-state";
+import { EmptyState } from "@/components/ui/empty-state";
 import { useLiquidatorWorkload } from "@/hooks/use-operaciones";
 import { useClaims } from "@/hooks/use-claims";
 import { formatCurrency } from "@/utils/format";
@@ -15,7 +27,6 @@ export function ReportesPage() {
     import("xlsx").then((XLSX) => {
       const wb = XLSX.utils.book_new();
 
-      // Hoja 1: Carga de trabajo por liquidador.
       const workloadData = (workload ?? []).map((w) => ({
         Liquidador: w.full_name || "Sin nombre",
         "Siniestros Activos": w.active_claims ?? 0,
@@ -31,7 +42,6 @@ export function ReportesPage() {
       const ws1 = XLSX.utils.json_to_sheet(workloadData);
       XLSX.utils.book_append_sheet(wb, ws1, "Carga Liquidadores");
 
-      // Hoja 2: Siniestros recientes.
       const claimsData = (claims ?? []).map((c) => ({
         Numero: c.claim_number,
         "Fecha Incidente": c.incident_date,
@@ -44,12 +54,16 @@ export function ReportesPage() {
       const ws2 = XLSX.utils.json_to_sheet(claimsData);
       XLSX.utils.book_append_sheet(wb, ws2, "Siniestros Recientes");
 
-      // Hoja 3: Resumen de productividad.
-      const totalActive = workload?.reduce((s, w) => s + (w.active_claims ?? 0), 0) ?? 0;
-      const totalApproved = workload?.reduce((s, w) => s + (w.approved ?? 0), 0) ?? 0;
-      const totalRejected = workload?.reduce((s, w) => s + (w.rejected ?? 0), 0) ?? 0;
-      const totalPaid = workload?.reduce((s, w) => s + (w.paid ?? 0), 0) ?? 0;
-      const totalAmount = workload?.reduce((s, w) => s + (w.active_amount ?? 0), 0) ?? 0;
+      const totalActive =
+        workload?.reduce((s, w) => s + (w.active_claims ?? 0), 0) ?? 0;
+      const totalApproved =
+        workload?.reduce((s, w) => s + (w.approved ?? 0), 0) ?? 0;
+      const totalRejected =
+        workload?.reduce((s, w) => s + (w.rejected ?? 0), 0) ?? 0;
+      const totalPaid =
+        workload?.reduce((s, w) => s + (w.paid ?? 0), 0) ?? 0;
+      const totalAmount =
+        workload?.reduce((s, w) => s + (w.active_amount ?? 0), 0) ?? 0;
       const summaryData = [
         { Indicador: "Liquidadores activos", Valor: workload?.length ?? 0 },
         { Indicador: "Siniestros activos", Valor: totalActive },
@@ -59,24 +73,32 @@ export function ReportesPage() {
         { Indicador: "Monto activo total", Valor: totalAmount },
         {
           Indicador: "Tasa de aprobacion",
-          Valor: totalApproved + totalRejected > 0
-            ? `${((totalApproved / (totalApproved + totalRejected)) * 100).toFixed(1)}%`
-            : "N/A",
+          Valor:
+            totalApproved + totalRejected > 0
+              ? `${((totalApproved / (totalApproved + totalRejected)) * 100).toFixed(1)}%`
+              : "N/A",
         },
       ];
       const ws3 = XLSX.utils.json_to_sheet(summaryData);
       XLSX.utils.book_append_sheet(wb, ws3, "Resumen");
 
-      XLSX.writeFile(wb, `reporte_productividad_${new Date().toISOString().split("T")[0]}.xlsx`);
+      XLSX.writeFile(
+        wb,
+        `reporte_productividad_${new Date().toISOString().split("T")[0]}.xlsx`,
+      );
     });
   };
 
   const isLoading = workloadLoading || claimsLoading;
 
-  const totalActive = workload?.reduce((s, w) => s + (w.active_claims ?? 0), 0) ?? 0;
-  const totalApproved = workload?.reduce((s, w) => s + (w.approved ?? 0), 0) ?? 0;
-  const totalRejected = workload?.reduce((s, w) => s + (w.rejected ?? 0), 0) ?? 0;
-  const totalAmount = workload?.reduce((s, w) => s + (w.active_amount ?? 0), 0) ?? 0;
+  const totalActive =
+    workload?.reduce((s, w) => s + (w.active_claims ?? 0), 0) ?? 0;
+  const totalApproved =
+    workload?.reduce((s, w) => s + (w.approved ?? 0), 0) ?? 0;
+  const totalRejected =
+    workload?.reduce((s, w) => s + (w.rejected ?? 0), 0) ?? 0;
+  const totalAmount =
+    workload?.reduce((s, w) => s + (w.active_amount ?? 0), 0) ?? 0;
   const approvalRate =
     totalApproved + totalRejected > 0
       ? ((totalApproved / (totalApproved + totalRejected)) * 100).toFixed(1)
@@ -84,87 +106,97 @@ export function ReportesPage() {
 
   return (
     <div className="app-page">
-      <div className="flex items-center justify-between">
-        <div className="app-page-header">
-          <h1 className="app-page-title">Reporte de Productividad</h1>
-          <p className="app-page-lead">
-            Indicadores clave y exportacion a Excel
-          </p>
-        </div>
-        <Button onClick={handleExport} disabled={isLoading}>
+      <div className="flex items-start justify-between">
+        <PageHeader
+          title="Reporte de Productividad"
+          lead="Indicadores clave y exportacion a Excel"
+        />
+        <Button
+          variant="secondary"
+          onClick={handleExport}
+          disabled={isLoading}
+        >
           <Download className="mr-2 size-4" />
           Exportar Excel
         </Button>
       </div>
 
-      {isLoading && (
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="text-muted-foreground size-6 animate-spin" />
-        </div>
-      )}
-
-      {!isLoading && (
+      {isLoading ? (
+        <LoadingState context="table" />
+      ) : (
         <>
-          {/* KPIs principales */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <KpiCard
               icon={<TrendingUp className="size-5" />}
               label="Tasa de aprobacion"
               value={`${approvalRate}%`}
             />
-            <KpiCard
-              label="Siniestros activos"
-              value={String(totalActive)}
-            />
-            <KpiCard
-              label="Monto activo total"
-              value={formatCurrency(totalAmount)}
-            />
+            <KpiCard label="Siniestros activos" value={String(totalActive)} />
+            <KpiCard label="Monto activo total" value={formatCurrency(totalAmount)} />
             <KpiCard
               label="Liquidadores activos"
               value={String(workload?.length ?? 0)}
             />
           </div>
 
-          {/* Tabla de productividad */}
-          <div className="rounded-lg border">
-            <div className="bg-muted/50 border-b px-4 py-3">
-              <h3 className="flex items-center gap-2 font-medium">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
                 <FileSpreadsheet className="size-4" />
                 Productividad por liquidador
-              </h3>
-            </div>
-            <div className="divide-y">
-              {(workload ?? []).map((w) => {
-                const total = w.total_claims ?? 0;
-                const approved = w.approved ?? 0;
-                const rate = total > 0 ? ((approved / total) * 100).toFixed(1) : "0.0";
-                return (
-                  <div key={w.user_id} className="flex items-center gap-4 p-4">
-                    <div className="flex-1">
-                      <p className="font-medium">{w.full_name || "Sin nombre"}</p>
-                      <p className="text-muted-foreground text-sm">
-                        {w.active_claims ?? 0} activos - {approved} aprobados - {w.rejected ?? 0} rechazados
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold">{rate}%</p>
-                      <p className="text-muted-foreground text-xs">tasa aprobacion</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold">{formatCurrency(w.active_amount ?? 0)}</p>
-                      <p className="text-muted-foreground text-xs">monto activo</p>
-                    </div>
-                  </div>
-                );
-              })}
-              {(workload ?? []).length === 0 && (
-                <div className="text-muted-foreground p-8 text-center">
-                  No hay datos de productividad disponibles
-                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              {(workload ?? []).length === 0 ? (
+                <EmptyState
+                  icon={<FileSpreadsheet className="size-6" />}
+                  title="No hay datos de productividad"
+                  description="No se encontraron liquidadores con carga registrada."
+                />
+              ) : (
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Liquidador</TableHead>
+                      <TableHead className="text-right">Activos</TableHead>
+                      <TableHead className="text-right">Aprobados</TableHead>
+                      <TableHead className="text-right">Rechazados</TableHead>
+                      <TableHead className="text-right">Tasa</TableHead>
+                      <TableHead className="text-right">Monto activo</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {(workload ?? []).map((w) => {
+                      const total = w.total_claims ?? 0;
+                      const approved = w.approved ?? 0;
+                      const rate =
+                        total > 0 ? ((approved / total) * 100).toFixed(1) : "0.0";
+                      return (
+                        <TableRow key={w.user_id}>
+                          <TableCell className="font-medium">
+                            {w.full_name || "Sin nombre"}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {w.active_claims ?? 0}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {approved}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {w.rejected ?? 0}
+                          </TableCell>
+                          <TableCell className="text-right">{rate}%</TableCell>
+                          <TableCell className="text-right text-muted-foreground">
+                            {formatCurrency(w.active_amount ?? 0)}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
               )}
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </>
       )}
     </div>
@@ -181,12 +213,16 @@ function KpiCard({
   icon?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-lg border p-4">
-      <div className="flex items-center gap-2">
-        {icon && <div className="text-primary">{icon}</div>}
-        <p className="text-muted-foreground text-xs">{label}</p>
-      </div>
-      <p className="mt-2 text-2xl font-semibold">{value}</p>
-    </div>
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+          {icon && <span className="text-primary">{icon}</span>}
+          {label}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <p className="text-2xl font-semibold">{value}</p>
+      </CardContent>
+    </Card>
   );
 }

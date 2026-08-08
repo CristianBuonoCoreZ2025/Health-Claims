@@ -5,6 +5,8 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Save, RotateCcw } from "lucide-react";
 
+import { PageHeader } from "@/components/ui/page-header";
+import { Button } from "@/components/ui/button";
 import { getNavMenuConfig, saveNavMenuConfig, type NavMenuItem } from "@/services/nav-menu-config";
 import { configToFlat, flatToConfig, type FlatItem } from "./menu-utils";
 import { MenuPalette } from "./menu-palette";
@@ -117,61 +119,70 @@ export function MenuPage() {
 
   return (
     <div className="app-page p-6">
-      <div className="app-page-header flex items-center justify-between">
-        <div>
-          <h1 className="app-page-title">Configuracion del menu</h1>
-          <p className="app-page-lead">Ordena y personaliza los items del menu lateral</p>
-        </div>
+      <div className="flex items-start justify-between">
+        <PageHeader
+          title="Configuracion del menu"
+          lead="Ordena y personaliza los items del menu lateral"
+        />
         <div className="flex items-center gap-2">
-          <button type="button" onClick={handleReset} className="liquid-button-outline">
-            <RotateCcw className="h-4 w-4 mr-1.5" />
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleReset}
+          >
+            <RotateCcw className="mr-2 size-4" />
             Reset
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
             onClick={handleSave}
             disabled={!dirty || saveMut.isPending}
-            className="btn-save"
           >
-            <Save className="h-4 w-4 mr-1.5" />
+            <Save className="mr-2 size-4" />
             Guardar
-          </button>
+          </Button>
         </div>
       </div>
 
-      <DndContext
-        sensors={sensors}
-        collisionDetection={collisionDetection}
-        onDragStart={onDragStart}
-        onDragMove={onDragMove}
-        onDragEnd={onDragEnd}
-        onDragCancel={onDragCancel}
-      >
-        <div className="grid gap-6 lg:grid-cols-[280px_1fr] mt-6">
-          <div className="app-card p-4">
-            <MenuPalette canvasIds={canvasIds} />
-          </div>
-          <div className="app-card p-4">
-            <MenuCanvas
-              flat={flat}
-              expandedGroups={expandedGroups}
-              dropIndicator={dropIndicator}
-              onToggleGroup={toggleGroup}
-              onRemove={removeItem}
-              onRename={renameItem}
-            />
-          </div>
+      {!initialized ? (
+        <div className="flex h-44 items-center justify-center">
+          <div className="text-muted-foreground text-sm">Cargando menu...</div>
         </div>
-
-        <DragOverlay>
-          {activeDrag ? (
-            <div className="flex items-center gap-2 rounded-lg px-2 py-1.5 border bg-card shadow-lg">
-              <activeDrag.icon className="h-4 w-4" />
-              <span className="text-sm">{activeDrag.label}</span>
+      ) : (
+        <DndContext
+          sensors={sensors}
+          collisionDetection={collisionDetection}
+          onDragStart={onDragStart}
+          onDragMove={onDragMove}
+          onDragEnd={onDragEnd}
+          onDragCancel={onDragCancel}
+        >
+          <div className="grid gap-6 lg:grid-cols-[280px_1fr] mt-6">
+            <div className="app-card p-4">
+              <MenuPalette canvasIds={canvasIds} />
             </div>
-          ) : null}
-        </DragOverlay>
-      </DndContext>
+            <div className="app-card p-4">
+              <MenuCanvas
+                flat={flat}
+                expandedGroups={expandedGroups}
+                dropIndicator={dropIndicator}
+                onToggleGroup={toggleGroup}
+                onRemove={removeItem}
+                onRename={renameItem}
+              />
+            </div>
+          </div>
+
+          <DragOverlay>
+            {activeDrag ? (
+              <div className="flex items-center gap-2 rounded-lg px-2 py-1.5 border bg-card shadow-lg">
+                <activeDrag.icon className="h-4 w-4" />
+                <span className="text-sm">{activeDrag.label}</span>
+              </div>
+            ) : null}
+          </DragOverlay>
+        </DndContext>
+      )}
     </div>
   );
 }
