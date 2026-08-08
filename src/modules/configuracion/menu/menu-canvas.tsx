@@ -45,12 +45,12 @@ export function MenuCanvas({
       <div
         ref={setNodeRef}
         className={cn(
-          "flex flex-col gap-1 min-h-[300px] rounded-xl border-2 border-dashed p-3 transition-colors",
+          "flex flex-col gap-1 min-h-75 rounded-xl border-2 border-dashed p-3 transition-colors",
           isOver ? "border-primary/50 bg-primary/5" : "border-border",
         )}
       >
         {flat.length === 0 ? (
-          <div className="flex items-center justify-center h-[280px] text-sm text-muted-foreground">
+          <div className="flex items-center justify-center h-70 text-sm text-muted-foreground">
             Arrastra items aqui para construir el menu
           </div>
         ) : (
